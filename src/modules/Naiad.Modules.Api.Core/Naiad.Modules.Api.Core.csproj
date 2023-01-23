@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\libraries\Naiad.libraries.activepub\Naiad.Libraries.ActivePub.csproj" />
+    <ProjectReference Include="..\..\libraries\Naiad.libraries.core\Naiad.Libraries.Core.csproj" />
+    <ProjectReference Include="..\..\libraries\Naiad.Libraries.LiteDb\Naiad.Libraries.LiteDb.csproj" />
+  </ItemGroup>
+
+</Project>
