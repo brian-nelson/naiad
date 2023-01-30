@@ -8,9 +8,11 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Connectors\" />
-    <Folder Include="Objects\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>
 
 </Project>
