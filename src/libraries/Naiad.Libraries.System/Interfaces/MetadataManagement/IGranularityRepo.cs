@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Naiad.Libraries.System.Models.MetadataManagement;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Naiad.Libraries.System.Interfaces.MetadataManagement
+namespace Naiad.Libraries.System.Interfaces.MetadataManagement;
+
+public interface IGranularityRepo
 {
-    internal interface IGranularityRepo
-    {
-    }
+    public IEnumerable<Granularity> GetAll();
+    public void Save(Granularity zone);
+    public Granularity GetById(Guid id);
 }
+
