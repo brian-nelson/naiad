@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Naiad.Modules.Api.Core": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:51531;http://localhost:51532"
+    }
+  }
+}

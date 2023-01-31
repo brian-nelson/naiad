@@ -1,7 +1,7 @@
 ﻿using System;
-using Naiad.Libraries.System.Interfaces;
+using Naiad.Libraries.System.Interfaces.System;
 
-namespace Naiad.Libraries.System.Objects
+namespace Naiad.Libraries.System.Models.System
 {
     public class User : IDbRecord
     {

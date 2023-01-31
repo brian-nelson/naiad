@@ -1,23 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<OutputType>library</OutputType>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Autofac" Version="6.5.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\libraries\Naiad.libraries.activepub\Naiad.Libraries.ActivePub.csproj" />
+		<ProjectReference Include="..\..\libraries\Naiad.libraries.core\Naiad.Libraries.Core.csproj" />
+		<ProjectReference Include="..\..\libraries\Naiad.Libraries.LiteDb\Naiad.Libraries.LiteDb.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\libraries\Naiad.libraries.activepub\Naiad.Libraries.ActivePub.csproj" />
-    <ProjectReference Include="..\..\libraries\Naiad.libraries.core\Naiad.Libraries.Core.csproj" />
-    <ProjectReference Include="..\..\libraries\Naiad.Libraries.LiteDb\Naiad.Libraries.LiteDb.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Connectors\" />
+	</ItemGroup>
 
 </Project>

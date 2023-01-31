@@ -10,4 +10,9 @@
     <ProjectReference Include="..\Naiad.Libraries.System\Naiad.Libraries.System.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repos\DataManagement\" />
+    <Folder Include="Repos\MetadataManagement\" />
+  </ItemGroup>
+
 </Project>
