@@ -7,7 +7,7 @@ namespace Naiad.Libraries.System.Interfaces.MetadataManagement;
 public interface IGranularityRepo
 {
     public IEnumerable<Granularity> GetAll();
-    public void Save(Granularity zone);
+    public void Save(Granularity granularity);
     public Granularity GetById(Guid id);
 }
 

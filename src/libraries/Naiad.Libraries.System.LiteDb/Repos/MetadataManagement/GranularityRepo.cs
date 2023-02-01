@@ -6,27 +6,27 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 internal class GranularityRepo : IGranularityRepo
 {
-    private readonly ILiteCollection<Granularity> _collection;
+    private readonly InternalRepo<Granularity> _repo;
 
     public GranularityRepo(
         ILiteDatabase database)
     {
-        _collection = database.GetCollection<Granularity>("granularities");
+        _repo = new InternalRepo<Granularity>(database, "granularities");
     }
 
     public IEnumerable<Granularity> GetAll()
     {
-        throw new NotImplementedException();
+        return _repo.GetAll();
     }
 
-    public void Save(Granularity zone)
+    public void Save(Granularity granularity)
     {
-        throw new NotImplementedException();
+        _repo.Save(granularity);
     }
 
     public Granularity GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _repo.GetById(id);
     }
 }
 

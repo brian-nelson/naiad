@@ -6,27 +6,27 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 public class ZoneRepo : IZoneRepo
 {
-    private readonly ILiteCollection<Zone> _collection;
+    private readonly InternalRepo<Zone> _repo;
 
     public ZoneRepo(
         ILiteDatabase database)
     {
-        _collection = database.GetCollection<Zone>("zones");
+        _repo = new InternalRepo<Zone>(database, "zones");
     }
 
     public IEnumerable<Zone> GetAll()
     {
-        throw new NotImplementedException();
+        return _repo.GetAll();
     }
 
     public void Save(Zone zone)
     {
-        throw new NotImplementedException();
+        _repo.Save(zone);
     }
 
     public Zone GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _repo.GetById(id);
     }
 }
 

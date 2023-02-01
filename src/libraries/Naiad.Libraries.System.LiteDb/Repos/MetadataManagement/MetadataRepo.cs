@@ -6,24 +6,24 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 public class MetadataRepo : IMetadataRepo
 {
-    private readonly ILiteCollection<Metadata> _collection;
+    private readonly InternalRepo<Metadata> _repo;
 
     public MetadataRepo(
         ILiteDatabase database)
     {
-        _collection = database.GetCollection<Metadata>("metadatas");
+        _repo = new InternalRepo<Metadata>(database, "metadata");
 
-        _collection.EnsureIndex(x => x.CategorizationId);
+        _repo.EnsureIndex(x => x.CategorizationId);
     }
 
     public Metadata GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _repo.GetById(id);
     }
 
     public void Save(Metadata metadata)
     {
-        throw new NotImplementedException();
+        _repo.Save(metadata);
     }
 }
 

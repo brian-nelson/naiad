@@ -7,7 +7,7 @@ namespace Naiad.Libraries.System.Interfaces.MetadataManagement;
 public interface ICategorizationRepo
 {
     public IEnumerable<Categorization> GetAll();
-    public void Save(Categorization zone);
+    public void Save(Categorization categorization);
     public Categorization GetById(Guid id);
 }
 

@@ -14,7 +14,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\libraries\Naiad.libraries.activepub\Naiad.Libraries.ActivePub.csproj" />
 		<ProjectReference Include="..\..\libraries\Naiad.libraries.core\Naiad.Libraries.Core.csproj" />
-		<ProjectReference Include="..\..\libraries\Naiad.Libraries.LiteDb\Naiad.Libraries.LiteDb.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

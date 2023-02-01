@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Naiad.libraries.core\Naiad.Libraries.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repos\" />
+  </ItemGroup>
+
 </Project>

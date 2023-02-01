@@ -6,20 +6,20 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 public class RelationshipRepo : IRelationshipRepo
 {
-    private readonly ILiteCollection<Relationship> _collection;
+    private readonly InternalRepo<Relationship> _repo;
 
     public RelationshipRepo(
         ILiteDatabase database)
     {
-        _collection = database.GetCollection<Relationship>("relationships");
+        _repo = new InternalRepo<Relationship>(database, "relationships");
 
-        _collection.EnsureIndex(x => x.ParentId);
-        _collection.EnsureIndex(x => x.ChildId);
+        _repo.EnsureIndex(x => x.ParentId);
+        _repo.EnsureIndex(x => x.ChildId);
     }
 
     public Relationship GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _repo.GetById(id);
     }
 
     public IEnumerable<Relationship> GetChildren(Guid parentId)
@@ -34,7 +34,7 @@ public class RelationshipRepo : IRelationshipRepo
 
     public void Save(Relationship relationship)
     {
-        throw new NotImplementedException();
+        _repo.Save(relationship);
     }
 }
 

@@ -6,24 +6,24 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 public class MetadataPropertyRepo : IMetadataPropertyRepo
 {
-    private readonly ILiteCollection<MetadataProperty> _collection;
+    private readonly InternalRepo<MetadataProperty> _repo;
 
     public MetadataPropertyRepo(
         ILiteDatabase database)
     {
-        _collection = database.GetCollection<MetadataProperty>("metadataproperties");
+        _repo = new InternalRepo<MetadataProperty>(database, "metadataproperties");
 
-        _collection.EnsureIndex(x => x.MetadataId);
+        _repo.EnsureIndex(x => x.MetadataId);
     }
 
     public MetadataProperty GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _repo.GetById(id);
     }
 
     public void Save(MetadataProperty property)
     {
-        throw new NotImplementedException();
+        _repo.Save(property);
     }
 
     public IEnumerable<MetadataProperty> Get(Guid metadataId)

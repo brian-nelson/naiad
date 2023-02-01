@@ -6,25 +6,25 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 public class DataPointerRepo : IDataPointerRepo
 {
-    private readonly ILiteCollection<DataPointer> _collection;
+    private readonly InternalRepo<DataPointer> _repo;
 
     public DataPointerRepo(
         ILiteDatabase database)
     {
-        _collection = database.GetCollection<DataPointer>("datapointers");
+        _repo = new InternalRepo<DataPointer>(database, "datapointers");
 
-        _collection.EnsureIndex(x => x.GranularityId);
-        _collection.EnsureIndex(x => x.ZoneId);
+        _repo.EnsureIndex(x => x.GranularityId);
+        _repo.EnsureIndex(x => x.ZoneId);
     }
 
     public DataPointer GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _repo.GetById(id);
     }
 
     public void Save(DataPointer pointer)
     {
-        throw new NotImplementedException();
+        _repo.Save(pointer);
     }
 }
 

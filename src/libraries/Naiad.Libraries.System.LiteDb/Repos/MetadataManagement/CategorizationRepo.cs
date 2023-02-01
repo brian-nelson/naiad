@@ -6,28 +6,28 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 public class CategorizationRepo : ICategorizationRepo
 {
-    private readonly ILiteCollection<Categorization> _collection;
+    private readonly InternalRepo<Categorization> _repo;
 
     public CategorizationRepo(
         ILiteDatabase database)
     {
-        _collection = database.GetCollection<Categorization>("categorizations");
+        _repo = new InternalRepo<Categorization>(database, "categorizations");
     }
 
 
     public IEnumerable<Categorization> GetAll()
     {
-        throw new NotImplementedException();
+        return _repo.GetAll();
     }
 
-    public void Save(Categorization zone)
+    public void Save(Categorization categorization)
     {
-        throw new NotImplementedException();
+        _repo.Save(categorization);
     }
 
     public Categorization GetById(Guid id)
     {
-        throw new NotImplementedException();
+        return _repo.GetById(id);
     }
 }
 
