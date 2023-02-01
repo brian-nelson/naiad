@@ -1,18 +1,15 @@
-﻿using System;
-using Naiad.Libraries.System.Interfaces.System;
-
-namespace Naiad.Libraries.System.Models.System
+﻿namespace Naiad.Libraries.System.Models.System
 {
-    public class User : IDbRecord
+    public class User : AbstractDbRecord
     {
-        public Guid Id { get; set; }
-
         public string Email { get; set; }
 
         public string GivenName { get; set; }
 
         public string FamilyName { get; set; }
 
-        public string HashedPassword { get; set; }
+        public bool IsEnabled { get; set; }
+
+        public bool MustChangePassword { get; set; }
     }
 }

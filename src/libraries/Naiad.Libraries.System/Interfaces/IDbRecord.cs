@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Naiad.Libraries.System.Interfaces.System;
+namespace Naiad.Libraries.System.Interfaces;
 
 public interface IDbRecord
 {

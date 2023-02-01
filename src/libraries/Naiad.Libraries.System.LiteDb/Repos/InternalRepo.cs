@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 using LiteDB;
-using Naiad.Libraries.System.Interfaces.System;
+using Naiad.Libraries.System.Interfaces;
 
 namespace Naiad.Libraries.System.LiteDb.Repos
 {
