@@ -22,7 +22,7 @@ namespace Naiad.Libraries.System.LiteDb.Repos.System
 
         public User GetByEmail(string email)
         {
-            throw new NotImplementedException();
+            return _repo.GetItem(Query.EQ("Email", email));
         }
 
         public void Save(User user)

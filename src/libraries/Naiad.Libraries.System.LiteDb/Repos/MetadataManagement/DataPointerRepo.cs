@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using Naiad.Libraries.System.Interfaces.MetadataManagement;
 using Naiad.Libraries.System.Models.MetadataManagement;
+using Naiad.Libraries.System.Models.System;
 
 namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
@@ -25,6 +26,24 @@ public class DataPointerRepo : IDataPointerRepo
     public void Save(DataPointer pointer)
     {
         _repo.Save(pointer);
+    }
+
+    public IEnumerable<DataPointer> GetByZone(Guid zoneId)
+    {
+        return _repo.GetItems(Query.EQ("ZoneId", zoneId));
+    }
+
+    public IEnumerable<DataPointer> GetByGranularity(Guid granularityId)
+    {
+        return _repo.GetItems(Query.EQ("GranularityId", granularityId));
+    }
+
+    public IEnumerable<DataPointer> GetByZoneAndGranularity(Guid zoneId, Guid granularityId)
+    {
+        return _repo.GetItems(
+            Query.And(
+            Query.EQ("ZoneId", zoneId),
+            Query.EQ("GranularityId", granularityId)));
     }
 }
 

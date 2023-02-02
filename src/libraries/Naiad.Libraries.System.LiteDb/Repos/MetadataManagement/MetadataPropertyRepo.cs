@@ -28,6 +28,6 @@ public class MetadataPropertyRepo : IMetadataPropertyRepo
 
     public IEnumerable<MetadataProperty> Get(Guid metadataId)
     {
-        throw new NotImplementedException();
+        return _repo.GetItems(Query.EQ("MetadataId", metadataId));
     }
 }

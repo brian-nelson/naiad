@@ -2,7 +2,13 @@
 {
     public class User : AbstractDbRecord
     {
-        public string Email { get; set; }
+        private string _email;
+
+        public string Email
+        {
+            get => _email;
+            set => _email = value.ToLower();
+        }
 
         public string GivenName { get; set; }
 

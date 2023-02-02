@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using Naiad.Libraries.System.Interfaces.MetadataManagement;
 using Naiad.Libraries.System.Models.MetadataManagement;
+using Naiad.Libraries.System.Models.System;
 
 namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
@@ -24,12 +25,12 @@ public class RelationshipRepo : IRelationshipRepo
 
     public IEnumerable<Relationship> GetChildren(Guid parentId)
     {
-        throw new NotImplementedException();
+        return _repo.GetItems(Query.EQ("ParentId", parentId));
     }
 
     public IEnumerable<Relationship> GetParents(Guid childId)
     {
-        throw new NotImplementedException();
+        return _repo.GetItems(Query.EQ("ChildId", childId));
     }
 
     public void Save(Relationship relationship)

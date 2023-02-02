@@ -1,5 +1,4 @@
 ﻿using System;
-using Naiad.Libraries.System.Models.System;
 
 namespace Naiad.Libraries.System.Models.MetadataManagement
 {

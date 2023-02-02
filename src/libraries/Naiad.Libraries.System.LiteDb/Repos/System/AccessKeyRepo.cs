@@ -22,7 +22,7 @@ namespace Naiad.Libraries.System.LiteDb.Repos.System
 
         public IEnumerable<AccessKey> GetByUserId(Guid userId)
         {
-            throw new NotImplementedException();
+            return _repo.GetItems(Query.EQ("UserId", userId));
         }
 
         public void Save(AccessKey accessKey)
