@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Constants\DataManagement\" />
     <Folder Include="Interfaces\DataManagement\" />
-    <Folder Include="Models\DataManagement\" />
   </ItemGroup>
 
 </Project>

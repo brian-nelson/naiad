@@ -1,9 +1,6 @@
-﻿using Naiad.Libraries.System.Models.System;
+﻿namespace Naiad.Libraries.System.Models.MetadataManagement;
 
-namespace Naiad.Libraries.System.Models.MetadataManagement
+public class Categorization : AbstractDbRecord
 {
-    public class Categorization : AbstractDbRecord
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

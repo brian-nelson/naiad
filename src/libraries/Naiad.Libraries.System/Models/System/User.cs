@@ -1,4 +1,6 @@
-﻿namespace Naiad.Libraries.System.Models.System
+﻿using Naiad.Libraries.System.Constants.System;
+
+namespace Naiad.Libraries.System.Models.System
 {
     public class User : AbstractDbRecord
     {
@@ -17,5 +19,7 @@
         public bool IsEnabled { get; set; }
 
         public bool MustChangePassword { get; set; }
+
+        public UserTypes UserType { get; set; }
     }
 }

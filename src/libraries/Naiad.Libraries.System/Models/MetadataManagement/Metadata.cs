@@ -1,12 +1,9 @@
 ﻿using System;
 
-namespace Naiad.Libraries.System.Models.MetadataManagement
+namespace Naiad.Libraries.System.Models.MetadataManagement;
+
+public class Metadata
+    : AbstractDbRecord
 {
-    public class Metadata 
-        : AbstractDbRecord
-    {
-        public Guid CategorizationId { get; set; }
-
-
-    }
+    public Guid? CategorizationId { get; set; }
 }

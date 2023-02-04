@@ -1,13 +1,11 @@
 ﻿using System;
-using Naiad.Libraries.System.Models.System;
 
-namespace Naiad.Libraries.System.Models.MetadataManagement
+namespace Naiad.Libraries.System.Models.MetadataManagement;
+
+public class MetadataProperty
+    : AbstractDbRecord
 {
-    public class MetadataProperty 
-        : AbstractDbRecord
-    {
-        public Guid MetadataId { get; set; }
-        public string Key { get; set; }
-        public string Value { get; set; }
-    }
+    public Guid MetadataId { get; set; }
+    public string Key { get; set; }
+    public string Value { get; set; }
 }

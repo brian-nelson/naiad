@@ -1,6 +1,6 @@
 ﻿namespace Naiad.Libraries.System.Constants.System
 {
-    public enum CertificateType
+    public enum CertificateTypes
     {
         PrivateKey = 0,
         PublicKey = 1

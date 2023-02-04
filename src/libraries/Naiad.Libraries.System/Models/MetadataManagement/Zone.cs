@@ -1,9 +1,6 @@
-﻿using Naiad.Libraries.System.Models.System;
+﻿namespace Naiad.Libraries.System.Models.MetadataManagement;
 
-namespace Naiad.Libraries.System.Models.MetadataManagement
+public class Zone : AbstractDbRecord
 {
-    public class Zone : AbstractDbRecord
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

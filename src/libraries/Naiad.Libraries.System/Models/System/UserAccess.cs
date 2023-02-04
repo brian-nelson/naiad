@@ -10,6 +10,6 @@ namespace Naiad.Libraries.System.Models.System
 
         public string Salt { get; set; }
 
-        public DateTime CreateDateTime { get; set; }
+        public DateTimeOffset SetOnDateTime { get; set; }
     }
 }

@@ -10,6 +10,8 @@ public class KnownInstance : AbstractDbRecord
 
     public Guid PublicKeyId { get; set; }
 
+    public DateTimeOffset LastTimeSeen { get; set; }
+
     /// <summary>
     /// Only set for localhost
     /// </summary>

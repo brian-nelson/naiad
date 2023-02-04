@@ -14,6 +14,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Naiad.Libraries.System\Naiad.Libraries.System.csproj" />
+    <ProjectReference Include="..\Naiad.Libraries.Testing\Naiad.Libraries.Testing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Constants\DataManagement\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

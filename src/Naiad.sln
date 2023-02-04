@@ -21,13 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.System", "l
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.System.LiteDb", "libraries\Naiad.Libraries.System.LiteDb\Naiad.Libraries.System.LiteDb.csproj", "{1769A000-AE21-4FB5-82A3-F4026BFE79E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.System.Tests", "libraries\Naiad.Libraries.System.Tests\Naiad.Libraries.System.Tests.csproj", "{D699689B-34E9-43F6-8B6C-63BD6CCB0F28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.System.Tests", "libraries\Naiad.Libraries.System.Tests\Naiad.Libraries.System.Tests.csproj", "{D699689B-34E9-43F6-8B6C-63BD6CCB0F28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.System.LiteDb.Tests", "libraries\Naiad.Libraries.System.LiteDb.Tests\Naiad.Libraries.System.LiteDb.Tests.csproj", "{426A5797-0CB0-4286-8083-F296C83D1645}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.System.LiteDb.Tests", "libraries\Naiad.Libraries.System.LiteDb.Tests\Naiad.Libraries.System.LiteDb.Tests.csproj", "{426A5797-0CB0-4286-8083-F296C83D1645}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.Core.Tests", "libraries\Naiad.Libraries.Core.Tests\Naiad.Libraries.Core.Tests.csproj", "{6F8003DC-0B87-4FA0-ACBD-AF41E05C533B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.Core.Tests", "libraries\Naiad.Libraries.Core.Tests\Naiad.Libraries.Core.Tests.csproj", "{6F8003DC-0B87-4FA0-ACBD-AF41E05C533B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.ActivityPub.Tests", "libraries\Naiad.Libraries.ActivityPub.Tests\Naiad.Libraries.ActivityPub.Tests.csproj", "{E8682C8E-0298-4B74-829A-A0F248942F14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.ActivityPub.Tests", "libraries\Naiad.Libraries.ActivityPub.Tests\Naiad.Libraries.ActivityPub.Tests.csproj", "{E8682C8E-0298-4B74-829A-A0F248942F14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.Testing", "libraries\Naiad.Libraries.Testing\Naiad.Libraries.Testing.csproj", "{BB52DBB8-EBF5-4FA4-A0B7-73F30B84BA02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{E8682C8E-0298-4B74-829A-A0F248942F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8682C8E-0298-4B74-829A-A0F248942F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8682C8E-0298-4B74-829A-A0F248942F14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB52DBB8-EBF5-4FA4-A0B7-73F30B84BA02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB52DBB8-EBF5-4FA4-A0B7-73F30B84BA02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB52DBB8-EBF5-4FA4-A0B7-73F30B84BA02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB52DBB8-EBF5-4FA4-A0B7-73F30B84BA02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{426A5797-0CB0-4286-8083-F296C83D1645} = {2FC5D3B3-757A-4D15-B8F7-567464D63AEB}
 		{6F8003DC-0B87-4FA0-ACBD-AF41E05C533B} = {2FC5D3B3-757A-4D15-B8F7-567464D63AEB}
 		{E8682C8E-0298-4B74-829A-A0F248942F14} = {2FC5D3B3-757A-4D15-B8F7-567464D63AEB}
+		{BB52DBB8-EBF5-4FA4-A0B7-73F30B84BA02} = {2FC5D3B3-757A-4D15-B8F7-567464D63AEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3F1B2E24-F6CD-44D2-8894-6DB55B7D15E8}
