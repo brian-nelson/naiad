@@ -24,6 +24,7 @@ public class AccessKeyTests
             Key = key,
             CreatedDateTime = createdDateTime,
             HashedSecret = hashedSecret,
+            IsEnabled = true,
             Salt = salt,
             UserId = userId
         };
