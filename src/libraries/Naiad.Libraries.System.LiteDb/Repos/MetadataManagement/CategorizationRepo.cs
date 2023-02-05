@@ -16,7 +16,6 @@ public class CategorizationRepo : ICategorizationRepo
         _repo = new InternalRepo<Categorization>(database, "categorizations");
     }
 
-
     public IEnumerable<Categorization> GetAll()
     {
         return _repo.GetAll();

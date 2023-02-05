@@ -20,13 +20,24 @@ public class DataService
         _storageProvider.SaveFile(fileId, stream);
     }
 
+    public Stream GetFile(string fileId)
+    {
+        return _storageProvider.GetFile(fileId);
+    }
+
     public NaiadFileInfo GetFileInfo(string fileId)
     {
         return _storageProvider.GetFileInfo(fileId);
     }
 
+    
     public IEnumerable<NaiadFileInfo> ListFiles(string prefix)
     {
         return _storageProvider.ListFiles(prefix);
+    }
+
+    public void DeleteFile(string fileId)
+    {
+        _storageProvider.DeleteFile(fileId);
     }
 }

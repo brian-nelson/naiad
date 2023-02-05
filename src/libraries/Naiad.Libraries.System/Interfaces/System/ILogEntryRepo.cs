@@ -8,7 +8,7 @@ public interface ILogEntryRepo
 {
     public LogEntry GetById(Guid logEntryId);
     public IEnumerable<LogEntry> GetByUser(Guid userId, DateTime startDate, DateTime endDate);
-    public IEnumerable<LogEntry> GetByUser(DateTime startDate, DateTime endDate);
+    public IEnumerable<LogEntry> Get(DateTime startDate, DateTime endDate);
     public void Save(IEnumerable<LogEntry> logEntries);
     public void Save(LogEntry logEntry);
 }

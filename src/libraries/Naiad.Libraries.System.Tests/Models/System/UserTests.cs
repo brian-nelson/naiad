@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Naiad.Libraries.System.Models.System;
 using Naiad.Libraries.Testing.Helpers;
 using NUnit.Framework;
@@ -16,7 +12,7 @@ public class UserTests
     public void TestGetSet()
     {
         Guid id = Guid.NewGuid();
-        string email = RandomHelper.GetRandomAlphaNumericString(20);
+        string email = RandomHelper.GetRandomAlphaNumericString(20).ToLower();
         string familyName = RandomHelper.GetRandomAlphaNumericString(10);
         string givenName = RandomHelper.GetRandomAlphaNumericString(10);
 

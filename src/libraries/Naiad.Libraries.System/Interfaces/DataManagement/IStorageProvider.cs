@@ -12,7 +12,7 @@ public interface IStorageProvider
 
     public NaiadFileInfo GetFileInfo(string fileId);
 
-    public IEnumerable<NaiadFileInfo> ListFiles(string prefix);
+    public IEnumerable<NaiadFileInfo> ListFiles(string prefix = null);
 
     public void DeleteFile(string fileId);
 }

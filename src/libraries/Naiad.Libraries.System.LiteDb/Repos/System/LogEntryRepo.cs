@@ -16,7 +16,6 @@ public class LogEntryRepo : ILogEntryRepo
 
         _repo.EnsureIndex(x => x.EntryDateTime, true);
         _repo.EnsureIndex(x => x.UserId, false);
-
     }
 
     public LogEntry GetById(Guid logEntryId)
@@ -33,7 +32,7 @@ public class LogEntryRepo : ILogEntryRepo
                 Query.LTE("EntryDateTime", endDate)));
     }
 
-    public IEnumerable<LogEntry> GetByUser(DateTime startDate, DateTime endDate)
+    public IEnumerable<LogEntry> Get(DateTime startDate, DateTime endDate)
     {
         return _repo.GetItems(
             Query.And(

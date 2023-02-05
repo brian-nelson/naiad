@@ -2,9 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\random_binary.bin" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\random_binary.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
@@ -14,6 +24,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Naiad.Libraries.System.LiteDb\Naiad.Libraries.System.LiteDb.csproj" />
+    <ProjectReference Include="..\Naiad.Libraries.Testing\Naiad.Libraries.Testing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="Providers\" />
   </ItemGroup>
 
 </Project>

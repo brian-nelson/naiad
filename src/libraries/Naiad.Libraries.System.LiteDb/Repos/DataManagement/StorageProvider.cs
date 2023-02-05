@@ -42,7 +42,7 @@ public class StorageProvider : IStorageProvider
         return null;
     }
 
-    public IEnumerable<NaiadFileInfo> ListFiles(string prefix)
+    public IEnumerable<NaiadFileInfo> ListFiles(string prefix = null)
     {
         var output = new List<NaiadFileInfo>();
 
