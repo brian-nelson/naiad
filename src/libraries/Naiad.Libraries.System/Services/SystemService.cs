@@ -12,6 +12,8 @@ public class SystemService
 {
     private readonly IAccessKeyRepo _accessKeyRepo;
     private readonly IConfigurationRepo _configurationRepo;
+    private readonly IKnownInstanceRepo _knownInstanceRepo;
+    private readonly ILogEntryRepo _logEntryRepo;
     private readonly ISessionRepo _sessionRepo;
     private readonly IUserAccessRepo _userAccessRepo;
     private readonly IUserRepo _userRepo;
@@ -21,6 +23,8 @@ public class SystemService
     {
         _accessKeyRepo = provider.GetAccessKeyRepo();
         _configurationRepo = provider.GetConfigurationRepo();
+        _knownInstanceRepo = provider.GetKnownInstanceRepo();
+        _logEntryRepo = provider.GetLogEntryRepo();
         _sessionRepo = provider.GetSessionRepo();
         _userAccessRepo = provider.GetUserAccessRepo();
         _userRepo = provider.GetUserRepo();
@@ -164,5 +168,15 @@ public class SystemService
     public void Save(Configuration configuration)
     {
         _configurationRepo.Save(configuration);
+    }
+
+    public KnownInstance GetKnownInstance(Guid knownInstanceId)
+    {
+        return _knownInstanceRepo.GetById(knownInstanceId);
+    }
+
+    public void Save(KnownInstance knownInstance)
+    {
+        _knownInstanceRepo.Save(knownInstance);
     }
 }

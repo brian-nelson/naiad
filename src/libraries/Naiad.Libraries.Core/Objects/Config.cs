@@ -1,47 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Naiad.Libraries.Core.Objects
+namespace Naiad.Libraries.Core.Objects;
+
+public class Config
 {
-    public class Config
+    private readonly Dictionary<string, string> _envVars;
+
+    public Config(Dictionary<string, string> envVars)
     {
-        private Dictionary<string, string> _envVars;
+        _envVars = envVars;
+    }
 
-        public Config(Dictionary<string, string> envVars)
+    public string GetString(string key)
+    {
+        if (_envVars.ContainsKey(key))
         {
-            _envVars = envVars;
+            return _envVars[key];
         }
 
-        public string GetString(string key)
-        {
-            if (_envVars.ContainsKey(key))
-            {
-                return _envVars[key];
-            }
+        return null;
+    }
 
-            return null;
-        }
-
-        public int? GetInt(string key)
+    public int? GetInt(string key)
+    {
+        if (_envVars.ContainsKey(key))
         {
-            if (_envVars.ContainsKey(key))
+            var value = _envVars[key];
+
+            if (value != null)
             {
                 return Convert.ToInt32(_envVars[key]);
             }
-
-            return null;
         }
 
-        public int GetInt(string key, int defaultValue)
+        return null;
+    }
+
+    public int GetInt(string key, int defaultValue)
+    {
+        var value = GetInt(key);
+
+        if (value.HasValue)
         {
-            var value = GetInt(key);
-
-            if (value.HasValue)
-            {
-                return value.Value;
-            }
-
-            return default;
+            return value.Value;
         }
+
+        return defaultValue;
     }
 }

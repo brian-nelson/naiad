@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Naiad.Modules.Api.Core.Controllers
+namespace Naiad.Modules.Api.Core.Controllers;
+
+[Authorize]
+[Produces("application/json")]
+public class DataController : ControllerBase
 {
-    public class DataController : ControllerBase
-    {
-    }
+
 }

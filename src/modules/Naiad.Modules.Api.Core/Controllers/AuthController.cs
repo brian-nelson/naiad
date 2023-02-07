@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Naiad.Libraries.System.Models.System;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Helpers;
@@ -7,6 +8,7 @@ using System;
 
 namespace Naiad.Modules.Api.Core.Controllers;
 
+[Authorize]
 [Produces("application/json")]
 public class AuthController : ControllerBase
 {
