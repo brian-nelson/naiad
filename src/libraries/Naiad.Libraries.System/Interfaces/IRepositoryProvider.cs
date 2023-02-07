@@ -27,7 +27,13 @@ public interface IRepositoryProvider
     // System
     public IAccessKeyRepo GetAccessKeyRepo();
 
+    public IConfigurationRepo GetConfigurationRepo();
+
+    public IKnownInstanceRepo GetKnownInstanceRepo();
+
     public ILogEntryRepo GetLogEntryRepo();
+
+    public ISessionRepo GetSessionRepo();
 
     public IUserAccessRepo GetUserAccessRepo();
 

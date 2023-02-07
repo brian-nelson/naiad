@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Naiad.Libraries.System.Constants.MetadataManagement;
+using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Interfaces.MetadataManagement;
 using Naiad.Libraries.System.Models.MetadataManagement;
 
@@ -17,21 +18,15 @@ public class MetadataService
     private readonly IZoneRepo _zoneRepo;
 
     public MetadataService(
-        ICategorizationRepo categorizationRepo,
-        IDataPointerRepo dataPointerRepo,
-        IGranularityRepo granularityRepo,
-        IMetadataPropertyRepo metadataPropertyRepo,
-        IMetadataRepo metadataRepo,
-        IRelationshipRepo relationshipRepo,
-        IZoneRepo zoneRepo)
+        IRepositoryProvider repositoryProvider)
     {
-        _categorizationRepo = categorizationRepo;
-        _dataPointerRepo = dataPointerRepo;
-        _granularityRepo = granularityRepo;
-        _metadataPropertyRepo = metadataPropertyRepo;
-        _metadataRepo = metadataRepo;
-        _relationshipRepo = relationshipRepo;
-        _zoneRepo = zoneRepo;
+        _categorizationRepo = repositoryProvider.GetCategorizationRepo();
+        _dataPointerRepo = repositoryProvider.GetDataPointerRepo();
+        _granularityRepo = repositoryProvider.GetGranularityRepo();
+        _metadataPropertyRepo = repositoryProvider.GetMetadataPropertyRepo();
+        _metadataRepo = repositoryProvider.GetMetadataRepo();
+        _relationshipRepo = repositoryProvider.GetRelationshipRepo();
+        _zoneRepo = repositoryProvider.GetZonRepo();
     }
 
     /* Categorization */

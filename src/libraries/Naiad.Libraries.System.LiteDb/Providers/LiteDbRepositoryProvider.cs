@@ -6,6 +6,7 @@ using Naiad.Libraries.System.Interfaces.System;
 using Naiad.Libraries.System.LiteDb.Repos.DataManagement;
 using Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 using Naiad.Libraries.System.LiteDb.Repos.System;
+using NotImplementedException = System.NotImplementedException;
 
 namespace Naiad.Libraries.System.LiteDb.Providers;
 
@@ -70,9 +71,24 @@ public class LiteDbRepositoryProvider : IRepositoryProvider
         return new AccessKeyRepo(Database);
     }
 
+    public IConfigurationRepo GetConfigurationRepo()
+    {
+        return new ConfigurationRepo(Database);
+    }
+
+    public IKnownInstanceRepo GetKnownInstanceRepo()
+    {
+        return new KnownInstanceRepo(Database);
+    }
+
     public ILogEntryRepo GetLogEntryRepo()
     {
         return new LogEntryRepo(Database);
+    }
+
+    public ISessionRepo GetSessionRepo()
+    {
+        return new SessionRepo();
     }
 
     public IUserAccessRepo GetUserAccessRepo()

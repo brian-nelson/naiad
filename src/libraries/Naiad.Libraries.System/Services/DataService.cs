@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Interfaces.DataManagement;
 using Naiad.Libraries.System.Models.DataManagement;
 
@@ -10,9 +11,9 @@ public class DataService
     private readonly IStorageProvider _storageProvider;
 
     public DataService(
-        IStorageProvider storageProvider)
+        IRepositoryProvider repositoryProvider)
     {
-        _storageProvider = storageProvider;
+        _storageProvider = repositoryProvider.GetStorageProvider();
     }
 
     public void SaveFile(string fileId, Stream stream)
@@ -30,7 +31,6 @@ public class DataService
         return _storageProvider.GetFileInfo(fileId);
     }
 
-    
     public IEnumerable<NaiadFileInfo> ListFiles(string prefix)
     {
         return _storageProvider.ListFiles(prefix);

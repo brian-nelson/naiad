@@ -4,5 +4,6 @@ namespace Naiad.Modules.Api.Core.Controllers
 {
     public class UserController : ControllerBase
     {
+
     }
 }

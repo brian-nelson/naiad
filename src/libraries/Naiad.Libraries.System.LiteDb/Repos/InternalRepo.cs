@@ -53,7 +53,7 @@ internal class InternalRepo<T>
         return item;
     }
 
-    public List<T> GetAll()
+    public IEnumerable<T> GetAll()
     {
         return _collection.FindAll()
             .ToList();
@@ -63,5 +63,4 @@ internal class InternalRepo<T>
     {
         _collection.Delete(id);
     }
-
 }
