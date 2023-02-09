@@ -97,5 +97,4 @@ public static class RandomHelper
 
         return random.NextDouble() * (max - min) + min;
     }
-
 }

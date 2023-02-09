@@ -2,23 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 
+namespace Naiad.Libraries.Core.Helpers;
 
-namespace Naiad.Libraries.Core.Helpers
+public static class EnvironmentVariableHelper
 {
-    public static class EnvironmentVariableHelper
+    public static Dictionary<string, string> GetMachineEnvVars(string prefix)
     {
-        public static Dictionary<string, string> GetMachineEnvVars(string prefix)
+        var output = new Dictionary<string, string>();
+
+        var variables = Environment.GetEnvironmentVariables(EnvironmentVariableTarget.Machine);
+
+        foreach (DictionaryEntry entry in variables)
         {
-            var output = new Dictionary<string, string>();
+            var key = entry.Key.ToString();
 
-            var variables = Environment.GetEnvironmentVariables(EnvironmentVariableTarget.Machine);
-
-            foreach (DictionaryEntry entry in variables)
+            if (prefix != null)
             {
-                var key = entry.Key.ToString();
-
-                if (key != null 
-                    && key.StartsWith(prefix))
+                if (key != null
+                    && key.StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var subkey = key.Substring(prefix.Length);
 
@@ -26,8 +27,12 @@ namespace Naiad.Libraries.Core.Helpers
                     output.Add(subkey, value);
                 }
             }
-
-            return output;
+            else
+            {
+                output.Add(key, entry.Value?.ToString());
+            }
         }
+
+        return output;
     }
 }

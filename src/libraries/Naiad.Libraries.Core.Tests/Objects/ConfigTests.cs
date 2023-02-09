@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using Naiad.Libraries.Core.Objects;
+using Naiad.Libraries.Testing.Helpers;
 using NUnit.Framework;
 
 namespace Naiad.Libraries.Core.Tests.Objects;
@@ -14,7 +16,8 @@ public class ConfigTests
         {
             { "one", "testOne" },
             { "two", "2" },
-            { "three", null }
+            { "three", null },
+            { "four", "4"}
         };
 
         var config = new Config(testEnvVars);
@@ -31,5 +34,11 @@ public class ConfigTests
 
         var threeResult = config.GetInt("three", 3);
         Assert.AreEqual(3, threeResult);
+
+        var fourResult = config.GetInt("four", 2);
+        Assert.AreEqual(4, fourResult);
+
+        var randomResult = config.GetString(RandomHelper.GetRandomAlphaString(5));
+        Assert.IsNull(randomResult);
     }
 }
