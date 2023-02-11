@@ -2,7 +2,8 @@
 
 namespace Naiad.Libraries.System.Models.System;
 
-public class Session : AbstractDbRecord
+public class Session 
+    : AbstractDbRecord
 {
     public Guid UserId { get; set; }
 

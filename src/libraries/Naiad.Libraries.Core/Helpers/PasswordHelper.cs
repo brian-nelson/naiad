@@ -1,40 +1,39 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Naiad.Libraries.Core.Helpers
+namespace Naiad.Libraries.Core.Helpers;
+
+public static class PasswordHelper
 {
-    public static class PasswordHelper
+    private const int SALT_BYTES = 20;
+    private const int HASH_BYTES = 20;
+    private const int ITERATIONS = 10000;
+
+    public static string Hash(string password, string salt)
     {
-        private const int SALT_BYTES = 20;
-        private const int HASH_BYTES = 20;
-        private const int ITERATIONS = 10000;
+        var saltBytes = Convert.FromBase64String(salt);
 
-        public static string Hash(string password, string salt)
+        if (saltBytes.Length != SALT_BYTES)
         {
-            var saltBytes = Convert.FromBase64String(salt);
-
-            if (saltBytes.Length != SALT_BYTES)
-            {
-                throw new ArgumentOutOfRangeException(nameof(salt));
-            }
-
-            byte[] hashBytes;
-
-            using (var hasher = new Rfc2898DeriveBytes(
-                       password: password,
-                       salt: saltBytes,
-                       iterations: ITERATIONS))
-            {
-                hashBytes = hasher.GetBytes(HASH_BYTES);
-            }
-
-            return Convert.ToBase64String(hashBytes);
+            throw new ArgumentOutOfRangeException(nameof(salt));
         }
 
-        public static string GenerateSalt()
+        byte[] hashBytes;
+
+        using (var hasher = new Rfc2898DeriveBytes(
+                   password: password,
+                   salt: saltBytes,
+                   iterations: ITERATIONS))
         {
-            var salt = RandomNumberGenerator.GetBytes(SALT_BYTES);
-            return Convert.ToBase64String(salt);
+            hashBytes = hasher.GetBytes(HASH_BYTES);
         }
+
+        return Convert.ToBase64String(hashBytes);
+    }
+
+    public static string GenerateSalt()
+    {
+        var salt = RandomNumberGenerator.GetBytes(SALT_BYTES);
+        return Convert.ToBase64String(salt);
     }
 }

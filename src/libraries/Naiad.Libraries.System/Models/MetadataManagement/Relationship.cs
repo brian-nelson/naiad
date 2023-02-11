@@ -3,7 +3,8 @@ using Naiad.Libraries.System.Constants.MetadataManagement;
 
 namespace Naiad.Libraries.System.Models.MetadataManagement;
 
-public class Relationship : AbstractDbRecord
+public class Relationship 
+    : AbstractDbRecord
 {
     public Guid ParentId { get; set; }
     public EntityType ParentType { get; set; }

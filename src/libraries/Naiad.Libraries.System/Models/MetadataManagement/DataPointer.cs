@@ -2,7 +2,8 @@
 
 namespace Naiad.Libraries.System.Models.MetadataManagement;
 
-public class DataPointer : AbstractDbRecord
+public class DataPointer 
+    : AbstractDbRecord
 {
     public DataPointer()
     {

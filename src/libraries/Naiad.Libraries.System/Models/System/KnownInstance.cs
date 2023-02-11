@@ -2,7 +2,8 @@
 
 namespace Naiad.Libraries.System.Models.System;
 
-public class KnownInstance : AbstractDbRecord
+public class KnownInstance
+    : AbstractDbRecord
 {
     public string Name { get; set; }
 
