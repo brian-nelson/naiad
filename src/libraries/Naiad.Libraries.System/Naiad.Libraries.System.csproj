@@ -15,4 +15,8 @@
     <Folder Include="Interfaces\DataManagement\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.5.0" />
+  </ItemGroup>
+
 </Project>

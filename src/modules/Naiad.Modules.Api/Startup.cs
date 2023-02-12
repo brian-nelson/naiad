@@ -1,5 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
+using Autofac;
+using Autofac.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +11,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
+using Naiad.Libraries.System.Interfaces;
+using Naiad.Libraries.System.LiteDb.Modules;
+using Naiad.modules.api;
+using Naiad.Modules.Api.Core.Modules;
+using Naiad.Modules.Api.Modules;
 
 namespace Naiad.Modules.Api
 {
@@ -49,7 +58,7 @@ namespace Naiad.Modules.Api
                     await context.Response.WriteAsync(sb.ToString());
                 });
             });
-
+            
             string staticContentFolder = Path.Combine(Directory.GetCurrentDirectory(), "webroot");
 
             DefaultFilesOptions defaultFileOptions = new DefaultFilesOptions();
@@ -86,6 +95,40 @@ namespace Naiad.Modules.Api
                 context.Response.ContentType = "text/html";
                 await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
             });
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            var config = Program.Config;
+               
+            builder.RegisterModule(
+                new LocalModule(config));
+
+            builder.RegisterModule(
+                new ApiModule(config));
+
+            //var repositoryProviderAssemblyName = config.GetString("API_REPO_PROVIDER_ASSEMBLY");
+            var repositoryProviderModuleName = config.GetString("API_REPO_PROVIDER_MODULE");
+
+            IRepositoryProviderModule repositoryProviderModule = null;
+
+            // TODO - This should not require Naiad to know about the libraries in advance
+            if (repositoryProviderModuleName.Equals("Naiad.Libraries.System.LiteDb.Modules.LiteDbModule"))
+            {
+                repositoryProviderModule = new LiteDbModule();
+                repositoryProviderModule.SetConfig(config);
+            }
+
+            if (repositoryProviderModule is IModule module)
+            {
+                builder.RegisterModule(module);
+            }
+            else
+            {
+                throw new Exception($"{repositoryProviderModuleName} does not implement IModule");
+            }
+            
+            
         }
     }
 }

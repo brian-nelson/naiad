@@ -8,7 +8,6 @@ using System;
 
 namespace Naiad.Modules.Api.Core.Controllers;
 
-[Authorize]
 [Produces("application/json")]
 public class AuthController : ControllerBase
 {
@@ -16,23 +15,11 @@ public class AuthController : ControllerBase
     private readonly string _jwtSecret;
 
     public AuthController(
-        SystemService systemService)
+        SystemService systemService,
+        JwtSecret jwtSecret)
     {
         _systemService = systemService;
-
-        var configuration = _systemService.GetConfiguration("JWT_SECRET");
-        if (configuration == null)
-        {
-            configuration = new Configuration
-            {
-                Key = "JWT_SECRET",
-                Value = JwtHelper.CreateJwtSecret()
-            };
-
-            _systemService.Save(configuration);
-        }
-
-        _jwtSecret = configuration.Value;
+        _jwtSecret = jwtSecret.Value;
     }
 
     [HttpPost]
@@ -55,11 +42,14 @@ public class AuthController : ControllerBase
         return Unauthorized();
     }
 
+    [Authorize]
     [HttpPost]
-    [Route("api/logout/{sessionId:Guid}")]
-    public ActionResult Logout([FromRoute] Guid sessionId)
+    [Route("api/logout")]
+    public ActionResult Logout()
     {
+        var sessionId = User.GetSessionId();
         _systemService.CloseSession(sessionId);
+
         return Ok();
     }
 }

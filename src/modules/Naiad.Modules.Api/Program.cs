@@ -1,14 +1,19 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Naiad.Libraries.Core.Helpers;
 using Naiad.Libraries.Core.Objects;
+using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api;
+using Naiad.Modules.Api.Core.Objects;
 using Newtonsoft.Json.Serialization;
 
 namespace Naiad.modules.api
@@ -16,6 +21,7 @@ namespace Naiad.modules.api
     class Program
     {
         public static Config Config;
+        public static JwtSecret JwtSecret;
 
         static void Main(string[] args)
         {
@@ -36,7 +42,32 @@ namespace Naiad.modules.api
                         .AddNewtonsoftJson(options =>
                             options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
-                    services.AddAutofac(c => { });
+                    services.AddAutofac(builder => { });
+
+                    services.AddAuthentication(x =>
+                        {
+                            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                        })
+                        .AddJwtBearer(options =>
+                        {
+                            options.RequireHttpsMetadata = false;
+                            options.SaveToken = true;
+                            options.TokenValidationParameters = new TokenValidationParameters
+                            {
+                                ValidateIssuerSigningKey = true,
+                                IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(JwtSecret.Value)),
+                                ValidateIssuer = false,
+                                ValidateAudience = false
+                            };
+                            options.Events = new JwtBearerEvents
+                            {
+                                OnAuthenticationFailed = context =>
+                                {
+                                    return Task.CompletedTask;
+                                }
+                            };
+                        });
 
                     services.AddCors(options =>
                     {
@@ -61,12 +92,17 @@ namespace Naiad.modules.api
 
                     serverOptions.Listen(IPAddress.Any, port, listenOptions =>
                     {
-                        listenOptions.Protocols = HttpProtocols.Http2;
+                        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
                         listenOptions.UseHttps(certificateFile, certificatePassword);
                     });
                 });
 
             var host = builder.Build();
+
+            JwtSecret = host.Services.GetRequiredService<JwtSecret>();
+            var bootstrap = host.Services.GetRequiredService<BootstrapService>();
+            bootstrap.PerformBootstrap();
+
             host.Run();
         }
     }

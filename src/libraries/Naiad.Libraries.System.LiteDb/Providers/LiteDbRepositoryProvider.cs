@@ -1,4 +1,6 @@
-﻿using LiteDB;
+﻿using Autofac;
+using LiteDB;
+using Naiad.Libraries.Core.Objects;
 using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Interfaces.DataManagement;
 using Naiad.Libraries.System.Interfaces.MetadataManagement;
@@ -11,6 +13,8 @@ namespace Naiad.Libraries.System.LiteDb.Providers;
 
 public class LiteDbRepositoryProvider : IRepositoryProvider
 {
+    internal ILiteDatabase Database { get; }
+
     public LiteDbRepositoryProvider(
         ILiteDatabase database)
     {
@@ -22,8 +26,6 @@ public class LiteDbRepositoryProvider : IRepositoryProvider
         mapper.Entity<IDbRecord>()
             .Id(x => x.Id);
     }
-
-    internal ILiteDatabase Database { get; }
 
     public IStorageProvider GetStorageProvider()
     {

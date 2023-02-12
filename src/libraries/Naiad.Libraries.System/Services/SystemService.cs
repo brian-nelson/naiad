@@ -107,6 +107,7 @@ public class SystemService
                 CreatedOnDateTime = now,
                 ExpiresOnDateTime = now.AddDays(30)
             };
+            Save(session);
 
             Dictionary<string, string> sessionValues = new Dictionary<string, string>
             {

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using LiteDB;
+using Naiad.Libraries.System.Constants.System;
 using Naiad.Libraries.System.Interfaces.System;
 using Naiad.Libraries.System.Models.System;
 
@@ -29,5 +31,10 @@ public class UserRepo : IUserRepo
     public void Save(User user)
     {
         _repo.Save(user);
+    }
+
+    public IEnumerable<User> GetByType(UserTypes userType)
+    {
+        return _repo.GetItems(Query.EQ("UserType", Enum.GetName(typeof(UserTypes), userType)));
     }
 }
