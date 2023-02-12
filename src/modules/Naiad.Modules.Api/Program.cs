@@ -1,16 +1,19 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Naiad.Libraries.Core.Helpers;
 using Naiad.Libraries.Core.Objects;
+using Naiad.Libraries.System.Models.System;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api;
 using Naiad.Modules.Api.Core.Objects;
@@ -22,6 +25,7 @@ namespace Naiad.modules.api
     {
         public static Config Config;
         public static JwtSecret JwtSecret;
+        public static SystemService SystemService;
 
         static void Main(string[] args)
         {
@@ -62,6 +66,23 @@ namespace Naiad.modules.api
                             };
                             options.Events = new JwtBearerEvents
                             {
+                                OnTokenValidated = context =>
+                                {
+                                    // TODO = is there a more elegant way to return failure
+                                    var identity = context.Principal.Claims.ToList().Find(c => c.Type == "SessionId");
+                                    if (identity != null)
+                                    {
+                                        var sessionId = Guid.Parse(identity.Value);
+                                        if (SystemService.ValidateSession(sessionId))
+                                        {
+                                            return Task.CompletedTask;
+                                        }
+                                    }
+
+                                    context.Fail("Session has expired or doesn't exist");
+                                    return Task.CompletedTask;
+                                },
+
                                 OnAuthenticationFailed = context =>
                                 {
                                     return Task.CompletedTask;
@@ -100,6 +121,7 @@ namespace Naiad.modules.api
             var host = builder.Build();
 
             JwtSecret = host.Services.GetRequiredService<JwtSecret>();
+            SystemService = host.Services.GetRequiredService<SystemService>();
             var bootstrap = host.Services.GetRequiredService<BootstrapService>();
             bootstrap.PerformBootstrap();
 

@@ -20,9 +20,14 @@ public class StorageProvider : IStorageProvider
     {
         var fileInfo = _fileStorage.FindById(fileId);
 
-        var blah = fileInfo.OpenRead();
-        return blah;
+        var stream = fileInfo.OpenRead();
+        return stream;
+    }
 
+    public bool FileExist(string fileId)
+    {
+        var fileInfo = _fileStorage.FindById(fileId);
+        return fileInfo != null;
     }
 
     public void SaveFile(string fileId, Stream stream)

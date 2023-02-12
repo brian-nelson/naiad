@@ -14,7 +14,7 @@ public class SessionRepo : ISessionRepo
     {
         _repo = new InternalRepo<Session>(database, "sessions");
 
-        _repo.EnsureIndex(x => x.UserId, true);
+        _repo.EnsureIndex(x => x.UserId, false);
     }
 
     public Session GetById(Guid sessionId)

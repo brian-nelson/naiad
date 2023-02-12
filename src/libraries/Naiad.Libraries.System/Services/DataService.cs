@@ -26,6 +26,11 @@ public class DataService
         return _storageProvider.GetFile(fileId);
     }
 
+    public bool FileExists(string fileId)
+    {
+        return _storageProvider.FileExist(fileId);
+    }
+
     public NaiadFileInfo GetFileInfo(string fileId)
     {
         return _storageProvider.GetFileInfo(fileId);

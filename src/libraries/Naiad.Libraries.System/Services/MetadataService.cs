@@ -51,6 +51,11 @@ public class MetadataService
         return _dataPointerRepo.GetById(id);
     }
 
+    public DataPointer GetDataPointer(string fileId)
+    {
+        return _dataPointerRepo.GetByLocation(fileId);
+    }
+
     public void Save(DataPointer dataPointer)
     {
         _dataPointerRepo.Save(dataPointer);

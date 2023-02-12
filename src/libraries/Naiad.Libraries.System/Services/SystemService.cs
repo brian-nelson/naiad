@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using Naiad.Libraries.Core.Helpers;
 using Naiad.Libraries.System.Constants.System;
 using Naiad.Libraries.System.Interfaces;
@@ -90,6 +91,27 @@ public class SystemService
         _sessionRepo.Save(session);
     }
 
+    public bool ValidateSession(Guid sessionId)
+    {
+        var session = _sessionRepo.GetById(sessionId);
+
+        if (session != null)
+        {
+            if (!session.IsDeleted)
+            {
+                var now = DateTimeOffset.UtcNow;
+
+                if (now >= session.CreatedOnDateTime
+                    && now <= session.ExpiresOnDateTime)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public Dictionary<string, string> CreateSession(
         string email,
         string password)
@@ -111,12 +133,12 @@ public class SystemService
 
             Dictionary<string, string> sessionValues = new Dictionary<string, string>
             {
+                { "UserId", user.Id.ToString() },
                 { "SessionId", session.Id.ToString() },
-                { "Email", user.Email },
                 { "FamilyName", user.FamilyName },
                 { "GivenName", user.GivenName },
-                { "UserId", user.Id.ToString() },
-                { "UserType", Enum.GetName(typeof(UserTypes), user.UserType) }
+                { ClaimTypes.Name, user.Email },
+                { ClaimTypes.Role, Enum.GetName(typeof(UserTypes), user.UserType) }
             };
 
             return sessionValues;

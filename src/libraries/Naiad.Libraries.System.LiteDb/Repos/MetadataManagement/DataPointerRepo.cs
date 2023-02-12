@@ -17,11 +17,18 @@ public class DataPointerRepo : IDataPointerRepo
 
         _repo.EnsureIndex(x => x.GranularityId);
         _repo.EnsureIndex(x => x.ZoneId);
+        _repo.EnsureIndex(x => x.StorageLocation, true);
     }
 
     public DataPointer GetById(Guid id)
     {
         return _repo.GetById(id);
+    }
+
+    public DataPointer GetByLocation(string fileId)
+    {
+        return _repo.GetItem(
+            Query.EQ("StorageLocation", fileId));
     }
 
     public void Save(DataPointer pointer)
@@ -31,12 +38,14 @@ public class DataPointerRepo : IDataPointerRepo
 
     public IEnumerable<DataPointer> GetByZone(Guid zoneId)
     {
-        return _repo.GetItems(Query.EQ("ZoneId", zoneId));
+        return _repo.GetItems(
+            Query.EQ("ZoneId", zoneId));
     }
 
     public IEnumerable<DataPointer> GetByGranularity(Guid granularityId)
     {
-        return _repo.GetItems(Query.EQ("GranularityId", granularityId));
+        return _repo.GetItems(
+            Query.EQ("GranularityId", granularityId));
     }
 
     public IEnumerable<DataPointer> GetByZoneAndGranularity(Guid zoneId, Guid granularityId)

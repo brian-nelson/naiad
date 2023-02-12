@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Naiad.Libraries.System.Models.System;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Helpers;
 using Naiad.Modules.Api.Core.Objects;

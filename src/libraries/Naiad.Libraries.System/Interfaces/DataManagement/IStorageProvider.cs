@@ -8,6 +8,8 @@ public interface IStorageProvider
 {
     public Stream GetFile(string fileId);
 
+    public bool FileExist(string fileId);
+
     public void SaveFile(string fileId, Stream stream);
 
     public NaiadFileInfo GetFileInfo(string fileId);
