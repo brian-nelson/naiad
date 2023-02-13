@@ -4,6 +4,7 @@ using Naiad.Libraries.System.Models.System;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Helpers;
 using Naiad.Modules.Api.Core.Objects;
+using Naiad.Modules.Api.Core.Services;
 
 namespace Naiad.Modules.Api.Core.Modules
 {
@@ -19,6 +20,7 @@ namespace Naiad.Modules.Api.Core.Modules
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
+
             builder.Register(c =>
                 {
                     var systemService = c.Resolve<SystemService>();
@@ -42,6 +44,8 @@ namespace Naiad.Modules.Api.Core.Modules
                     return jwtSecret;
                 })
                 .As<JwtSecret>();
+
+            builder.RegisterType<MetadataUIService>();
         }
     }
 }
