@@ -22,11 +22,11 @@ public class SessionRepo : ISessionRepo
         return _repo.GetById(sessionId);
     }
 
-    public IEnumerable<Session> GetByEmail(string email)
+    public IEnumerable<Session> GetByUser(Guid userId)
     {
         return _repo.GetItems(
             Query.And(
-                Query.EQ("Email", email),
+                Query.EQ("UserId", userId),
                 Query.EQ("IsDeleted", false)));
     }
 

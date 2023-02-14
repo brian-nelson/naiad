@@ -23,6 +23,11 @@ public class UserRepo : IUserRepo
         return _repo.GetById(userId);
     }
 
+    public IEnumerable<User> GetAll()
+    {
+        return _repo.GetAll();
+    }
+
     public User GetByEmail(string email)
     {
         return _repo.GetItem(Query.EQ("Email", email));

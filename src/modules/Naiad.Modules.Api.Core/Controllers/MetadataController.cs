@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Naiad.Libraries.System.Models.MetadataManagement;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Services;
 
@@ -27,8 +24,4 @@ public class MetadataController : ControllerBase
     }
 
     
-
-    
-
-    // Zones
 }

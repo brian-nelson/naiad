@@ -51,6 +51,68 @@ public class SystemService
         return _userAccessRepo.GetById(id);
     }
 
+    public void SetPassword(
+        Guid userId, 
+        string newPassword)
+    {
+        var userAccess = _userAccessRepo.GetByUserId(userId);
+
+        if (userAccess == null)
+        {
+            string salt = PasswordHelper.GenerateSalt();
+
+            userAccess = new UserAccess
+            {
+                UserId = userId,
+                SetOnDateTime = DateTimeOffset.UtcNow,
+                Salt = salt,
+                HashedPassword = PasswordHelper.Hash(newPassword, salt)
+            };
+            _userAccessRepo.Save(userAccess);
+        }
+
+        CloseAllSessions(userId);
+    }
+
+    public void CloseAllSessions(Guid userId)
+    {
+        var sessions = _sessionRepo.GetByUser(userId);
+
+        foreach (var session in sessions)
+        {
+            session.IsDeleted = true;
+            _sessionRepo.Save(session);
+        }
+    }
+
+    public void ChangePassword(
+        Guid userId,
+        string oldPassword,
+        string newPassword)
+    {
+        var userAccess = _userAccessRepo.GetByUserId(userId);
+
+        if (userAccess != null)
+        {
+            var testHash = PasswordHelper.Hash(oldPassword, userAccess.Salt);
+
+            if (testHash.Equals(userAccess.HashedPassword))
+            {
+                string salt = PasswordHelper.GenerateSalt();
+
+                userAccess.SetOnDateTime = DateTimeOffset.UtcNow;
+                userAccess.Salt = salt;
+                userAccess.HashedPassword = PasswordHelper.Hash(newPassword, salt);
+
+                _userAccessRepo.Save(userAccess);
+            }
+
+            return;
+        }
+
+        throw new Exception("Password not initially set");
+    }
+
     public UserAccess GetUserAccessByUser(Guid userId)
     {
         return _userAccessRepo.GetByUserId(userId);
@@ -64,6 +126,11 @@ public class SystemService
     public User GetUser(Guid userId)
     {
         return _userRepo.GetById(userId);
+    }
+
+    public IEnumerable<User> GetUsers()
+    {
+        return _userRepo.GetAll();
     }
 
     public User GetUserByEmail(string email)
@@ -81,9 +148,9 @@ public class SystemService
         return _sessionRepo.GetById(sessionId);
     }
 
-    public IEnumerable<Session> GetSessions(string email)
+    public IEnumerable<Session> GetOpenSessions(Guid userId)
     {
-        return _sessionRepo.GetByEmail(email);
+        return _sessionRepo.GetByUser(userId);
     }
 
     public void Save(Session session)
