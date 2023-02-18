@@ -9,4 +9,7 @@ public interface IMetadataPropertyRepo
     public MetadataProperty GetById(Guid id);
     public void Save(MetadataProperty property);
     public IEnumerable<MetadataProperty> Get(Guid metadataId);
+
+    public IEnumerable<MetadataProperty> GetByKey(string key);
+    public MetadataProperty GetByIdAndKey(Guid metadataId, string key);
 }

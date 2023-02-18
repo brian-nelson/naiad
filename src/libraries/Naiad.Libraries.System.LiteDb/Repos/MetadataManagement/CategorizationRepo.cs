@@ -30,5 +30,10 @@ public class CategorizationRepo : ICategorizationRepo
     {
         return _repo.GetById(id);
     }
+
+    public Categorization GetByName(string name)
+    {
+        return _repo.GetItem(Query.EQ("Name", name));
+    }
 }
 

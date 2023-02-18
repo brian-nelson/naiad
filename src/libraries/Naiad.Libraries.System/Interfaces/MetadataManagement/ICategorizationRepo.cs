@@ -9,5 +9,7 @@ public interface ICategorizationRepo
     public IEnumerable<Categorization> GetAll();
     public void Save(Categorization categorization);
     public Categorization GetById(Guid id);
+
+    public Categorization GetByName(string name);
 }
 

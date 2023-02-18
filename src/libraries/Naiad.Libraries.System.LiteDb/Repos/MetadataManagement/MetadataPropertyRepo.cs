@@ -15,7 +15,8 @@ public class MetadataPropertyRepo : IMetadataPropertyRepo
     {
         _repo = new InternalRepo<MetadataProperty>(database, "metadataproperties");
 
-        _repo.EnsureIndex(x => x.MetadataId);
+        _repo.EnsureIndex(x => x.MetadataId, false);
+        _repo.EnsureIndex(x => x.Key, false);
     }
 
     public MetadataProperty GetById(Guid id)
@@ -31,5 +32,17 @@ public class MetadataPropertyRepo : IMetadataPropertyRepo
     public IEnumerable<MetadataProperty> Get(Guid metadataId)
     {
         return _repo.GetItems(Query.EQ("MetadataId", metadataId));
+    }
+
+    public IEnumerable<MetadataProperty> GetByKey(string key)
+    {
+        return _repo.GetItems(Query.EQ("Key", key));
+    }
+
+    public MetadataProperty GetByIdAndKey(Guid metadataId, string key)
+    {
+        return _repo.GetItem(Query.And(
+            Query.EQ("MetadataId", metadataId),
+            Query.EQ("Key", key)));
     }
 }
