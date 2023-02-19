@@ -25,7 +25,7 @@ public class ZoneController : ControllerBase
     }
 
     [HttpGet]
-    [Route("api/zone")]
+    [Route("api/zones")]
     public ActionResult<IEnumerable<Zone>> GetZones()
     {
         var zones = _metadataService.GetZones();

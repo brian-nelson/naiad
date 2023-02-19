@@ -32,7 +32,5 @@ public static class UserHelper
 
         return claim?.Value;
     }
-
-
 }
 

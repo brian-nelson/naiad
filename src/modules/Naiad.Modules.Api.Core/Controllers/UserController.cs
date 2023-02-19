@@ -7,7 +7,6 @@ using Naiad.Libraries.System.Models.System;
 using Naiad.Modules.Api.Core.Helpers;
 using Naiad.Modules.Api.Core.Objects;
 using Naiad.Libraries.System.Interfaces;
-using Naiad.Libraries.System.Models.DataManagement;
 
 namespace Naiad.Modules.Api.Core.Controllers;
 
@@ -28,7 +27,7 @@ public class UserController
     }
 
     [HttpGet]
-    [Route("api/user")]
+    [Route("api/users")]
     public ActionResult<IEnumerable<User>> GetUsers()
     {
         var users = _systemService.GetUsers();

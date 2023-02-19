@@ -25,8 +25,8 @@ public class GranularityController : ControllerBase
     }
 
     [HttpGet]
-    [Route("api/granularity")]
-    public ActionResult<IEnumerable<Granularity>> GetGranularity()
+    [Route("api/granularities")]
+    public ActionResult<IEnumerable<Granularity>> GetGranularities()
     {
         var granularities = _metadataService.GetGranularities();
         _logger.Info($"All granularities retrieved", User.GetUserId());

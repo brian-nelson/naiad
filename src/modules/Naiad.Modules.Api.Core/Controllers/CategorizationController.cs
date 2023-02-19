@@ -25,7 +25,7 @@ public class CategorizationController : ControllerBase
     }
 
     [HttpGet]
-    [Route("api/categorization")]
+    [Route("api/categorizations")]
     public ActionResult<IEnumerable<Categorization>> GetCategorizations()
     {
         var categorizations = _metadataService.GetCategorizations();
