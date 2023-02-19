@@ -21,7 +21,7 @@ public static class UserHelper
 
     public static string GetEmail(this ClaimsPrincipal user)
     {
-        var claim = user.FindFirst(ClaimTypes.Name);
+        var claim = user.FindFirst(ClaimTypes.Email);
 
         return claim?.Value;
     }
@@ -32,5 +32,7 @@ public static class UserHelper
 
         return claim?.Value;
     }
+
+
 }
 

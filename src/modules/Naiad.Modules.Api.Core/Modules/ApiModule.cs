@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Naiad.Libraries.Core.Objects;
+using Naiad.Libraries.System.Interfaces;
+using Naiad.Libraries.System.Logger;
 using Naiad.Libraries.System.Models.System;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Helpers;
@@ -46,6 +48,9 @@ namespace Naiad.Modules.Api.Core.Modules
                 .As<JwtSecret>();
 
             builder.RegisterType<MetadataUIService>();
+
+            builder.RegisterType<SystemLogger>()
+                .As<INaiadLogger>();
         }
     }
 }

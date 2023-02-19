@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Models.MetadataManagement;
 using Naiad.Libraries.System.Services;
+using Naiad.Modules.Api.Core.Helpers;
 using Naiad.Modules.Api.Core.Objects;
 
 namespace Naiad.Modules.Api.Core.Controllers;
@@ -12,18 +14,18 @@ namespace Naiad.Modules.Api.Core.Controllers;
 [Produces("application/json")]
 public class DataController : ControllerBase
 {
-    private readonly SystemService _systemService;
     private readonly DataService _dataService;
     private readonly MetadataService _metadataService;
+    private readonly INaiadLogger _logger;
 
     public DataController(
-        SystemService systemService,
         DataService dataService,
-        MetadataService metadataService)
+        MetadataService metadataService,
+        INaiadLogger logger)
     {
-        _systemService = systemService;
         _dataService = dataService;
         _metadataService = metadataService;
+        _logger = logger;
     }
 
     [Authorize(Roles = "Administrator,ReadWrite")]
@@ -61,6 +63,8 @@ public class DataController : ControllerBase
             FileId = filePathAndName
         };
 
+        _logger.Info($"Data file saved ({filePathAndName},{pointer.Id})", User.GetUserId());
+
         return Ok(result);
     }
 
@@ -76,12 +80,15 @@ public class DataController : ControllerBase
             var filename = Path.GetFileName(fileInfo.Filename) ?? filePathAndName;
             var stream = _dataService.GetFile(fileInfo.Id);
 
+            _logger.Info($"Data file retrieved ({filePathAndName})", User.GetUserId());
+
             return new FileStreamResult(stream, "application/octet-stream")
             {
                 FileDownloadName = filename
             };
         }
 
+        _logger.Info($"Data file not found ({filePathAndName})", User.GetUserId());
         return new StatusCodeResult(StatusCodes.Status404NotFound);
     }
 }

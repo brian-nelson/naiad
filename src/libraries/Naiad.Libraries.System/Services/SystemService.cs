@@ -181,9 +181,10 @@ public class SystemService
 
     public Dictionary<string, string> CreateSession(
         string email,
-        string password)
+        string password,
+        out User user)
     {
-        var user = AuthenticateUser(email, password);
+        user = AuthenticateUser(email, password);
 
         if (user != null)
         {

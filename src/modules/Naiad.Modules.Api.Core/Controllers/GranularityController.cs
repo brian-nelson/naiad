@@ -4,6 +4,8 @@ using Naiad.Libraries.System.Models.MetadataManagement;
 using Naiad.Libraries.System.Services;
 using System.Collections.Generic;
 using System;
+using Naiad.Libraries.System.Interfaces;
+using Naiad.Modules.Api.Core.Helpers;
 
 namespace Naiad.Modules.Api.Core.Controllers;
 
@@ -12,14 +14,14 @@ namespace Naiad.Modules.Api.Core.Controllers;
 public class GranularityController : ControllerBase
 {
     private readonly MetadataService _metadataService;
-    private readonly SystemService _systemService;
+    private readonly INaiadLogger _logger;
 
     public GranularityController(
         MetadataService metadataService,
-        SystemService systemService)
+        INaiadLogger logger)
     {
         _metadataService = metadataService;
-        _systemService = systemService;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -27,6 +29,7 @@ public class GranularityController : ControllerBase
     public ActionResult<IEnumerable<Granularity>> GetGranularity()
     {
         var granularities = _metadataService.GetGranularities();
+        _logger.Info($"All granularities retrieved", User.GetUserId());
         return Ok(granularities);
     }
 
@@ -35,7 +38,7 @@ public class GranularityController : ControllerBase
     public ActionResult<Categorization> GetGranularity(Guid granularityId)
     {
         var granularity = _metadataService.GetGranularity(granularityId);
-
+        _logger.Info($"Granularity retrieved ({granularityId})", User.GetUserId());
         return Ok(granularity);
     }
 
@@ -45,7 +48,7 @@ public class GranularityController : ControllerBase
     public ActionResult SaveGranularity([FromBody] Granularity granularity)
     {
         _metadataService.Save(granularity);
-
+        _logger.Info($"Granularity saved ({granularity.Id})", User.GetUserId());
         return Ok();
     }
 }

@@ -6,6 +6,8 @@ using System;
 using Naiad.Libraries.System.Models.System;
 using Naiad.Modules.Api.Core.Helpers;
 using Naiad.Modules.Api.Core.Objects;
+using Naiad.Libraries.System.Interfaces;
+using Naiad.Libraries.System.Models.DataManagement;
 
 namespace Naiad.Modules.Api.Core.Controllers;
 
@@ -15,11 +17,14 @@ public class UserController
     : ControllerBase
 {
     private readonly SystemService _systemService;
+    private readonly INaiadLogger _logger;
 
     public UserController(
-        SystemService systemService)
+        SystemService systemService,
+        INaiadLogger logger)
     {
         _systemService = systemService;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -27,6 +32,7 @@ public class UserController
     public ActionResult<IEnumerable<User>> GetUsers()
     {
         var users = _systemService.GetUsers();
+        _logger.Info($"All users retrieved", User.GetUserId());
         return Ok(users);
     }
 
@@ -36,7 +42,7 @@ public class UserController
         Guid userId)
     {
         var user = _systemService.GetUser(userId);
-
+        _logger.Info($"User retrieved ({userId})", User.GetUserId());
         return Ok(user);
     }
 
@@ -47,7 +53,7 @@ public class UserController
         [FromBody] User user)
     {
         _systemService.Save(user);
-
+        _logger.Info($"User saved ({user.Id})", User.GetUserId());
         return Ok();
     }
 
@@ -61,6 +67,8 @@ public class UserController
         _systemService.SetPassword(
             userId, 
             request.NewPassword);
+        
+        _logger.Info($"Password set ({userId})", User.GetUserId());
 
         return Ok();
     }
@@ -75,7 +83,8 @@ public class UserController
             request.OldPassword,
             request.NewPassword);
 
+        _logger.Info($"Password changed", User.GetUserId());
+
         return Ok();
     }
-
 }

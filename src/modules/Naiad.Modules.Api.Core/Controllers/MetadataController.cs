@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Services;
 
@@ -11,16 +12,16 @@ public class MetadataController : ControllerBase
 {
     private readonly MetadataUIService _metadataUiService;
     private readonly MetadataService _metadataService;
-    private readonly SystemService _systemService;
+    private readonly INaiadLogger _logger;
 
     public MetadataController(
         MetadataUIService metadataUiService,
         MetadataService metadataService,
-        SystemService systemService)
+        INaiadLogger logger)
     {
         _metadataUiService = metadataUiService;
         _metadataService = metadataService;
-        _systemService = systemService;
+        _logger = logger;
     }
 
     

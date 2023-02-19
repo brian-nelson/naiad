@@ -4,6 +4,8 @@ using Naiad.Libraries.System.Models.MetadataManagement;
 using Naiad.Libraries.System.Services;
 using System.Collections.Generic;
 using System;
+using Naiad.Libraries.System.Interfaces;
+using Naiad.Modules.Api.Core.Helpers;
 
 namespace Naiad.Modules.Api.Core.Controllers;
 
@@ -12,14 +14,14 @@ namespace Naiad.Modules.Api.Core.Controllers;
 public class CategorizationController : ControllerBase
 {
     private readonly MetadataService _metadataService;
-    private readonly SystemService _systemService;
+    private readonly INaiadLogger _logger;
 
     public CategorizationController(
         MetadataService metadataService,
-        SystemService systemService)
+        INaiadLogger logger)
     {
         _metadataService = metadataService;
-        _systemService = systemService;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -27,6 +29,9 @@ public class CategorizationController : ControllerBase
     public ActionResult<IEnumerable<Categorization>> GetCategorizations()
     {
         var categorizations = _metadataService.GetCategorizations();
+
+        _logger.Info("All categorizations retrieved", User.GetUserId());
+
         return Ok(categorizations);
     }
 
@@ -35,6 +40,8 @@ public class CategorizationController : ControllerBase
     public ActionResult<Categorization> GetCategorization(Guid categorizationId)
     {
         var categorization = _metadataService.GetCategorization(categorizationId);
+
+        _logger.Info($"Categorization retrieved ({categorizationId})", User.GetUserId());
 
         return Ok(categorization);
     }
@@ -45,6 +52,8 @@ public class CategorizationController : ControllerBase
     public ActionResult SaveCategorization([FromBody] Categorization categorization)
     {
         _metadataService.Save(categorization);
+
+        _logger.Info($"Categorization saved ({categorization.Id})", User.GetUserId());
 
         return Ok();
     }

@@ -4,6 +4,8 @@ using Naiad.Libraries.System.Models.MetadataManagement;
 using Naiad.Libraries.System.Services;
 using System.Collections.Generic;
 using System;
+using Naiad.Libraries.System.Interfaces;
+using Naiad.Modules.Api.Core.Helpers;
 
 namespace Naiad.Modules.Api.Core.Controllers; 
 
@@ -12,14 +14,14 @@ namespace Naiad.Modules.Api.Core.Controllers;
 public class ZoneController : ControllerBase
 {
     private readonly MetadataService _metadataService;
-    private readonly SystemService _systemService;
+    private readonly INaiadLogger _logger;
 
     public ZoneController(
         MetadataService metadataService,
-        SystemService systemService)
+        INaiadLogger logger)
     {
         _metadataService = metadataService;
-        _systemService = systemService;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -27,6 +29,7 @@ public class ZoneController : ControllerBase
     public ActionResult<IEnumerable<Zone>> GetZones()
     {
         var zones = _metadataService.GetZones();
+        _logger.Info($"All zones retrieved", User.GetUserId());
         return Ok(zones);
     }
 
@@ -35,7 +38,7 @@ public class ZoneController : ControllerBase
     public ActionResult<Zone> GetZone(Guid zoneId)
     {
         var zone = _metadataService.GetZone(zoneId);
-
+        _logger.Info($"Zone retrieved ({zoneId})", User.GetUserId());
         return Ok(zone);
     }
 
@@ -45,7 +48,7 @@ public class ZoneController : ControllerBase
     public ActionResult SaveZone([FromBody] Zone zone)
     {
         _metadataService.Save(zone);
-
+        _logger.Info($"Zone saved ({zone.Id})", User.GetUserId());
         return Ok();
     }
 
