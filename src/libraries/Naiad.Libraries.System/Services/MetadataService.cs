@@ -263,6 +263,11 @@ public class MetadataService
             sdd.Name);
 
         SetMetadataPropertyValue(
+            metadata.Id,
+            StructuredDataConstants.NSD_DESCRIPTION,
+            sdd.Description);
+
+        SetMetadataPropertyValue(
             metadata.Id, 
             StructuredDataConstants.NSD_MIME_TYPE, 
             sdd.MimeType);
@@ -278,7 +283,7 @@ public class MetadataService
             GetNsdCollectionName(sdd.Name));
     }
 
-    private string GetNsdCollectionName(string name)
+    public static string GetNsdCollectionName(string name)
     {
         return $"nsd_{name.ToLower()}";
     }
@@ -314,6 +319,7 @@ public class MetadataService
                 var sdd = new StructuredDataDefinition
                 {
                     Name = metadataPropertyValue,
+                    Description = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_DESCRIPTION),
                     MimeType = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_MIME_TYPE),
                     IdentifierName = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_IDENTIFIER_NAME),
                     CollectionName = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_COLLECTION_NAME)
@@ -324,6 +330,34 @@ public class MetadataService
         }
 
         return null;
+    }
+
+    private IEnumerable<StructuredDataDefinition> FindStructuredDataDefinitions(Guid categorizationId)
+    {
+        var output = new List<StructuredDataDefinition>();
+
+        var metadatas = _metadataRepo.Get(categorizationId);
+
+        foreach (var metadata in metadatas)
+        {
+            var metadataPropertyValue = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_NAME);
+
+            if (metadataPropertyValue != null)
+            {
+                var sdd = new StructuredDataDefinition
+                {
+                    Name = metadataPropertyValue,
+                    Description = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_DESCRIPTION),
+                    MimeType = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_MIME_TYPE),
+                    IdentifierName = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_IDENTIFIER_NAME),
+                    CollectionName = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_COLLECTION_NAME)
+                };
+
+                output.Add(sdd);
+            }
+        }
+
+        return output;
     }
 
     public string GetMetadataPropertyValue(Guid metadataId, string key)
@@ -354,6 +388,13 @@ public class MetadataService
         var categorization = EnsureCategorization(StructuredDataConstants.NAIAD_STRUCTURED_DATA);
 
         return FindStructuredDataDefinition(categorization.Id, name);
+    }
+
+    public IEnumerable<StructuredDataDefinition> GetStructuredDataDefinitions()
+    {
+        var categorization = EnsureCategorization(StructuredDataConstants.NAIAD_STRUCTURED_DATA);
+
+        return FindStructuredDataDefinitions(categorization.Id);
     }
 }
 

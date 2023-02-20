@@ -1,0 +1,71 @@
+import axios from 'axios';
+import AuthDao from "../data/AuthDao";
+import Environment from "../env";
+import UserDao from "../data/UserDao";
+
+export default class NaiadService {
+    static JWT = "";
+    static UserProperties = null;
+    static UserAccess = {};
+
+    static setJwt(jwt) {
+        NaiadService.JWT = jwt;
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + NaiadService.JWT;
+
+        this.UserProperties = JSON.parse(atob(jwt.split('.')[1]));
+    }
+
+    static getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) === 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    static setCookie(cname, cvalue, exdays) {
+        let d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        let expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    static login(username, password) {
+        const dao = new AuthDao(Environment.BASE_URL);
+        return dao.login(username, password);
+    }
+
+    static logout() {
+        this.UserProperties = [];
+        this.JWT = null;
+        this.UserAccess = {};
+    }
+
+    static getUsers() {
+        const dao = new UserDao(Environment.BASE_URL);
+        return dao.getUsers();
+    }
+
+    static getUser(userId) {
+        const dao = new UserDao(Environment.BASE_URL);
+        return dao.getUser(userId);
+    }
+
+    static saveUser(user) {
+        const dao = new UserDao(Environment.BASE_URL);
+        return dao.saveUser(user);
+    }
+
+    static setPassword(user) {
+        const dao = new UserDao(Environment.BASE_URL);
+        return dao.setPassword(user);
+    }
+}

@@ -7,11 +7,11 @@ export default class UserDao extends BaseDao {
     }
 
     getUser(userId) {
-        return this.read(`/users/${userId}`);
+        return this.read(`/user/${userId}`);
     }
 
     saveUser(user) {
-        return this.write('/users', user);
+        return this.write('/user', user);
     }
 
     changePassword(changePasswordRequest) {
@@ -19,6 +19,6 @@ export default class UserDao extends BaseDao {
     }
 
     setPassword(userId, setPasswordRequest) {
-        return this.write(`/users/${userId}/password`, setPasswordRequest);
+        return this.write(`/user/${userId}/password`, setPasswordRequest);
     }
 }

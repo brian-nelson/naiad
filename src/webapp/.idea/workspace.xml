@@ -31,16 +31,26 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/SourceCode/AudioAdventurer/satellite-audio-recording/source/browser_apps/sar_site",
+    "last_opened_file_path": "D:/SourceCode/brian-nelson/naiad/src/webapp/src/containers",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.sourceCode.HTML",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2022.2.3\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\SourceCode\brian-nelson\naiad\src\webapp\src\containers" />
+      <recent name="D:\SourceCode\brian-nelson\naiad\src\webapp\src" />
+      <recent name="D:\SourceCode\brian-nelson\naiad\src\webapp\src\components" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\SourceCode\brian-nelson\naiad\src\webapp\public" />
+      <recent name="D:\SourceCode\brian-nelson\naiad\src\webapp\src" />
+      <recent name="D:\SourceCode\brian-nelson\naiad\src\webapp" />
       <recent name="D:\SourceCode\brian-nelson\naiad\src\webapp\src\services" />
     </key>
   </component>
@@ -67,7 +77,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1676781001388</updated>
-      <workItem from="1676781002634" duration="1343000" />
+      <workItem from="1676781002634" duration="25519000" />
     </task>
     <servers />
   </component>

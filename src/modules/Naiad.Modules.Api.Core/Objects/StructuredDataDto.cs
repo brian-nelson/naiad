@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-
-namespace Naiad.Libraries.System.Models.DataManagement
+﻿namespace Naiad.Modules.Api.Core.Objects
 {
-    public class StructuredDataDefinition
+    public class StructuredDataDto
     {
         public string Name { get; set; }
 
@@ -11,7 +9,5 @@ namespace Naiad.Libraries.System.Models.DataManagement
         public string MimeType { get; set; }
 
         public string IdentifierName { get; set; }
-
-        public string CollectionName { get; set; }
     }
 }

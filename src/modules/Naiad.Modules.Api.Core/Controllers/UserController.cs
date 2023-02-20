@@ -26,13 +26,14 @@ public class UserController
         _logger = logger;
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpGet]
     [Route("api/users")]
-    public ActionResult<IEnumerable<User>> GetUsers()
+    public ActionResult<IEnumerable<UserDto>> GetUsers()
     {
         var users = _systemService.GetUsers();
         _logger.Info($"All users retrieved", User.GetUserId());
-        return Ok(users);
+        return Ok(users.ToUserDtos());
     }
 
     [HttpGet]
@@ -42,17 +43,20 @@ public class UserController
     {
         var user = _systemService.GetUser(userId);
         _logger.Info($"User retrieved ({userId})", User.GetUserId());
-        return Ok(user);
+        return Ok(user.ToUserDto());
     }
 
     [Authorize(Roles = "Administrator")]
     [HttpPost]
     [Route("api/user")]
     public ActionResult SaveUser(
-        [FromBody] User user)
+        [FromBody] UserDto userDto)
     {
+        var user = userDto.ToUser();
         _systemService.Save(user);
+
         _logger.Info($"User saved ({user.Id})", User.GetUserId());
+        
         return Ok();
     }
 

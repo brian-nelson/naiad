@@ -1,0 +1,60 @@
+import React, {Suspense} from "react";
+import {Navigate, Route, Routes, useParams} from "react-router-dom";
+import Environment from "./env";
+
+import Home from "./containers/Home";
+import Login from "./containers/Login";
+import SetPassword from "./containers/SetPassword";
+import Users from "./containers/Users";
+import User from "./containers/User";
+
+const AppRoutes = ({childProps}) => (
+  <Suspense fallback={<div>Loading ...</div>}>
+    <Routes>
+      <Route path="/"
+             exact
+             element={<Home {...childProps}/>}
+      />
+      <Route path="/login"
+             exact
+             element={<Login {...childProps}/>}
+      />
+      <Route path="/users"
+             exact
+             element={<RequireAuthentication child={<Users {...childProps}/>} childProps={childProps}/>}
+      />
+      <Route path="/users/:userId"
+             exact
+             element={
+               <RequireAuthentication
+                 child={<WithParams Component={User} childProps={childProps}/>}
+                 childProps={childProps}
+               />
+             }
+      />
+      <Route path="/users/setpassword/:userId"
+             exact
+             element={
+               <RequireAuthentication
+                 child={<WithParams Component={SetPassword} childProps={childProps}/>}
+                 childProps={childProps}
+               />
+             }
+      />
+    </Routes>
+  </Suspense>
+);
+
+function RequireAuthentication({child, childProps, redirectTo}) {
+  if (redirectTo == null) {
+    redirectTo = `${Environment.BASE_URL}`
+  }
+
+  return childProps.userHasAuthenticated ? child : <Navigate to={redirectTo}/>;
+}
+
+function WithParams({Component, childProps}) {
+  return (<Component {...childProps} params={useParams()}/>);
+}
+
+export default AppRoutes;

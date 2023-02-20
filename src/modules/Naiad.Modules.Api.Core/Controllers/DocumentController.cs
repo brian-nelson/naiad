@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Naiad.Libraries.System.Interfaces;
-using Naiad.Libraries.System.Models.DataManagement;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Helpers;
+using Naiad.Modules.Api.Core.Objects;
 
 namespace Naiad.Modules.Api.Core.Controllers;
 
@@ -25,18 +26,30 @@ public class DocumentController : ControllerBase
     [Authorize(Roles = "Administrator,ReadWrite")]
     [HttpPost]
     [Route("api/definition")]
-    public void DefineDataType([FromBody] StructuredDataDefinition structuredDataDefinition)
+    public void DefineDataType([FromBody] StructuredDataDto structuredDataDto)
     {
-        _metadataService.DefineStructuredData(structuredDataDefinition);
-        _logger.Info($"SDD defined ({structuredDataDefinition.Name})", User.GetUserId());
+        var sdd = structuredDataDto.ToStructuredDataDefinition();
+        _metadataService.DefineStructuredData(sdd);
+        _logger.Info($"SDD defined ({sdd.Name})", User.GetUserId());
     }
 
     [HttpGet]
     [Route("api/definition/{name}")]
-    public ActionResult<StructuredDataDefinition> GetDataType([FromRoute] string name)
+    public ActionResult<StructuredDataDto> GetDataType([FromRoute] string name)
     {
         var sdd = _metadataService.GetStructuredDataDefinition(name);
         _logger.Info($"SDD retrieved ({name})", User.GetUserId());
-        return Ok(sdd);
+
+        return Ok(sdd.ToStructuredDataDto());
+    }
+
+    [HttpGet]
+    [Route("api/definitions")]
+    public ActionResult<IEnumerable<StructuredDataDto>> GetDataTypes()
+    {
+        var sdds = _metadataService.GetStructuredDataDefinitions();
+        _logger.Info($"All SDDs retrieved", User.GetUserId());
+
+        return Ok(sdds.ToStructuredDataDtos());
     }
 }
