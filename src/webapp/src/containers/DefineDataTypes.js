@@ -38,6 +38,7 @@ export default class DefineDataTypes extends Component {
       return (
         <thead>
         <tr>
+          <th>Action</th>
           <th>Name</th>
           <th>Description</th>
           <th>Mime Type</th>
@@ -61,7 +62,7 @@ export default class DefineDataTypes extends Component {
           <tr key={item.Id}>
             <td>
               <Link to={url}>
-                "Edit"
+                Edit
               </Link>
             </td>
             <td>{name}</td>
@@ -90,8 +91,10 @@ export default class DefineDataTypes extends Component {
           </Col>
           <Col>
             <div className="float-md-right">
-              <Link to={`/definition/new`}>
-                <BsFileEarmarkPlusFill/>
+              <Link to={`/definition/_`}>
+                <BsFileEarmarkPlusFill
+                  size={24}
+                />
               </Link>
             </div>
           </Col>

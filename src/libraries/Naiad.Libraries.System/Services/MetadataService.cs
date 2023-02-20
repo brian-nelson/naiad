@@ -242,11 +242,12 @@ public class MetadataService
 
         var categorization = EnsureCategorization(StructuredDataConstants.NAIAD_STRUCTURED_DATA);
 
-        var existingSdd = FindStructuredDataDefinition(categorization.Id, sdd.Name);
+        var existingSdd = FindStructuredDataDefinition(categorization.Id, sdd.Name, out Guid metadatId);
 
         if (existingSdd != null)
         {
-            throw new CannotRedefineStructuredDataException();
+            SetMetadataPropertyValue(metadatId, StructuredDataConstants.NSD_DESCRIPTION, sdd.Description);
+            return;
         }
 
         // Build Metadata record
@@ -305,7 +306,7 @@ public class MetadataService
         return categorization;
     }
 
-    private StructuredDataDefinition FindStructuredDataDefinition(Guid categorizationId, string name)
+    private StructuredDataDefinition FindStructuredDataDefinition(Guid categorizationId, string name, out Guid metadatId)
     {
         var metadatas = _metadataRepo.Get(categorizationId);
 
@@ -325,10 +326,13 @@ public class MetadataService
                     CollectionName = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_COLLECTION_NAME)
                 };
 
+                metadatId = metadata.Id;
+
                 return sdd;
             }
         }
 
+        metadatId = Guid.Empty;
         return null;
     }
 
@@ -381,13 +385,14 @@ public class MetadataService
         }
 
         metadataProperty.Value = value;
+        _metadataPropertyRepo.Save(metadataProperty);
     }
 
     public StructuredDataDefinition GetStructuredDataDefinition(string name)
     {
         var categorization = EnsureCategorization(StructuredDataConstants.NAIAD_STRUCTURED_DATA);
 
-        return FindStructuredDataDefinition(categorization.Id, name);
+        return FindStructuredDataDefinition(categorization.Id, name, out Guid metadataId);
     }
 
     public IEnumerable<StructuredDataDefinition> GetStructuredDataDefinitions()

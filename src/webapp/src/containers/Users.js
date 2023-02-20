@@ -111,7 +111,9 @@ export default class Users extends Component {
           <Col>
             <div className="float-md-right">
               <Link to={`/users/new`}>
-                <BsFillPersonPlusFill/>
+                <BsFillPersonPlusFill
+                  size={24}
+                />
               </Link>
             </div>
           </Col>

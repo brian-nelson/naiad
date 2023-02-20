@@ -10,9 +10,11 @@ export default class DefineDataType extends Component {
     super(props);
 
     let name = this.props.params.name;
+    let isNew = false;
 
-    if (name === "new"){
+    if (name === "_"){
       name = "";
+      isNew = true;
     }
 
     this.state = {
@@ -21,6 +23,7 @@ export default class DefineDataType extends Component {
       Description: "",
       MimeType: "",
       IdentifierName: "",
+      IsNew: isNew
     };
 
     this.loadDefinition = this.loadDefinition.bind(this);
@@ -113,6 +116,7 @@ export default class DefineDataType extends Component {
                   placeholder="Enter data type name (only text and numbers)"
                   value={this.state.Name}
                   onChange={this.handleChange}
+                  disabled={!this.state.IsNew}
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="Description">
@@ -129,6 +133,7 @@ export default class DefineDataType extends Component {
                 <Form.Select
                   onChange={this.handleChange}
                   value={this.state.MimeType}
+                  disabled={!this.state.IsNew}
                 >
                   <option value="application/json">Json</option>
                   <option value="text/csv">CSV</option>
@@ -141,6 +146,7 @@ export default class DefineDataType extends Component {
                   placeholder="Enter the identifier name"
                   value={this.state.IdentifierName}
                   onChange={this.handleChange}
+                  disabled={!this.state.IsNew}
                 />
               </Form.Group>
               <div className="BottomBar">
