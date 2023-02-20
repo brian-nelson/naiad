@@ -2,7 +2,7 @@ import './App.css';
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
-import {Container, Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {ToastContainer} from 'react-toastify';
 import AppRoutes from "./AppRoutes";
 import NaiadService from "./services/NaiadService";
@@ -31,13 +31,15 @@ export default class App extends Component {
     return (
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Item>
-            <LinkContainer to="/StructuredData">
-              <Nav.Link>
-                Structured Data
-              </Nav.Link>
-            </LinkContainer>
-          </Nav.Item>
+          <NavDropdown title="Structured Data" id="structured-data-dropdown">
+            <NavDropdown.Item href="/definitions">
+              <LinkContainer to="/definitions">
+                <Nav.Link>
+                  Define Data Type
+                </Nav.Link>
+              </LinkContainer>
+            </NavDropdown.Item>
+          </NavDropdown>
         </Nav>
       </Navbar.Collapse>
     );

@@ -40,7 +40,7 @@ public class DocumentController : ControllerBase
         var sdd = _metadataService.GetStructuredDataDefinition(name);
         _logger.Info($"SDD retrieved ({name})", User.GetUserId());
 
-        return Ok(sdd.ToStructuredDataDto());
+        return Ok(sdd?.ToStructuredDataDto());
     }
 
     [HttpGet]

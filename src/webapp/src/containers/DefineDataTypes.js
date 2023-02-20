@@ -1,32 +1,32 @@
-import "./Users.css";
+import "./DefineDataTypes.css";
 import React, {Component} from "react";
 import NaiadService from "../services/NaiadService";
 import {Row, Col, Table} from "react-bootstrap";
-import { BsFillPersonPlusFill } from "react-icons/bs";
+import { BsFileEarmarkPlusFill } from "react-icons/bs";
 import { Link } from 'react-router-dom'
 import { toast } from "react-toastify";
 
-export default class Users extends Component {
+export default class DefineDataTypes extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      users: []
+      definitions: []
     };
 
-    this.loadUsers = this.loadUsers.bind(this);
+    this.loadDataTypes = this.loadDataTypes.bind(this);
     this.renderTableBody = this.renderTableBody.bind(this);
   }
 
   componentDidMount() {
-    this.loadUsers();
+    this.loadDataTypes();
   }
 
-  loadUsers() {
-    NaiadService.getUsers()
+  loadDataTypes() {
+    NaiadService.getDefinitions()
       .then(r => {
         this.setState({
-          users: r
+          definitions: r
         });
       })
       .catch(e => {
@@ -38,11 +38,10 @@ export default class Users extends Component {
       return (
         <thead>
         <tr>
-          <th>Email</th>
           <th>Name</th>
-          <th>Role</th>
-          <th>Enabled</th>
-          <th>Action</th>
+          <th>Description</th>
+          <th>Mime Type</th>
+          <th>Identifier Name</th>
         </tr>
         </thead>);
   }
@@ -51,43 +50,24 @@ export default class Users extends Component {
     if (list != null
       && list.length > 0) {
       let rows =  list.map((item, i) => {
-        let url = `/user/${item.Id}`;
-        let setPasswordUrl = `/user/setpassword/${item.Id}`
 
-        let email = item.Email;
-        let role = item.UserRole;
-
-        let isEnabled = "No";
-        if (item.IsEnabled) {
-          isEnabled = "Yes";
-        }
-
-        if (role === "ReadOnly") {
-          role = "Read Only";
-        } else if (role === "ReadWrite") {
-          role = "Read/Write";
-        }
-
-        let firstName = item.GivenName ?? '';
-        let lastName = item.FamilyName ?? '';
-
-        let name = `${firstName} ${lastName}`.trim();
+        let url = `/definition/${item.Name}`;
+        let name = item.Name;
+        let description = item.Description;
+        let mimeType = item.MimeType;
+        let identifierName = item.IdentifierName;
 
         return (
           <tr key={item.Id}>
             <td>
               <Link to={url}>
-                {email}
+                "Edit"
               </Link>
             </td>
             <td>{name}</td>
-            <td>{role}</td>
-            <td>{isEnabled}</td>
-            <td>
-              <Link to={setPasswordUrl}>
-                Set Password
-              </Link>
-            </td>
+            <td>{description}</td>
+            <td>{mimeType}</td>
+            <td>{identifierName}</td>
           </tr>);
       });
 
@@ -103,15 +83,15 @@ export default class Users extends Component {
 
   render() {
     return (
-      <div className="Users">
+      <div className="DefineDataTypes">
         <Row>
           <Col>
-            <h3>Users</h3>
+            <h3>Structured Data Types</h3>
           </Col>
           <Col>
             <div className="float-md-right">
-              <Link to={`/users/new`}>
-                <BsFillPersonPlusFill/>
+              <Link to={`/definition/new`}>
+                <BsFileEarmarkPlusFill/>
               </Link>
             </div>
           </Col>
@@ -120,7 +100,7 @@ export default class Users extends Component {
           <Col>
             <Table striped bordered hover>
               { this.renderTableHeader() }
-              { this.renderTableBody(this.state.users) }
+              { this.renderTableBody(this.state.definitions) }
             </Table>
           </Col>
         </Row>

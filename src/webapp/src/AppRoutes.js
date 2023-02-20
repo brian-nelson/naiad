@@ -2,6 +2,8 @@ import React, {Suspense} from "react";
 import {Navigate, Route, Routes, useParams} from "react-router-dom";
 import Environment from "./env";
 
+import DefineDataType from "./containers/DefineDataType";
+import DefineDataTypes from "./containers/DefineDataTypes";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
 import SetPassword from "./containers/SetPassword";
@@ -15,6 +17,19 @@ const AppRoutes = ({childProps}) => (
              exact
              element={<Home {...childProps}/>}
       />
+      <Route path="/definition/:name"
+             exact
+             element={
+               <RequireAuthentication
+                 child={<WithParams Component={DefineDataType} childProps={childProps}/>}
+                 childProps={childProps}
+               />
+             }
+      />
+      <Route path="/definitions"
+             exact
+             element={<RequireAuthentication child={<DefineDataTypes {...childProps}/>} childProps={childProps}/>}
+      />
       <Route path="/login"
              exact
              element={<Login {...childProps}/>}
@@ -23,7 +38,7 @@ const AppRoutes = ({childProps}) => (
              exact
              element={<RequireAuthentication child={<Users {...childProps}/>} childProps={childProps}/>}
       />
-      <Route path="/users/:userId"
+      <Route path="/user/:userId"
              exact
              element={
                <RequireAuthentication
@@ -32,7 +47,7 @@ const AppRoutes = ({childProps}) => (
                />
              }
       />
-      <Route path="/users/setpassword/:userId"
+      <Route path="/user/setpassword/:userId"
              exact
              element={
                <RequireAuthentication

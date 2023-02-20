@@ -2,6 +2,7 @@ import axios from 'axios';
 import AuthDao from "../data/AuthDao";
 import Environment from "../env";
 import UserDao from "../data/UserDao";
+import DefinitionDao from "../data/DefinitionDao";
 
 export default class NaiadService {
     static JWT = "";
@@ -38,6 +39,8 @@ export default class NaiadService {
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
 
+    /* Auth */
+
     static login(username, password) {
         const dao = new AuthDao(Environment.BASE_URL);
         return dao.login(username, password);
@@ -48,6 +51,8 @@ export default class NaiadService {
         this.JWT = null;
         this.UserAccess = {};
     }
+
+    /* Users */
 
     static getUsers() {
         const dao = new UserDao(Environment.BASE_URL);
@@ -64,8 +69,24 @@ export default class NaiadService {
         return dao.saveUser(user);
     }
 
-    static setPassword(user) {
+    static setPassword(user, setPasswordRequest) {
         const dao = new UserDao(Environment.BASE_URL);
-        return dao.setPassword(user);
+        return dao.setPassword(user, setPasswordRequest);
+    }
+
+    /* Data Definition */
+    static getDefinitions() {
+        const dao = new DefinitionDao(Environment.BASE_URL);
+        return dao.getDefinitions();
+    }
+
+    static getDefinition(name) {
+        const dao = new DefinitionDao(Environment.BASE_URL);
+        return dao.getDefinition(name);
+    }
+
+    static saveDefinition(definition) {
+        const dao = new DefinitionDao(Environment.BASE_URL);
+        return dao.saveDefinition(definition);
     }
 }
