@@ -1,8 +1,11 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Naiad.Libraries.System.Interfaces;
+using Naiad.Libraries.System.Models.DataManagement;
 using Naiad.Libraries.System.Models.MetadataManagement;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Helpers;
@@ -28,6 +31,7 @@ public class DataController : ControllerBase
         _logger = logger;
     }
 
+    [RequestSizeLimit(500_000_000)]
     [Authorize(Roles = "Administrator,ReadWrite")]
     [HttpPost]
     [Route("api/data/{*filePathAndName}")]
@@ -36,6 +40,12 @@ public class DataController : ControllerBase
         [FromForm] IFormFile file)
     {
         // TODO Validate Filename
+
+        if (file == null
+            || filePathAndName.IsNullOrEmpty())
+        {
+            return BadRequest();
+        }
 
         using (var ms = new MemoryStream())
         {
@@ -90,5 +100,13 @@ public class DataController : ControllerBase
 
         _logger.Info($"Data file not found ({filePathAndName})", User.GetUserId());
         return new StatusCodeResult(StatusCodes.Status404NotFound);
+    }
+
+    [HttpGet]
+    [Route("api/data/list/{*filePathAndName}")]
+    public ActionResult<IEnumerable<NaiadFileInfo>> ListFiles([FromRoute] string filePathAndName)
+    {
+        var fileInfo = _dataService.ListFiles(filePathAndName);
+        return Ok(fileInfo);
     }
 }

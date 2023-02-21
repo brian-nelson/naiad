@@ -1,6 +1,6 @@
 import './App.css';
 import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {ToastContainer} from 'react-toastify';
@@ -14,12 +14,18 @@ export default class App extends Component {
 
     this.state = {
       isAuthenticated: false,
-      isAuthenticating: true
+      redirect: false
     };
   }
 
   userHasAuthenticated = authenticated => {
-    this.setState({isAuthenticated: authenticated});
+    this.setState({isAuthenticated: authenticated}, () => {
+      if (!this.state.isAuthenticated) {
+        this.setState( { redirect: true}, () =>{
+          this.setState({ redirect: false})
+        });
+      }
+    });
   };
 
   handleLogout = event => {
@@ -27,17 +33,26 @@ export default class App extends Component {
     this.userHasAuthenticated(false);
   };
 
+  renderRedirect = () => {
+    //Return home
+    if (this.state.redirect) {
+      return <Navigate to={`/`} />
+    }
+  };
+
   renderLoggedInNavBarStart() {
     return (
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <NavDropdown title="Structured Data" id="structured-data-dropdown">
-            <NavDropdown.Item href="/definitions">
-              <LinkContainer to="/definitions">
-                <Nav.Link>
-                  Define Data Type
-                </Nav.Link>
-              </LinkContainer>
+          <NavDropdown title="Data" id="structured-data-dropdown">
+            <NavDropdown.Item to="/definitions" as={Link}>
+              Define Structured Data Type
+            </NavDropdown.Item>
+            <NavDropdown.Item to="/datafiles" as={Link}>
+              List Data Files
+            </NavDropdown.Item>
+            <NavDropdown.Item to="/collections" as={Link}>
+              View Collections
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
@@ -109,6 +124,7 @@ export default class App extends Component {
           autoClose={false}
           closeOnClick
         />
+        { this.renderRedirect() }
         { this.renderNavbar() }
         <AppRoutes childProps={childProps}/>
       </div>

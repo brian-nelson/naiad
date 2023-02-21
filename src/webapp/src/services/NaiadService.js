@@ -3,6 +3,7 @@ import AuthDao from "../data/AuthDao";
 import Environment from "../env";
 import UserDao from "../data/UserDao";
 import DefinitionDao from "../data/DefinitionDao";
+import DataFileDao from "../data/DataFileDao";
 
 export default class NaiadService {
     static JWT = "";
@@ -88,5 +89,11 @@ export default class NaiadService {
     static saveDefinition(definition) {
         const dao = new DefinitionDao(Environment.BASE_URL);
         return dao.saveDefinition(definition);
+    }
+
+    /* Data Files */
+    static listDataFiles(prefix) {
+        const dao = new DataFileDao(Environment.BASE_URL);
+        return dao.listDataFiles(prefix);
     }
 }

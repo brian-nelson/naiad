@@ -127,8 +127,6 @@ namespace Naiad.Modules.Api
             {
                 throw new Exception($"{repositoryProviderModuleName} does not implement IModule");
             }
-            
-            
         }
     }
 }
