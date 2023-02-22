@@ -49,7 +49,7 @@ export default class Collections extends Component {
     if (list != null
       && list.length > 0) {
       let rows =  list.map((item, i) => {
-        let url = `/definition/${item.Name}`;
+        let url = `/collection/${item.Name}`;
         let name = item.Name;
         let description = item.Description;
 

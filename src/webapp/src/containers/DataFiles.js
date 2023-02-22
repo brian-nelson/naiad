@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import NaiadService from "../services/NaiadService";
 import {Row, Col, Table} from "react-bootstrap";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default class DataFiles extends Component {
   constructor(props) {
@@ -63,6 +64,7 @@ export default class DataFiles extends Component {
         <thead>
         <tr>
           <th>Action</th>
+          <th>Metadata</th>
           <th>Id</th>
           <th>Mime Type</th>
           <th>Size</th>
@@ -77,11 +79,15 @@ export default class DataFiles extends Component {
         let name = item.Id;
         let mimeType = item.MimeType;
         let size = item.Size;
+        let metaDataUrl = `/datafile/metadata/${item.Id}`;
 
         return (
           <tr key={item.Id}>
             <td>
               <button onClick={ (evt) => { this.handleDownload(item.Id); }}>Download</button>
+            </td>
+            <td>
+              <Link to={metaDataUrl}>View</Link>
             </td>
             <td>{name}</td>
             <td>{mimeType}</td>

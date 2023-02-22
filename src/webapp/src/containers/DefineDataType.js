@@ -35,6 +35,14 @@ export default class DefineDataType extends Component {
     }
   }
 
+  handleOnKeyDown = event => {
+    if (/[^0-9a-zA-Z]/.test(event.key)){
+      event.preventDefault();
+    }
+
+    return false;
+  }
+
   loadDefinition(name) {
     NaiadService.getDefinition(name)
       .then(r => {
@@ -110,12 +118,13 @@ export default class DefineDataType extends Component {
           <Col>
             <Form onSubmit={this.handleSubmit}>
               <Form.Group className="mb-3" controlId="Name">
-                <Form.Label>Name</Form.Label>
+                <Form.Label>Name (only alphanumeric characters)</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter data type name (only text and numbers)"
                   value={this.state.Name}
                   onChange={this.handleChange}
+                  onKeyDown={this.handleOnKeyDown}
                   disabled={!this.state.IsNew}
                 />
               </Form.Group>

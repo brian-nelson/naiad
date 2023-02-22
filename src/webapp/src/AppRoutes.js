@@ -3,7 +3,8 @@ import {Navigate, Route, Routes, useParams} from "react-router-dom";
 import Environment from "./env";
 
 import Collections from "./containers/Collections";
-import DataFiles from "./containers/DataFiles"
+import DataFiles from "./containers/DataFiles";
+import DataFileMetadata from "./containers/DataFileMetadata";
 import DefineDataType from "./containers/DefineDataType";
 import DefineDataTypes from "./containers/DefineDataTypes";
 import Home from "./containers/Home";
@@ -23,6 +24,12 @@ const AppRoutes = ({childProps}) => (
       <Route path="/collections"
              exact
              element={<RequireAuthentication child={<Collections {...childProps}/>} childProps={childProps}/>}
+      />
+
+      <Route path="/datafile/metadata/*"
+             exact
+             loader={({params}) => { let {org, "*": splat} = params; }}
+             element={<RequireAuthentication child={<DataFileMetadata {...childProps}/>} childProps={childProps}/>}
       />
 
       <Route path="/datafiles"
