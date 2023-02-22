@@ -9,15 +9,41 @@ export default class DataFiles extends Component {
     super(props);
 
     this.state = {
-      DataFiles: []
+      DataFiles: [],
+      downloadFileUrl: null
     };
 
     this.loadDataFiles = this.loadDataFiles.bind(this);
     this.renderTableBody = this.renderTableBody.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
   }
 
   componentDidMount() {
     this.loadDataFiles();
+  }
+
+  handleDownload(filePath){
+    this.setState ({fileDownloadUrl: filePath}, // Step 5
+      () => {
+        NaiadService.downloadDataFile(filePath)
+          .then((r) => {
+            let pathParts = filePath.split('/');
+            let localFilename = pathParts[pathParts.length - 1];
+
+            const url = window.URL.createObjectURL(
+              new Blob([r.data], { type : 'application/octet-stream' })
+            );
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = localFilename;
+            document.body.appendChild(link);
+            link.click();
+          })
+          .catch(e => {
+            toast.error(e.message);
+          });
+      });
   }
 
   loadDataFiles() {
@@ -55,6 +81,7 @@ export default class DataFiles extends Component {
         return (
           <tr key={item.Id}>
             <td>
+              <button onClick={ (evt) => { this.handleDownload(item.Id); }}>Download</button>
             </td>
             <td>{name}</td>
             <td>{mimeType}</td>

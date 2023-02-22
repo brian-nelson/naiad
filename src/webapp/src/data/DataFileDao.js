@@ -9,4 +9,8 @@ export default class DataFileDao extends BaseDao {
 
     return this.read(`/data/list`);
   }
+
+  getFile(filePath) {
+    return this.readFile(`/data/${filePath}`);
+  }
 }

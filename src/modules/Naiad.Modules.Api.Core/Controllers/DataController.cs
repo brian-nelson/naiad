@@ -88,14 +88,20 @@ public class DataController : ControllerBase
         if (fileInfo != null)
         {
             var filename = Path.GetFileName(fileInfo.Filename) ?? filePathAndName;
-            var stream = _dataService.GetFile(fileInfo.Id);
 
-            _logger.Info($"Data file retrieved ({filePathAndName})", User.GetUserId());
-
-            return new FileStreamResult(stream, "application/octet-stream")
+            using (var stream = _dataService.GetFile(fileInfo.Id))
             {
-                FileDownloadName = filename
-            };
+                var memoryStream = new MemoryStream();
+                stream.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+
+                _logger.Info($"Data file retrieved ({filePathAndName})", User.GetUserId());
+
+                return new FileStreamResult(memoryStream, "application/octet-stream")
+                {
+                    FileDownloadName = filename
+                };
+            }
         }
 
         _logger.Info($"Data file not found ({filePathAndName})", User.GetUserId());

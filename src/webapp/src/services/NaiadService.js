@@ -96,4 +96,9 @@ export default class NaiadService {
         const dao = new DataFileDao(Environment.BASE_URL);
         return dao.listDataFiles(prefix);
     }
+
+    static downloadDataFile(filePath) {
+        const dao = new DataFileDao(Environment.BASE_URL);
+        return dao.getFile(filePath);
+    }
 }

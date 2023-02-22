@@ -78,7 +78,7 @@ export default class BaseDao {
                 responseType: 'blob'
             })
                 .then(res => {
-                    resolve(res.data);
+                    resolve(res);
                 })
                 .catch(error => {
                     reject(error);
