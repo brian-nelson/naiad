@@ -1,4 +1,6 @@
-﻿namespace Naiad.Libraries.System.Models.DataManagement;
+﻿using System;
+
+namespace Naiad.Libraries.System.Models.DataManagement;
 
 public class NaiadFileInfo
 {
@@ -6,4 +8,5 @@ public class NaiadFileInfo
     public string Filename { get; set; }
     public string MimeType { get; set; }
     public long Size { get; set; }
+    public Guid? DataPointerId { get; set; }
 }

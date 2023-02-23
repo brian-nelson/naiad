@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 
 namespace Naiad.Libraries.System.Models.DataManagement
 {
     public class StructuredDataDefinition
     {
+        public Guid MetadataId { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }

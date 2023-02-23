@@ -79,7 +79,7 @@ export default class DataFiles extends Component {
         let name = item.Id;
         let mimeType = item.MimeType;
         let size = item.Size;
-        let metaDataUrl = `/datafile/metadata/${item.Id}`;
+        let metaDataUrl = `/datafile/metadata/${item.DataPointerId}`;
 
         return (
           <tr key={item.Id}>
@@ -113,7 +113,7 @@ export default class DataFiles extends Component {
             <h3>List of Data Files</h3>
           </Col>
           <Col>
-            <div className="float-md-right">
+            <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
             </div>
           </Col>
         </Row>

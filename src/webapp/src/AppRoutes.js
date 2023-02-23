@@ -26,10 +26,14 @@ const AppRoutes = ({childProps}) => (
              element={<RequireAuthentication child={<Collections {...childProps}/>} childProps={childProps}/>}
       />
 
-      <Route path="/datafile/metadata/*"
+      <Route path="/datafile/metadata/:DataPointerId"
              exact
-             loader={({params}) => { let {org, "*": splat} = params; }}
-             element={<RequireAuthentication child={<DataFileMetadata {...childProps}/>} childProps={childProps}/>}
+             element={
+               <RequireAuthentication
+                 child={<WithParams Component={DataFileMetadata} childProps={childProps}/>}
+                 childProps={childProps}
+               />
+             }
       />
 
       <Route path="/datafiles"

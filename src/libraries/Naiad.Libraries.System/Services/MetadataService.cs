@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Naiad.Libraries.Core.Helpers;
 using Naiad.Libraries.System.Constants.DataManagement;
 using Naiad.Libraries.System.Constants.MetadataManagement;
-using Naiad.Libraries.System.Exceptions.DataManagement;
 using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Interfaces.MetadataManagement;
 using Naiad.Libraries.System.Models.DataManagement;
@@ -242,11 +242,14 @@ public class MetadataService
 
         var categorization = EnsureCategorization(StructuredDataConstants.NAIAD_STRUCTURED_DATA);
 
-        var existingSdd = FindStructuredDataDefinition(categorization.Id, sdd.Name, out Guid metadatId);
+        var existingSdd = FindStructuredDataDefinition(categorization.Id, sdd.Name);
 
         if (existingSdd != null)
         {
-            SetMetadataPropertyValue(metadatId, StructuredDataConstants.NSD_DESCRIPTION, sdd.Description);
+            SetMetadataPropertyValue(
+                sdd.MetadataId, 
+                StructuredDataConstants.NSD_DESCRIPTION, 
+                sdd.Description);
             return;
         }
 
@@ -306,7 +309,9 @@ public class MetadataService
         return categorization;
     }
 
-    private StructuredDataDefinition FindStructuredDataDefinition(Guid categorizationId, string name, out Guid metadatId)
+    private StructuredDataDefinition FindStructuredDataDefinition(
+        Guid categorizationId,
+        string name)
     {
         var metadatas = _metadataRepo.Get(categorizationId);
 
@@ -317,22 +322,11 @@ public class MetadataService
             if (metadataPropertyValue != null
                 && metadataPropertyValue.Equals(name))
             {
-                var sdd = new StructuredDataDefinition
-                {
-                    Name = metadataPropertyValue,
-                    Description = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_DESCRIPTION),
-                    MimeType = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_MIME_TYPE),
-                    IdentifierName = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_IDENTIFIER_NAME),
-                    CollectionName = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_COLLECTION_NAME)
-                };
-
-                metadatId = metadata.Id;
-
+                var sdd = GetStructuredDataDefinition(metadata.Id);
                 return sdd;
             }
         }
 
-        metadatId = Guid.Empty;
         return null;
     }
 
@@ -344,24 +338,37 @@ public class MetadataService
 
         foreach (var metadata in metadatas)
         {
-            var metadataPropertyValue = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_NAME);
+            var sdd = GetStructuredDataDefinition(metadata.Id);
 
-            if (metadataPropertyValue != null)
+            if (sdd != null)
             {
-                var sdd = new StructuredDataDefinition
-                {
-                    Name = metadataPropertyValue,
-                    Description = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_DESCRIPTION),
-                    MimeType = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_MIME_TYPE),
-                    IdentifierName = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_IDENTIFIER_NAME),
-                    CollectionName = GetMetadataPropertyValue(metadata.Id, StructuredDataConstants.NSD_COLLECTION_NAME)
-                };
-
                 output.Add(sdd);
             }
         }
 
         return output;
+    }
+
+    public StructuredDataDefinition GetStructuredDataDefinition(Guid metadataId)
+    {
+        var metadataPropertyValue = GetMetadataPropertyValue(metadataId, StructuredDataConstants.NSD_NAME);
+
+        if (metadataPropertyValue != null)
+        {
+            var sdd = new StructuredDataDefinition
+            {
+                MetadataId = metadataId,
+                Name = metadataPropertyValue,
+                Description = GetMetadataPropertyValue(metadataId, StructuredDataConstants.NSD_DESCRIPTION),
+                MimeType = GetMetadataPropertyValue(metadataId, StructuredDataConstants.NSD_MIME_TYPE),
+                IdentifierName = GetMetadataPropertyValue(metadataId, StructuredDataConstants.NSD_IDENTIFIER_NAME),
+                CollectionName = GetMetadataPropertyValue(metadataId, StructuredDataConstants.NSD_COLLECTION_NAME)
+            };
+
+            return sdd;
+        }
+
+        return null;
     }
 
     public string GetMetadataPropertyValue(Guid metadataId, string key)
@@ -392,7 +399,7 @@ public class MetadataService
     {
         var categorization = EnsureCategorization(StructuredDataConstants.NAIAD_STRUCTURED_DATA);
 
-        return FindStructuredDataDefinition(categorization.Id, name, out Guid metadataId);
+        return FindStructuredDataDefinition(categorization.Id, name);
     }
 
     public IEnumerable<StructuredDataDefinition> GetStructuredDataDefinitions()
@@ -400,6 +407,47 @@ public class MetadataService
         var categorization = EnsureCategorization(StructuredDataConstants.NAIAD_STRUCTURED_DATA);
 
         return FindStructuredDataDefinitions(categorization.Id);
+    }
+
+    public IEnumerable<StructuredDataDefinition> GetStructuredDataDefinitionsTaggedToData(Guid dataPointerId)
+    {
+        var metadataIds = new List<Guid>();
+
+        var childRelationships = _relationshipRepo.GetChildren(dataPointerId);
+        foreach (var childRelationship in childRelationships)
+        {
+            if (childRelationship.ConnectionContext.Equals(StructuredDataConstants.NAIAD_STRUCTURED_DATA)
+                && childRelationship.ChildType == EntityType.Metadata)
+            {
+                metadataIds.Add(childRelationship.ChildId);
+            }
+        }
+
+        var parentRelationships = _relationshipRepo.GetParents(dataPointerId);
+        foreach (var parentRelationship in parentRelationships)
+        {
+            if (parentRelationship.ConnectionContext.Equals(StructuredDataConstants.NAIAD_STRUCTURED_DATA)
+                && parentRelationship.ParentType == EntityType.Metadata)
+            {
+                metadataIds.Add(parentRelationship.ParentId);
+            }
+        }
+
+        var distinctIds = metadataIds.Distinct();
+
+        var output = new List<StructuredDataDefinition>();
+
+        foreach (var metadataId in distinctIds)
+        {
+            var sdd = GetStructuredDataDefinition(metadataId);
+
+            if (sdd != null)
+            {
+                output.Add(sdd);
+            }
+        }
+
+        return output;
     }
 }
 

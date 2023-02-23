@@ -84,7 +84,7 @@ export default class SetPassword extends Component {
             <h3>User: {`${this.state.email}`.trim()}</h3>
           </Col>
           <Col>
-            <div className="float-md-right">
+            <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
               <Link to={`/users`}>Return to Users</Link>
             </div>
           </Col>

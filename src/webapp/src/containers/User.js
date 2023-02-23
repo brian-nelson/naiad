@@ -138,7 +138,7 @@ export default class User extends Component {
             <h3>User: {`${this.state.GivenName} ${this.state.FamilyName}`.trim()}</h3>
           </Col>
           <Col>
-            <div className="float-md-right">
+            <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
               <Link to={`/users`}>Return to Users</Link>
             </div>
           </Col>

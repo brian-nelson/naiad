@@ -90,7 +90,7 @@ export default class DefineDataTypes extends Component {
             <h3>Structured Data Types</h3>
           </Col>
           <Col>
-            <div className="float-md-right">
+            <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
               <Link to={`/definition/_`}>
                 <BsFileEarmarkPlusFill
                   size={24}

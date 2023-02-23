@@ -57,14 +57,21 @@ namespace Naiad.Libraries.System.Logger
         {
             //TODO add cache.
 
-            var logEntry = new LogEntry
+            try
             {
-                EntryDateTime = DateTimeOffset.UtcNow,
-                Level = level,
-                Message = message
-            };
+                var logEntry = new LogEntry
+                {
+                    EntryDateTime = DateTimeOffset.UtcNow,
+                    Level = level,
+                    Message = message
+                };
 
-            _logEntryRepo.Save(logEntry);
+                _logEntryRepo.Save(logEntry);
+            }
+            catch (Exception ex)
+            {
+                // Eat exception
+            }
         }
     }
 }

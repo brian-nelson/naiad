@@ -109,7 +109,7 @@ export default class Users extends Component {
             <h3>Users</h3>
           </Col>
           <Col>
-            <div className="float-md-right">
+            <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
               <Link to={`/users/new`}>
                 <BsFillPersonPlusFill
                   size={24}

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Naiad.Libraries.System.Interfaces;
@@ -26,7 +27,8 @@ public class DocumentController : ControllerBase
     [Authorize(Roles = "Administrator,ReadWrite")]
     [HttpPost]
     [Route("api/definition")]
-    public void DefineDataType([FromBody] StructuredDataDto structuredDataDto)
+    public void DefineDataType(
+        [FromBody] StructuredDataDto structuredDataDto)
     {
         var sdd = structuredDataDto.ToStructuredDataDefinition();
         _metadataService.DefineStructuredData(sdd);
@@ -35,7 +37,8 @@ public class DocumentController : ControllerBase
 
     [HttpGet]
     [Route("api/definition/{name}")]
-    public ActionResult<StructuredDataDto> GetDataType([FromRoute] string name)
+    public ActionResult<StructuredDataDto> GetDataType(
+        [FromRoute] string name)
     {
         var sdd = _metadataService.GetStructuredDataDefinition(name);
         _logger.Info($"SDD retrieved ({name})", User.GetUserId());
@@ -51,5 +54,26 @@ public class DocumentController : ControllerBase
         _logger.Info($"All SDDs retrieved", User.GetUserId());
 
         return Ok(sdds.ToStructuredDataDtos());
+    }
+
+    [HttpGet]
+    [Route("api/data/{dataPointerId:guid}/definitions")]
+    public ActionResult<IEnumerable<StructuredDataDto>> GetDataTypeUsed(
+        [FromRoute] Guid dataPointerId)
+    {
+        var sdds = _metadataService.GetStructuredDataDefinitionsTaggedToData(dataPointerId);
+        _logger.Info($"All SDDs retrieved", User.GetUserId());
+
+        return Ok(sdds.ToStructuredDataDtos());
+    }
+
+    [HttpGet]
+    [Route("api/data/{dataPointerId:guid}/transform/{metadataId:guid}")]
+    public ActionResult TransformData(
+        [FromRoute] Guid dataPointerId,
+        [FromRoute] Guid metadataId)
+    {
+        //TODO - Implement
+        return Ok();
     }
 }

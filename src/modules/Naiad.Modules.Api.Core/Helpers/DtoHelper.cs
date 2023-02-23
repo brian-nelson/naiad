@@ -14,6 +14,7 @@ public static class DtoHelper
     {
         return new StructuredDataDto
         {
+            MetadataId = sdd.MetadataId,
             Name = sdd.Name,
             Description = sdd.Description,
             MimeType = sdd.MimeType,
@@ -29,6 +30,7 @@ public static class DtoHelper
         {
             var sddto = new StructuredDataDto
             {
+                MetadataId = sdd.MetadataId,
                 Name = sdd.Name,
                 Description = sdd.Description,
                 MimeType = sdd.MimeType,
@@ -45,6 +47,7 @@ public static class DtoHelper
     {
         return new StructuredDataDefinition
         {
+            MetadataId = sdd.MetadataId,
             Name = sdd.Name,
             Description = sdd.Description,
             MimeType = sdd.MimeType,

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Naiad.Libraries.System.Interfaces;
+using Naiad.Libraries.System.Models.MetadataManagement;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Services;
 
@@ -24,5 +26,12 @@ public class MetadataController : ControllerBase
         _logger = logger;
     }
 
-    
+    [HttpGet]
+    [Route("api/datapointer/{dataPointerId:guid}")]
+    public ActionResult<DataPointer> GetDataPointer(
+        [FromRoute] Guid dataPointerId)
+    {
+        var pointer = _metadataService.GetDataPointer(dataPointerId);
+        return Ok(pointer);
+    }
 }

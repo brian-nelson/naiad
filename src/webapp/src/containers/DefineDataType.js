@@ -109,7 +109,7 @@ export default class DefineDataType extends Component {
             <h3>Data Definition: {`${this.state.Name}`.trim()}</h3>
           </Col>
           <Col>
-            <div className="float-md-right">
+            <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
               <Link to={`/definitions`}>Return to Data Definitions</Link>
             </div>
           </Col>

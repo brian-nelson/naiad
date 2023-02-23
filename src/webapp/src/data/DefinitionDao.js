@@ -10,6 +10,10 @@ export default class DefinitionDao extends BaseDao {
     return this.read(`/definition/${name}`);
   }
 
+  getDefinitionsByDataPointer(dataPointerId) {
+    return this.read(`/data/${dataPointerId}/definitions`);
+  }
+
   saveDefinition(definition) {
     return this.write('/definition', definition);
   }
