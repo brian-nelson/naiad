@@ -38,5 +38,16 @@ public class RelationshipRepo : IRelationshipRepo
     {
         _repo.Save(relationship);
     }
+
+    public Relationship GetRelationship(
+        Guid parentId, 
+        Guid childId,
+        string connectionContext)
+    {
+        return _repo.GetItem(Query.And(
+            Query.EQ("ParentId", parentId),
+            Query.EQ("ChildId", childId),
+            Query.EQ("ConnectionContext", connectionContext)));
+    }
 }
 

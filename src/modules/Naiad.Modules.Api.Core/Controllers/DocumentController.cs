@@ -14,13 +14,16 @@ namespace Naiad.Modules.Api.Core.Controllers;
 public class DocumentController : ControllerBase
 {
     private readonly MetadataService _metadataService;
+    private readonly StructuredDataService _structuredDataService;
     private readonly INaiadLogger _logger;
 
     public DocumentController(
         MetadataService metadataService,
+        StructuredDataService structuredDataService,
         INaiadLogger logger)
     {
         _metadataService = metadataService;
+        _structuredDataService = structuredDataService;
         _logger = logger;
     }
 
@@ -73,7 +76,7 @@ public class DocumentController : ControllerBase
         [FromRoute] Guid dataPointerId,
         [FromRoute] Guid metadataId)
     {
-        //TODO - Implement
+        
         return Ok();
     }
 }

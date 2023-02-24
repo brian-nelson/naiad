@@ -10,4 +10,9 @@ public interface IRelationshipRepo
     public IEnumerable<Relationship> GetChildren(Guid parentId);
     public IEnumerable<Relationship> GetParents(Guid childId);
     public void Save(Relationship relationship);
+
+    public Relationship GetRelationship(
+        Guid parentId,
+        Guid childId,
+        string connectionContext);
 }

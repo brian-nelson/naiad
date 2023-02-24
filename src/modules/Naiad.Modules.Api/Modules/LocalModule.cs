@@ -22,6 +22,7 @@ public class LocalModule : Module
         builder.RegisterType<SystemService>();
         builder.RegisterType<MetadataService>();
         builder.RegisterType<BootstrapService>();
+        builder.RegisterType<StructuredDataService>();
 
 
         builder.RegisterBuildCallback(resolver =>

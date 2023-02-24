@@ -409,6 +409,11 @@ public class MetadataService
         return FindStructuredDataDefinitions(categorization.Id);
     }
 
+    public Relationship GetRelationship(Guid parentId, Guid childId, string connectionContext)
+    {
+        return _relationshipRepo.GetRelationship(parentId, childId, connectionContext);
+    }
+
     public IEnumerable<StructuredDataDefinition> GetStructuredDataDefinitionsTaggedToData(Guid dataPointerId)
     {
         var metadataIds = new List<Guid>();
