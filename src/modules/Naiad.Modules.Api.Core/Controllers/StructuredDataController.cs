@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Naiad.Libraries.Core.Helpers;
+using Naiad.Libraries.System.Constants.DataManagement;
 using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Helpers;
@@ -11,13 +14,13 @@ namespace Naiad.Modules.Api.Core.Controllers;
 
 [Authorize]
 [Produces("application/json")]
-public class DocumentController : ControllerBase
+public class StructuredDataController : ControllerBase
 {
     private readonly MetadataService _metadataService;
     private readonly StructuredDataService _structuredDataService;
     private readonly INaiadLogger _logger;
 
-    public DocumentController(
+    public StructuredDataController(
         MetadataService metadataService,
         StructuredDataService structuredDataService,
         INaiadLogger logger)
@@ -70,13 +73,25 @@ public class DocumentController : ControllerBase
         return Ok(sdds.ToStructuredDataDtos());
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("api/data/{dataPointerId:guid}/transform/{metadataId:guid}")]
     public ActionResult TransformData(
         [FromRoute] Guid dataPointerId,
         [FromRoute] Guid metadataId)
     {
-        
+        _structuredDataService.TransformFileToStructuredData(dataPointerId, metadataId);
         return Ok();
+    }
+
+    [HttpGet]
+    [Route("api/structured/{metadataId:guid}")]
+    public ContentResult GetAllStructuredData(
+        [FromRoute] Guid metadataId)
+    {
+        var dataTable = _structuredDataService.GetAllData(metadataId);
+
+        var json = JsonHelper.ToJson(dataTable);
+
+        return this.Content(json, MimeTypeConstants.JSON);
     }
 }
