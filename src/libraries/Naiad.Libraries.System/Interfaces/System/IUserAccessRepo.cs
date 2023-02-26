@@ -3,9 +3,7 @@ using System;
 
 namespace Naiad.Libraries.System.Interfaces.System;
 
-public interface IUserAccessRepo
+public interface IUserAccessRepo : IDataRepository<UserAccess>
 {
-    public UserAccess GetById(Guid userAccessId);
     public UserAccess GetByUserId(Guid userId);
-    public void Save(UserAccess userAccess);
 }

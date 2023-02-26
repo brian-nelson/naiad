@@ -34,4 +34,9 @@ public class SessionRepo : ISessionRepo
     {
         _repo.Save(session);
     }
+
+    public IEnumerable<Session> GetAll()
+    {
+        return _repo.GetAll();
+    }
 }

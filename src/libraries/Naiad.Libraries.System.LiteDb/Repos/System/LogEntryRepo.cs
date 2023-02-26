@@ -52,4 +52,9 @@ public class LogEntryRepo : ILogEntryRepo
     {
         _repo.Save(logEntry);
     }
+
+    public IEnumerable<LogEntry> GetAll()
+    {
+        return _repo.GetAll();
+    }
 }

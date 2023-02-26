@@ -39,6 +39,11 @@ public class RelationshipRepo : IRelationshipRepo
         _repo.Save(relationship);
     }
 
+    public IEnumerable<Relationship> GetAll()
+    {
+        return _repo.GetAll();
+    }
+
     public Relationship GetRelationship(
         Guid parentId, 
         Guid childId,

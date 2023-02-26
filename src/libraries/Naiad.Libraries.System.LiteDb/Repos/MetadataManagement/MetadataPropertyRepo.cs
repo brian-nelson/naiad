@@ -29,6 +29,11 @@ public class MetadataPropertyRepo : IMetadataPropertyRepo
         _repo.Save(property);
     }
 
+    public IEnumerable<MetadataProperty> GetAll()
+    {
+        return _repo.GetAll();
+    }
+
     public IEnumerable<MetadataProperty> Get(Guid metadataId)
     {
         return _repo.GetItems(Query.EQ("MetadataId", metadataId));

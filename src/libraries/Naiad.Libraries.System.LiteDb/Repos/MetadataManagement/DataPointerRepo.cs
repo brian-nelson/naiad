@@ -36,6 +36,11 @@ public class DataPointerRepo : IDataPointerRepo
         _repo.Save(pointer);
     }
 
+    public IEnumerable<DataPointer> GetAll()
+    {
+        return _repo.GetAll();
+    }
+
     public IEnumerable<DataPointer> GetByZone(Guid zoneId)
     {
         return _repo.GetItems(

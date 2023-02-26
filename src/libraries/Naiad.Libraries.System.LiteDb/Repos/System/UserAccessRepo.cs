@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LiteDB;
 using Naiad.Libraries.System.Interfaces.System;
 using Naiad.Libraries.System.Models.System;
@@ -29,5 +30,10 @@ public class UserAccessRepo : IUserAccessRepo
     public void Save(UserAccess userAccess)
     {
         _repo.Save(userAccess);
+    }
+
+    public IEnumerable<UserAccess> GetAll()
+    {
+        return _repo.GetAll();
     }
 }

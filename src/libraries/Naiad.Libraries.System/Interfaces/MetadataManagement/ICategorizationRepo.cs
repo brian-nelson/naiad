@@ -1,15 +1,9 @@
 ﻿using Naiad.Libraries.System.Models.MetadataManagement;
-using System;
-using System.Collections.Generic;
 
 namespace Naiad.Libraries.System.Interfaces.MetadataManagement;
 
-public interface ICategorizationRepo
+public interface ICategorizationRepo : IDataRepository<Categorization>
 {
-    public IEnumerable<Categorization> GetAll();
-    public void Save(Categorization categorization);
-    public Categorization GetById(Guid id);
-
     public Categorization GetByName(string name);
 }
 

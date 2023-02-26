@@ -28,11 +28,14 @@ public class MetadataRepo : IMetadataRepo
         _repo.Save(metadata);
     }
 
+    public IEnumerable<Metadata> GetAll()
+    {
+        return _repo.GetAll();
+    }
+
     public IEnumerable<Metadata> Get(Guid categorizationId)
     {
         return _repo.GetItems(Query.EQ("CategorizationId", categorizationId));
     }
-
-
 }
 

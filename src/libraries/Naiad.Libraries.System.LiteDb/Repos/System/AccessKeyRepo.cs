@@ -13,7 +13,6 @@ public class AccessKeyRepo : IAccessKeyRepo
     public AccessKeyRepo(ILiteDatabase database)
     {
         _repo = new InternalRepo<AccessKey>(database, "useraccesses");
-
         _repo.EnsureIndex(x => x.UserId, false);
     }
 
@@ -30,5 +29,10 @@ public class AccessKeyRepo : IAccessKeyRepo
     public void Save(AccessKey accessKey)
     {
         _repo.Save(accessKey);
+    }
+
+    public IEnumerable<AccessKey> GetAll()
+    {
+        return _repo.GetAll();
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace Naiad.Libraries.System.Interfaces.System;
+﻿using Naiad.Libraries.System.Models.System;
 
-public interface ICertificateRepo
+namespace Naiad.Libraries.System.Interfaces.System;
+
+public interface ICertificateRepo : IDataRepository<Certificate>
 {
     
 }
