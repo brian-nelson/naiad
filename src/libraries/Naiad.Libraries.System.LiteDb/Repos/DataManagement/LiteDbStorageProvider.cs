@@ -7,11 +7,11 @@ using Naiad.Libraries.System.Models.DataManagement;
 
 namespace Naiad.Libraries.System.LiteDb.Repos.DataManagement;
 
-public class StorageProvider : IStorageProvider
+public class LiteDbStorageRepo : IStorageRepo
 {
     private readonly ILiteStorage<string> _fileStorage;
 
-    public StorageProvider(ILiteDatabase database)
+    public LiteDbStorageRepo(ILiteDatabase database)
     {
         _fileStorage = database.FileStorage;
     }
@@ -24,7 +24,7 @@ public class StorageProvider : IStorageProvider
         return stream;
     }
 
-    public bool FileExist(string fileId)
+    public bool FileExists(string fileId)
     {
         var fileInfo = _fileStorage.FindById(fileId);
         return fileInfo != null;

@@ -7,7 +7,7 @@ namespace Naiad.Libraries.System.Interfaces;
 public interface IRepositoryProvider
 {
     // Data Management
-    public IStorageProvider GetStorageProvider();
+    public IStorageRepo GetStorageProvider();
 
     // Metadata Management
     public ICategorizationRepo GetCategorizationRepo();

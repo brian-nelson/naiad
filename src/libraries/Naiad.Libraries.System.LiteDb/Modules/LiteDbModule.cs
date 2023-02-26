@@ -40,8 +40,8 @@ public class LiteDbModule : Module, IRepositoryProviderModule
             .SingleInstance();
 
         // Data Management 
-        builder.RegisterType<StorageProvider>()
-            .As<IStorageProvider>();
+        builder.RegisterType<LiteDbStorageRepo>()
+            .As<IStorageRepo>();
 
         // Metadata Management
         builder.RegisterType<CategorizationRepo>()

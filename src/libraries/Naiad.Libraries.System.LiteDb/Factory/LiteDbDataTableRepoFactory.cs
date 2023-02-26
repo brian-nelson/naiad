@@ -5,19 +5,19 @@ using Naiad.Libraries.System.Models.DataManagement;
 
 namespace Naiad.Libraries.System.LiteDb.Factory
 {
-    public class DataTableRepoFactory : IDataTableRepoFactory
+    public class LiteDbDataTableRepoFactory : IDataTableRepoFactory
     {
         private readonly ILiteDatabase _liteDatabase;
 
-        public DataTableRepoFactory(
+        public LiteDbDataTableRepoFactory(
             ILiteDatabase liteDatabase)
         {
             _liteDatabase = liteDatabase;
         }
 
-        public IDataTableProvider GetDataTableRepo(StructuredDataDefinition sdd)
+        public IDataTableRepo GetDataTableRepo(StructuredDataDefinition sdd)
         {
-            var dataTableRepo = new DataTableRepo(
+            var dataTableRepo = new LiteDbDataTableRepo(
                 _liteDatabase, sdd);
 
             return dataTableRepo;

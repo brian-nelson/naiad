@@ -4,11 +4,11 @@ using System.IO;
 
 namespace Naiad.Libraries.System.Interfaces.DataManagement;
 
-public interface IStorageProvider
+public interface IStorageRepo
 {
     public Stream GetFile(string fileId);
 
-    public bool FileExist(string fileId);
+    public bool FileExists(string fileId);
 
     public void SaveFile(string fileId, Stream stream);
 

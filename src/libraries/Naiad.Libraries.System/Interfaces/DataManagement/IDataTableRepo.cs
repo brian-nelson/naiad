@@ -2,7 +2,7 @@
 
 namespace Naiad.Libraries.System.Interfaces.DataManagement;
 
-public interface IDataTableProvider
+public interface IDataTableRepo
 {
     public DataTable GetAllData();
 

@@ -49,6 +49,8 @@ namespace Naiad.Libraries.System.Services
 
                                 var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
                                 repo.SaveData(dataTable);
+
+                                // TODO - Ensure that a relationship is set between the original doc and the sdd
                             }
                             else
                             {

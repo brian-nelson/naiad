@@ -1,6 +1,4 @@
-﻿using Autofac;
-using LiteDB;
-using Naiad.Libraries.Core.Objects;
+﻿using LiteDB;
 using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Interfaces.DataManagement;
 using Naiad.Libraries.System.Interfaces.MetadataManagement;
@@ -27,9 +25,9 @@ public class LiteDbRepositoryProvider : IRepositoryProvider
             .Id(x => x.Id);
     }
 
-    public IStorageProvider GetStorageProvider()
+    public IStorageRepo GetStorageProvider()
     {
-        return new StorageProvider(Database);
+        return new LiteDbStorageRepo(Database);
     }
 
     public ICategorizationRepo GetCategorizationRepo()

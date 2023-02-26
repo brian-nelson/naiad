@@ -9,7 +9,7 @@ namespace Naiad.Libraries.System.Services;
 
 public class DataService
 {
-    private readonly IStorageProvider _storageProvider;
+    private readonly IStorageRepo _storageProvider;
     private readonly MetadataService _metadataService;
 
     public DataService(
@@ -32,7 +32,7 @@ public class DataService
 
     public bool FileExists(string fileId)
     {
-        return _storageProvider.FileExist(fileId);
+        return _storageProvider.FileExists(fileId);
     }
 
     public NaiadFileInfo GetFileInfo(string fileId)

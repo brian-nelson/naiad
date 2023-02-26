@@ -4,12 +4,9 @@ using Naiad.Libraries.System.Models.MetadataManagement;
 
 namespace Naiad.Libraries.System.Interfaces.MetadataManagement;
 
-public interface IDataPointerRepo
+public interface IDataPointerRepo : IDataRepository<DataPointer>
 {
-    public DataPointer GetById(Guid id);
     public DataPointer GetByLocation(string fileId);
-
-    public void Save(DataPointer pointer);
 
     public IEnumerable<DataPointer> GetByZone(Guid zoneId);
     public IEnumerable<DataPointer> GetByGranularity(Guid granularityId);

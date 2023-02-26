@@ -6,14 +6,14 @@ using Naiad.Libraries.System.Models.DataManagement;
 
 namespace Naiad.Libraries.System.LiteDb.Repos.DataManagement
 {
-    public class DataTableRepo : IDataTableProvider
+    public class LiteDbDataTableRepo : IDataTableRepo
     {
         private readonly StructuredDataDefinition _structuredDataDefinition;
 
         private readonly string _uniqueColumn;
         private readonly ILiteCollection<BsonDocument> _collection;
 
-        public DataTableRepo(
+        public LiteDbDataTableRepo(
             ILiteDatabase database,
             StructuredDataDefinition structuredDataDefinition)
         {
@@ -37,7 +37,11 @@ namespace Naiad.Libraries.System.LiteDb.Repos.DataManagement
                 {
                     foreach (var bsonDocumentKey in bsonDocument.Keys)
                     {
-                        if (bsonDocumentKey.Equals(_uniqueColumn))
+                        if (bsonDocumentKey.Equals("_id"))
+                        {
+                            // For now ignore the internal ids
+                        }
+                        else if (bsonDocumentKey.Equals(_uniqueColumn))
                         {
                             var column = dataTable.Columns.Add(bsonDocumentKey, typeof(string));
                             column.Unique = true;
@@ -54,7 +58,12 @@ namespace Naiad.Libraries.System.LiteDb.Repos.DataManagement
 
                 foreach (var bsonDocumentKey in bsonDocument.Keys)
                 {
-                    dataRow[bsonDocumentKey] = bsonDocument[bsonDocumentKey];
+                    var bsonValue = bsonDocument[bsonDocumentKey];
+
+                    if (bsonValue.Type != BsonType.ObjectId)
+                    {
+                        dataRow[bsonDocumentKey] = bsonValue.AsString;
+                    }
                 }
 
                 dataTable.Rows.Add(dataRow);

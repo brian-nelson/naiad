@@ -34,7 +34,7 @@ public class LocalModule : Module
         builder.RegisterType<ConverterFactory>()
             .As<IConverterFactory>();
 
-        builder.RegisterType<DataTableRepoFactory>()
+        builder.RegisterType<LiteDbDataTableRepoFactory>()
             .As<IDataTableRepoFactory>();
 
 
