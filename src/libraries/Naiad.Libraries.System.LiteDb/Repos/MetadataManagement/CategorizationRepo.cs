@@ -15,6 +15,8 @@ public class CategorizationRepo : ICategorizationRepo
         ILiteDatabase database)
     {
         _repo = new InternalRepo<Categorization>(database, "categorizations");
+
+        _repo.EnsureIndex(x => x.Name, true);
     }
 
     public IEnumerable<Categorization> GetAll()

@@ -14,6 +14,8 @@ internal class GranularityRepo : IGranularityRepo
         ILiteDatabase database)
     {
         _repo = new InternalRepo<Granularity>(database, "granularities");
+
+        _repo.EnsureIndex(x => x.Name, true);
     }
 
     public IEnumerable<Granularity> GetAll()

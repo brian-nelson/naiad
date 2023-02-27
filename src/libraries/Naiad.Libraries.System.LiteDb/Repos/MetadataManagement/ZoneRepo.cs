@@ -14,6 +14,8 @@ public class ZoneRepo : IZoneRepo
         ILiteDatabase database)
     {
         _repo = new InternalRepo<Zone>(database, "zones");
+
+        _repo.EnsureIndex(x => x.Name, true);
     }
 
     public IEnumerable<Zone> GetAll()
