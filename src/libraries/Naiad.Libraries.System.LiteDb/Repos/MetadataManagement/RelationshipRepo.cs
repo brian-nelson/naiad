@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LiteDB;
+using Naiad.Libraries.System.Exceptions.DataManagement;
 using Naiad.Libraries.System.Interfaces.MetadataManagement;
 using Naiad.Libraries.System.Models.MetadataManagement;
 
@@ -36,6 +37,17 @@ public class RelationshipRepo : IRelationshipRepo
 
     public void Save(Relationship relationship)
     {
+        var existing = GetRelationship(
+            relationship.ParentId,
+            relationship.ChildId,
+            relationship.ConnectionContext);
+
+        if (existing != null
+            && existing.Id != relationship.Id)
+        {
+            throw new DuplicateKeyViolation("Record already exists with this ParentId, ChildId and connectionContext");
+        }
+
         _repo.Save(relationship);
     }
 

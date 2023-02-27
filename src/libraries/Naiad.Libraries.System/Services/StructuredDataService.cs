@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Data;
+using Naiad.Libraries.System.Constants.DataManagement;
+using Naiad.Libraries.System.Constants.MetadataManagement;
 using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Interfaces.DataManagement;
 using Naiad.Libraries.System.Models.DataManagement;
+using Naiad.Libraries.System.Models.MetadataManagement;
 
 namespace Naiad.Libraries.System.Services
 {
@@ -50,7 +53,7 @@ namespace Naiad.Libraries.System.Services
                                 var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
                                 repo.SaveData(dataTable);
 
-                                // TODO - Ensure that a relationship is set between the original doc and the sdd
+                                CreateStructuredDataRelationship(dataPointerId, metadataId);
                             }
                             else
                             {
@@ -71,6 +74,25 @@ namespace Naiad.Libraries.System.Services
             else
             {
                 throw new ArgumentException("Unknown type of structured data");
+            }
+        }
+
+        public void CreateStructuredDataRelationship(Guid dataPointerId, Guid metadataId)
+        {
+            var existing = _metadataService.GetStructuredDataRelationship(dataPointerId, metadataId);
+
+            if (existing == null)
+            {
+                var relationship = new Relationship
+                {
+                    ParentId = dataPointerId,
+                    ParentType = EntityType.DataPointer,
+                    ChildId = metadataId,
+                    ChildType = EntityType.Metadata,
+                    ConnectionContext = StructuredDataConstants.NAIAD_STRUCTURED_DATA
+                };
+
+                _metadataService.Save(relationship);
             }
         }
 

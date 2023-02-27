@@ -145,6 +145,19 @@ public class MetadataService
         _relationshipRepo.Save(relationship);
     }
 
+    public Relationship GetRelationship(Guid parentId, Guid childId, string connectionContext)
+    {
+        return _relationshipRepo.GetRelationship(parentId, childId, connectionContext);
+    }
+
+    public Relationship GetStructuredDataRelationship(Guid dataPointerId, Guid metadataId)
+    {
+        return GetRelationship(dataPointerId, metadataId, StructuredDataConstants.NAIAD_STRUCTURED_DATA);
+    }
+
+
+    // Metadata
+
     public IEnumerable<Metadata> GetChildrenMetadata(Guid parentId)
     {
         var output = new List<Metadata>();
@@ -217,6 +230,7 @@ public class MetadataService
         return output;
     }
 
+    
     /* Zones */
     public Zone GetZone(Guid zoneId)
     {
@@ -407,11 +421,6 @@ public class MetadataService
         var categorization = EnsureCategorization(StructuredDataConstants.NAIAD_STRUCTURED_DATA);
 
         return FindStructuredDataDefinitions(categorization.Id);
-    }
-
-    public Relationship GetRelationship(Guid parentId, Guid childId, string connectionContext)
-    {
-        return _relationshipRepo.GetRelationship(parentId, childId, connectionContext);
     }
 
     public IEnumerable<StructuredDataDefinition> GetStructuredDataDefinitionsTaggedToData(Guid dataPointerId)

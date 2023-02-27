@@ -14,7 +14,7 @@ public class LogEntryRepo : ILogEntryRepo
     {
         _repo = new InternalRepo<LogEntry>(database, "logentries");
 
-        _repo.EnsureIndex(x => x.EntryDateTime, true);
+        _repo.EnsureIndex(x => x.EntryDateTime, false);
         _repo.EnsureIndex(x => x.UserId, false);
     }
 

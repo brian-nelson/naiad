@@ -34,4 +34,14 @@ public class MetadataController : ControllerBase
         var pointer = _metadataService.GetDataPointer(dataPointerId);
         return Ok(pointer);
     }
+
+    [HttpPost]
+    [Route("api/datapointer")]
+    public ActionResult SaveDataPointer([FromBody] DataPointer dataPointer)
+    {
+        _metadataService.Save(dataPointer);
+        return Ok();
+    }
+
+    
 }

@@ -23,8 +23,6 @@ namespace Naiad.Libraries.System.Converters
 
                 using (var csvReader = new CsvReader(streamReader, config, true))
                 {
-                    
-
                     using (var dr = new CsvDataReader(csvReader))
                     {
                         output = new DataTable();

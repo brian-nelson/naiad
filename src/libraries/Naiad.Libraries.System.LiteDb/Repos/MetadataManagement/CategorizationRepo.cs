@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LiteDB;
+using Naiad.Libraries.System.Exceptions.DataManagement;
 using Naiad.Libraries.System.Interfaces.MetadataManagement;
 using Naiad.Libraries.System.Models.MetadataManagement;
 
@@ -23,6 +24,13 @@ public class CategorizationRepo : ICategorizationRepo
 
     public void Save(Categorization categorization)
     {
+        var existing = GetByName(categorization.Name);
+        if (existing != null
+            && !existing.Id.Equals(categorization.Id))
+        {
+            throw new DuplicateKeyViolation("Record already exists given categorization name");
+        }
+
         _repo.Save(categorization);
     }
 
