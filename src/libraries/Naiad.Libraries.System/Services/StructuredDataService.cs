@@ -120,10 +120,28 @@ namespace Naiad.Libraries.System.Services
             return GetAllData(sdd);
         }
 
+        public DataTable GetData(Guid metadataId, int skip, int limit)
+        {
+            var sdd = _metadataService.GetStructuredDataDefinition(metadataId);
+
+            if (sdd == null)
+            {
+                throw new ArgumentException("Structured Data Definition not found");
+            }
+
+            return GetAllData(sdd, skip, limit);
+        }
+
         public DataTable GetAllData(StructuredDataDefinition sdd)
         {
             var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
             return repo.GetAllData();
+        }
+
+        public DataTable GetAllData(StructuredDataDefinition sdd, int skip, int limit)
+        {
+            var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
+            return repo.GetData(skip, limit);
         }
 
     }

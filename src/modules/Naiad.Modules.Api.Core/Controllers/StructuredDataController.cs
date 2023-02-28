@@ -93,4 +93,20 @@ public class StructuredDataController : ControllerBase
 
         return this.Content(json, MimeTypeConstants.JSON);
     }
+
+    [HttpGet]
+    [Route("api/structured/{metadataId:guid}/{skip:int}/{limit:int}")]
+    public ContentResult GetStructuredData(
+        [FromRoute] Guid metadataId,
+        [FromRoute] int skip,
+        [FromRoute] int limit)
+    {
+        var dataTable = _structuredDataService.GetData(metadataId, skip, limit);
+
+        var json = JsonHelper.ToJson(dataTable);
+
+        return this.Content(json, MimeTypeConstants.JSON);
+    }
+
+    
 }

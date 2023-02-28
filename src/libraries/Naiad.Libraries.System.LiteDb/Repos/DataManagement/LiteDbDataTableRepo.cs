@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using LiteDB;
 using Naiad.Libraries.System.Interfaces.DataManagement;
@@ -21,12 +22,30 @@ public class LiteDbDataTableRepo : IDataTableRepo
         _collection.EnsureIndex(_uniqueColumn, true);
     }
 
+    public DataTable GetData(int skip, int limit)
+    {
+        var dataTable = new DataTable();
+
+        var bsonDocuments = _collection.Find(Query.All(_uniqueColumn), skip, limit);
+
+        ProcessRows(dataTable, bsonDocuments);
+
+        return dataTable;
+    }
+
     public DataTable GetAllData()
     {
         var dataTable = new DataTable();
 
-        var bsonDocuments = _collection.FindAll();
+        var bsonDocuments = _collection.Find(Query.All(_uniqueColumn));
 
+        ProcessRows(dataTable, bsonDocuments);
+
+        return dataTable;
+    }
+
+    public void ProcessRows(DataTable dataTable, IEnumerable<BsonDocument> bsonDocuments)
+    {
         foreach (var bsonDocument in bsonDocuments)
         {
             if (dataTable.Columns.Count == 0)
@@ -64,8 +83,6 @@ public class LiteDbDataTableRepo : IDataTableRepo
 
             dataTable.Rows.Add(dataRow);
         }
-
-        return dataTable;
     }
 
     public void SaveData(DataTable table)
