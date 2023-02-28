@@ -1,6 +1,6 @@
 import "./DefineDataType.css";
 import React, {Component} from "react";
-import {Row, Col, Table, Button, Modal} from "react-bootstrap";
+import {Row, Col, Table, Button, Modal, Spinner} from "react-bootstrap";
 import { Link, Navigate } from 'react-router-dom'
 import NaiadService from "../services/NaiadService";
 import {toast} from "react-toastify";
@@ -21,7 +21,8 @@ export default class DataFileMetadata extends Component {
       definitionUsed: [],
       definitions: [],
       showNewMappingPopup: false,
-      selectedMetadataId: null
+      selectedMetadataId: null,
+      processingData: false
     };
 
     this.loadDataPointer = this.loadDataPointer.bind(this);
@@ -79,15 +80,27 @@ export default class DataFileMetadata extends Component {
   handleReapply(metadataId) {
     let dataPointerId = this.state.DataPointerId;
 
-    NaiadService.applyConvertor(dataPointerId, metadataId)
-      .then(r => {
-        toast.info("Conversion applied");
+    this.setState({
+        processingData: true
+      }, () =>
+        NaiadService.applyConvertor(dataPointerId, metadataId)
+          .then(r => {
+            toast.info("Conversion applied");
 
-        this.loadDataTypesUsed();
-      })
-      .catch(e => {
-        toast.error(e.message);
-      })
+            this.setState({
+              processingData: false
+            });
+
+            this.loadDataTypesUsed();
+          })
+          .catch(e => {
+            toast.error(e.message);
+
+            this.setState({
+              processingData: false
+            });
+          })
+    );
   }
 
   handleNewMapping() {
@@ -165,7 +178,9 @@ export default class DataFileMetadata extends Component {
         return (
           <tr key={item.MetadataId}>
             <td>
-              <Button onClick={ (evt) => { this.handleReapply(item.MetadataId); }}>Reapply</Button>
+              <Button onClick={ (evt) => { this.handleReapply(item.MetadataId); }}
+                      disabled={this.state.processingData}
+              >Reapply</Button>
             </td>
             <td>{name}</td>
             <td>{description}</td>
@@ -197,7 +212,18 @@ export default class DataFileMetadata extends Component {
             <Button variant="secondary" onClick={this.handleClose}>Cancel</Button>
             <Button variant="primary" onClick={this.handleClose}>Save</Button>
           </Modal.Footer>
-
+        </Modal>
+        <Modal
+          show={this.state.processingData}
+          onHide={this.handleClose}>
+          <Modal.Header>
+            <Modal.Title>Processing Data</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Spinner animation="border" role="status" visible={this.state.processingData}>
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </Modal.Body>
         </Modal>
         <Row>
           <Col>
@@ -217,13 +243,10 @@ export default class DataFileMetadata extends Component {
               </Col>
               <Col>
                 <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
-                  {
-                    //TODO - Link to new page to set a new data type
-                  }
-                    <BsFileEarmarkPlusFill
-                      size={24}
-                      onClick={ (evt) => { this.handleNewMapping(); }}
-                    />
+                  <BsFileEarmarkPlusFill
+                    size={24}
+                    onClick={ (evt) => { this.handleNewMapping(); }}
+                  />
                 </div>
               </Col>
             </Row>
