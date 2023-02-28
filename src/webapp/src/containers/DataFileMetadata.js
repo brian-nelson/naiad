@@ -1,10 +1,11 @@
 import "./DefineDataType.css";
 import React, {Component} from "react";
-import {Row, Col, Table, Button} from "react-bootstrap";
+import {Row, Col, Table, Button, Modal} from "react-bootstrap";
 import { Link, Navigate } from 'react-router-dom'
 import NaiadService from "../services/NaiadService";
 import {toast} from "react-toastify";
 import {BsFileEarmarkPlusFill} from "react-icons/bs";
+import Form from 'react-bootstrap/Form';
 
 export default class DataFileMetadata extends Component {
   constructor(props) {
@@ -18,12 +19,18 @@ export default class DataFileMetadata extends Component {
       StorageLocation: "",
       redirect: false,
       definitionUsed: [],
-      definitions: []
+      definitions: [],
+      showNewMappingPopup: false,
+      selectedMetadataId: null
     };
 
     this.loadDataPointer = this.loadDataPointer.bind(this);
     this.loadDataTypes = this.loadDataTypes.bind(this);
     this.loadDataTypesUsed = this.loadDataTypesUsed.bind(this);
+    this.handleReapply = this.handleReapply.bind(this);
+    this.handleNewMapping = this.handleNewMapping.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleSelection = this.handleSelection.bind(this);
   }
 
   componentDidMount() {
@@ -69,11 +76,71 @@ export default class DataFileMetadata extends Component {
       });
   }
 
+  handleReapply(metadataId) {
+    let dataPointerId = this.state.DataPointerId;
+
+    NaiadService.applyConvertor(dataPointerId, metadataId)
+      .then(r => {
+        toast.info("Conversion applied");
+
+        this.loadDataTypesUsed();
+      })
+      .catch(e => {
+        toast.error(e.message);
+      })
+  }
+
+  handleNewMapping() {
+    this.setState({ showNewMappingPopup: true});
+  }
+
+  handleClose() {
+    if (this.state.selectedMetadataId != null) {
+      this.handleReapply(this.state.selectedMetadataId);
+    }
+
+    this.setState({
+      showNewMappingPopup: false,
+      selectedMetadataId: null
+    });
+  }
+
+  handleSelection(event) {
+    let value = event.target.value;
+    if (value != null) {
+      this.setState({
+        selectedMetadataId: value
+      });
+    }
+  }
+
   renderRedirect = () => {
     if (this.state.redirect) {
       return <Navigate to={`/datafiles`}/>
     }
   };
+
+  renderSelect(list) {
+    if (list != null
+      && list.length > 0) {
+      let rows = list.map((item, i) => {
+        return (
+          <option
+            value={item.MetadataId}
+          >
+            {item.Name}
+          </option>);
+      });
+
+      return (
+        <Form.Select
+          onChange={this.handleSelection}
+        >
+          <option value={null}>Select a type</option>
+        {rows}
+        </Form.Select>);
+    }
+  }
 
   renderTableHeaderApplied() {
     return (
@@ -96,9 +163,9 @@ export default class DataFileMetadata extends Component {
         let mimeType = item.MimeType;
 
         return (
-          <tr key={item.Id}>
+          <tr key={item.MetadataId}>
             <td>
-              <Button>Reapply</Button>
+              <Button onClick={ (evt) => { this.handleReapply(item.MetadataId); }}>Reapply</Button>
             </td>
             <td>{name}</td>
             <td>{description}</td>
@@ -117,6 +184,21 @@ export default class DataFileMetadata extends Component {
     return (
       <div className="User">
         {this.renderRedirect()}
+        <Modal
+          show={this.state.showNewMappingPopup}
+          onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Chose a data type</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {this.renderSelect(this.state.definitions)}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>Cancel</Button>
+            <Button variant="primary" onClick={this.handleClose}>Save</Button>
+          </Modal.Footer>
+
+        </Modal>
         <Row>
           <Col>
             <h3>Metadata for: {`${this.state.StorageLocation}`.trim()}</h3>
@@ -138,11 +220,10 @@ export default class DataFileMetadata extends Component {
                   {
                     //TODO - Link to new page to set a new data type
                   }
-                  <Link to={`/`}>
                     <BsFileEarmarkPlusFill
                       size={24}
+                      onClick={ (evt) => { this.handleNewMapping(); }}
                     />
-                  </Link>
                 </div>
               </Col>
             </Row>

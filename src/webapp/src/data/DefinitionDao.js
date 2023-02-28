@@ -17,4 +17,8 @@ export default class DefinitionDao extends BaseDao {
   saveDefinition(definition) {
     return this.write('/definition', definition);
   }
+
+  applyConverter(dataPointerId, metadataId) {
+    return this.write(`/data/${dataPointerId}/transform/${metadataId}`)
+  }
 }

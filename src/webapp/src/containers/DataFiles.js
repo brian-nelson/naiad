@@ -1,7 +1,7 @@
 import "./DataFiles.css";
 import React, {Component} from "react";
 import NaiadService from "../services/NaiadService";
-import {Row, Col, Table} from "react-bootstrap";
+import {Row, Col, Table, Button} from "react-bootstrap";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
@@ -84,7 +84,7 @@ export default class DataFiles extends Component {
         return (
           <tr key={item.Id}>
             <td>
-              <button onClick={ (evt) => { this.handleDownload(item.Id); }}>Download</button>
+              <Button onClick={ (evt) => { this.handleDownload(item.Id); }}>Download</Button>
             </td>
             <td>
               <Link to={metaDataUrl}>View</Link>

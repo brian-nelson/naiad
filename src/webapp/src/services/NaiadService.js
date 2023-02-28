@@ -97,6 +97,11 @@ export default class NaiadService {
         return dao.saveDefinition(definition);
     }
 
+    static applyConvertor(dataPointerId, metadataId) {
+        const dao = new DefinitionDao(Environment.BASE_URL);
+        return dao.applyConverter(dataPointerId, metadataId);
+    }
+
     /* Data Files */
     static listDataFiles(prefix) {
         const dao = new DataFileDao(Environment.BASE_URL);

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using CsvHelper;
@@ -12,6 +11,8 @@ namespace Naiad.Libraries.System.Converters
 {
     public class CsvConverter : IDataTableConverter
     {
+        public string Name => "Naiad Simple CSV Converter";
+
         public DataTable Convert(Stream sourceFile)
         {
             DataTable output;
