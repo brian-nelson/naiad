@@ -5,6 +5,7 @@ import UserDao from "../data/UserDao";
 import DefinitionDao from "../data/DefinitionDao";
 import DataFileDao from "../data/DataFileDao";
 import DataPointerDao from "../data/DataPointerDao";
+import StructuredDataDao from "../data/StructuredDataDao";
 
 export default class NaiadService {
     static JWT = "";
@@ -92,6 +93,11 @@ export default class NaiadService {
         return dao.getDefinition(name);
     }
 
+    static getDefinitionDetails(name) {
+        const dao = new DefinitionDao(Environment.BASE_URL);
+        return dao.getDefinitionDetails(name);
+    }
+
     static saveDefinition(definition) {
         const dao = new DefinitionDao(Environment.BASE_URL);
         return dao.saveDefinition(definition);
@@ -117,5 +123,11 @@ export default class NaiadService {
     static getDataPointer(dataPointerId) {
         const dao = new DataPointerDao(Environment.BASE_URL);
         return dao.getDataPointer(dataPointerId);
+    }
+
+    /* Structured Data */
+    static getStructuredData(metadataId, skip, limit) {
+        const dao = new StructuredDataDao(Environment.BASE_URL);
+        return dao.getStructuredData(metadataId, skip, limit);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Reflection.Metadata.Ecma335;
 using Naiad.Libraries.System.Constants.DataManagement;
 using Naiad.Libraries.System.Constants.MetadataManagement;
 using Naiad.Libraries.System.Interfaces;
@@ -7,142 +9,164 @@ using Naiad.Libraries.System.Interfaces.DataManagement;
 using Naiad.Libraries.System.Models.DataManagement;
 using Naiad.Libraries.System.Models.MetadataManagement;
 
-namespace Naiad.Libraries.System.Services
+namespace Naiad.Libraries.System.Services;
+
+public class StructuredDataService
 {
-    public class StructuredDataService
+    private readonly DataService _dataService;
+    private readonly MetadataService _metadataService;
+    private readonly IDataTableRepoFactory _dataTableRepoFactory;
+    private readonly IConverterFactory _converterFactory;
+
+    public StructuredDataService(
+        DataService dataService,
+        MetadataService metadataService,
+        IDataTableRepoFactory dataTableRepoFactory,
+        IConverterFactory converterFactory)
     {
-        private readonly DataService _dataService;
-        private readonly MetadataService _metadataService;
-        private readonly IDataTableRepoFactory _dataTableRepoFactory;
-        private readonly IConverterFactory _converterFactory;
+        _dataService = dataService;
+        _metadataService = metadataService;
+        _dataTableRepoFactory = dataTableRepoFactory;
+        _converterFactory = converterFactory;
+    }
 
-        public StructuredDataService(
-            DataService dataService,
-            MetadataService metadataService,
-            IDataTableRepoFactory dataTableRepoFactory,
-            IConverterFactory converterFactory)
+    public void TransformFileToStructuredData(
+        Guid dataPointerId,
+        Guid metadataId)
+    {
+        var sdd = _metadataService.GetStructuredDataDefinition(metadataId);
+
+        if (sdd != null)
         {
-            _dataService = dataService;
-            _metadataService = metadataService;
-            _dataTableRepoFactory = dataTableRepoFactory;
-            _converterFactory = converterFactory;
-        }
+            var dataPointer = _metadataService.GetDataPointer(dataPointerId);
 
-        public void TransformFileToStructuredData(
-            Guid dataPointerId,
-            Guid metadataId)
-        {
-            var sdd = _metadataService.GetStructuredDataDefinition(metadataId);
-
-            if (sdd != null)
+            if (dataPointer != null)
             {
-                var dataPointer = _metadataService.GetDataPointer(dataPointerId);
-
-                if (dataPointer != null)
+                using (var stream = _dataService.GetFile(dataPointer.StorageLocation))
                 {
-                    using (var stream = _dataService.GetFile(dataPointer.StorageLocation))
+                    if (stream != null)
                     {
-                        if (stream != null)
+                        var converter = _converterFactory.GetConverter(sdd.MimeType);
+
+                        if (converter != null)
                         {
-                            var converter = _converterFactory.GetConverter(sdd.MimeType);
+                            var dataTable = converter.Convert(stream);
 
-                            if (converter != null)
-                            {
-                                var dataTable = converter.Convert(stream);
+                            var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
+                            repo.SaveData(dataTable);
 
-                                var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
-                                repo.SaveData(dataTable);
-
-                                CreateStructuredDataRelationship(dataPointerId, metadataId);
-                            }
-                            else
-                            {
-                                throw new ArgumentException("No converter found for mimetype");
-                            }
+                            CreateStructuredDataRelationship(dataPointerId, metadataId);
                         }
                         else
                         {
-                            throw new ArgumentException("Data pointer found, but file not found");
+                            throw new ArgumentException("No converter found for mimetype");
                         }
                     }
-                }
-                else
-                {
-                    throw new ArgumentException("Data Pointer not found");
+                    else
+                    {
+                        throw new ArgumentException("Data pointer found, but file not found");
+                    }
                 }
             }
             else
             {
-                throw new ArgumentException("Unknown type of structured data");
+                throw new ArgumentException("Data Pointer not found");
             }
         }
-
-        public void CreateStructuredDataRelationship(Guid dataPointerId, Guid metadataId)
+        else
         {
-            var existing = _metadataService.GetStructuredDataRelationship(dataPointerId, metadataId);
+            throw new ArgumentException("Unknown type of structured data");
+        }
+    }
 
-            if (existing == null)
+    public void CreateStructuredDataRelationship(Guid dataPointerId, Guid metadataId)
+    {
+        var existing = _metadataService.GetStructuredDataRelationship(dataPointerId, metadataId);
+
+        if (existing == null)
+        {
+            var relationship = new Relationship
             {
-                var relationship = new Relationship
-                {
-                    ParentId = dataPointerId,
-                    ParentType = EntityType.DataPointer,
-                    ChildId = metadataId,
-                    ChildType = EntityType.Metadata,
-                    ConnectionContext = StructuredDataConstants.NAIAD_STRUCTURED_DATA
-                };
+                ParentId = dataPointerId,
+                ParentType = EntityType.DataPointer,
+                ChildId = metadataId,
+                ChildType = EntityType.Metadata,
+                ConnectionContext = StructuredDataConstants.NAIAD_STRUCTURED_DATA
+            };
 
-                _metadataService.Save(relationship);
-            }
+            _metadataService.Save(relationship);
         }
+    }
 
-        public DataTable GetAllData(string structuredDataType)
+    public DataTable GetAllData(string structuredDataType)
+    {
+        var sdd = _metadataService.GetStructuredDataDefinition(structuredDataType);
+
+        if (sdd == null)
         {
-            var sdd = _metadataService.GetStructuredDataDefinition(structuredDataType);
-
-            if (sdd == null)
-            {
-                throw new ArgumentException("Structured Data Definition not found");
-            }
-
-            return GetAllData(sdd);
+            throw new ArgumentException("Structured Data Definition not found");
         }
 
-        public DataTable GetAllData(Guid metadataId)
+        return GetAllData(sdd);
+    }
+
+    public DataTable GetAllData(Guid metadataId)
+    {
+        var sdd = _metadataService.GetStructuredDataDefinition(metadataId);
+
+        if (sdd == null)
         {
-            var sdd = _metadataService.GetStructuredDataDefinition(metadataId);
-
-            if (sdd == null)
-            {
-                throw new ArgumentException("Structured Data Definition not found");
-            }
-
-            return GetAllData(sdd);
+            throw new ArgumentException("Structured Data Definition not found");
         }
 
-        public DataTable GetData(Guid metadataId, int skip, int limit)
+        return GetAllData(sdd);
+    }
+
+    public int GetCount(Guid metadataId)
+    {
+        var sdd = _metadataService.GetStructuredDataDefinition(metadataId);
+
+        if (sdd == null)
         {
-            var sdd = _metadataService.GetStructuredDataDefinition(metadataId);
-
-            if (sdd == null)
-            {
-                throw new ArgumentException("Structured Data Definition not found");
-            }
-
-            return GetAllData(sdd, skip, limit);
+            throw new ArgumentException("Structured Data Definition not found");
         }
 
-        public DataTable GetAllData(StructuredDataDefinition sdd)
+        return GetCount(sdd);
+    }
+
+    public int GetCount(StructuredDataDefinition sdd)
+    {
+        var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
+        return repo.GetCount();
+    }
+
+    public DataTable GetData(Guid metadataId, int skip, int limit)
+    {
+        var sdd = _metadataService.GetStructuredDataDefinition(metadataId);
+
+        if (sdd == null)
         {
-            var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
-            return repo.GetAllData();
+            throw new ArgumentException("Structured Data Definition not found");
         }
 
-        public DataTable GetAllData(StructuredDataDefinition sdd, int skip, int limit)
-        {
-            var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
-            return repo.GetData(skip, limit);
-        }
+        return GetAllData(sdd, skip, limit);
+    }
 
+    public DataTable GetAllData(StructuredDataDefinition sdd)
+    {
+        var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
+        return repo.GetAllData();
+    }
+
+    public DataTable GetAllData(StructuredDataDefinition sdd, int skip, int limit)
+    {
+        var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
+        return repo.GetData(skip, limit);
+    }
+
+    public List<string> GetColumns(StructuredDataDefinition sdd)
+    {
+        var repo = _dataTableRepoFactory.GetDataTableRepo(sdd);
+        return repo.GetColumns();
     }
 }

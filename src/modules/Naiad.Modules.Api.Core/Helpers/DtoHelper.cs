@@ -22,6 +22,18 @@ public static class DtoHelper
         };
     }
 
+    public static StructuredDataDetailDto ToStructuredDataDetailDto(this StructuredDataDefinition sdd)
+    {
+        return new StructuredDataDetailDto
+        {
+            MetadataId = sdd.MetadataId,
+            Name = sdd.Name,
+            Description = sdd.Description,
+            MimeType = sdd.MimeType,
+            IdentifierName = sdd.IdentifierName
+        };
+    }
+
     public static IEnumerable<StructuredDataDto> ToStructuredDataDtos(this IEnumerable<StructuredDataDefinition> sdds)
     {
         var output = new List<StructuredDataDto>();

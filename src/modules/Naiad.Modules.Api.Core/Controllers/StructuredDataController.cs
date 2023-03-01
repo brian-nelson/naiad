@@ -52,6 +52,24 @@ public class StructuredDataController : ControllerBase
     }
 
     [HttpGet]
+    [Route("api/definition/{name}/details")]
+    public ActionResult<StructuredDataDetailDto> GetDataTypeDetails(
+        [FromRoute] string name)
+    {
+        var sdd = _metadataService.GetStructuredDataDefinition(name);
+        var output = sdd?.ToStructuredDataDetailDto();
+        if (output != null)
+        {
+            output.Columns = _structuredDataService.GetColumns(sdd);
+            output.RowCount = _structuredDataService.GetCount(sdd.MetadataId);
+        }
+
+        _logger.Info($"SDD Details retrieved ({name})", User.GetUserId());
+
+        return Ok(output);
+    }
+
+    [HttpGet]
     [Route("api/definitions")]
     public ActionResult<IEnumerable<StructuredDataDto>> GetDataTypes()
     {
@@ -108,5 +126,18 @@ public class StructuredDataController : ControllerBase
         return this.Content(json, MimeTypeConstants.JSON);
     }
 
-    
+    [HttpGet]
+    [Route("api/structured/{metadataId:guid}/count")]
+    public ActionResult<CountResponse> GetCount(
+        [FromRoute] Guid metadataId)
+    {
+        var count = _structuredDataService.GetCount(metadataId);
+
+        var response = new CountResponse
+        {
+            Count = count
+        };
+
+        return Ok(response);
+    }
 }

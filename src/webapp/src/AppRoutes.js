@@ -12,6 +12,7 @@ import Login from "./containers/Login";
 import SetPassword from "./containers/SetPassword";
 import Users from "./containers/Users";
 import User from "./containers/User";
+import ViewData from "./containers/ViewData";
 
 const AppRoutes = ({childProps}) => (
   <Suspense fallback={<div>Loading ...</div>}>
@@ -19,6 +20,16 @@ const AppRoutes = ({childProps}) => (
       <Route path="/"
              exact
              element={<Home {...childProps}/>}
+      />
+
+      <Route path="/collection/:name"
+             exact
+             element={
+               <RequireAuthentication
+                 child={<WithParams Component={ViewData} childProps={childProps}/>}
+                 childProps={childProps}
+               />
+             }
       />
 
       <Route path="/collections"
