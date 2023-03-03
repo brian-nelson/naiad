@@ -1,5 +1,5 @@
 ﻿using System;
-using Naiad.Libraries.System.Interfaces;
+using Naiad.Libraries.Core.Interfaces;
 
 namespace Naiad.Libraries.System.Models;
 

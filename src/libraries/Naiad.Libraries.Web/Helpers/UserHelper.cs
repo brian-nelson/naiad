@@ -1,7 +1,7 @@
-﻿using System.Security.Claims;
-using System;
+﻿using System;
+using System.Security.Claims;
 
-namespace Naiad.Modules.Api.Core.Helpers;
+namespace Naiad.Libraries.Web.Helpers;
 
 public static class UserHelper
 {

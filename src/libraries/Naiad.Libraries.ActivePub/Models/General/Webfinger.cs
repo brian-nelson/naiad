@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Naiad.Libraries.ActivePub.Models.General;
+namespace Naiad.Libraries.ActivityPub.Models.General;
 
 public class Webfinger
 {

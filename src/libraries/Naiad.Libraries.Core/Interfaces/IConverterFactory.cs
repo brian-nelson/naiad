@@ -1,6 +1,4 @@
-﻿using Naiad.Libraries.Core.Interfaces;
-
-namespace Naiad.Libraries.System.Interfaces;
+﻿namespace Naiad.Libraries.Core.Interfaces;
 
 public interface IConverterFactory
 {

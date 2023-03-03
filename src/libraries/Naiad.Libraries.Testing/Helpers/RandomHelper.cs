@@ -18,13 +18,13 @@ public static class RandomHelper
 
 
 
-    public static string GetRandomAlphaString(int _length)
+    public static string GetRandomAlphaString(int length)
     {
         StringBuilder sb = new StringBuilder();
 
-        Byte[] array = GetRandomArray(_length);
+        Byte[] array = GetRandomArray(length);
 
-        for (int i = 0; i < _length; i++)
+        for (int i = 0; i < length; i++)
         {
             int b = array[i] % 52;
 

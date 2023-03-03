@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
-namespace Naiad.Libraries.ActivePub.Models.Pub;
+namespace Naiad.Libraries.ActivityPub.Models.Pub;
 
 public class OrderedCollection<T>
 {

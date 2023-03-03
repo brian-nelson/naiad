@@ -1,5 +1,6 @@
 ﻿using Naiad.Libraries.System.Models.System;
 using System.Collections.Generic;
+using Naiad.Libraries.Core.Interfaces;
 using Naiad.Libraries.System.Constants.System;
 
 namespace Naiad.Libraries.System.Interfaces.System;

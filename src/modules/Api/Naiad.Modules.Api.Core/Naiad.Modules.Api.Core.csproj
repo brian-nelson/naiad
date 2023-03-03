@@ -22,6 +22,7 @@
 	  <ProjectReference Include="..\..\..\libraries\Naiad.libraries.core\Naiad.Libraries.Core.csproj" />
 	  <ProjectReference Include="..\..\..\libraries\Naiad.Libraries.System.LiteDb\Naiad.Libraries.System.LiteDb.csproj" />
 	  <ProjectReference Include="..\..\..\libraries\Naiad.Libraries.System\Naiad.Libraries.System.csproj" />
+	  <ProjectReference Include="..\..\..\libraries\Naiad.Libraries.Web\Naiad.Libraries.Web.csproj" />
 	</ItemGroup>
 
 </Project>

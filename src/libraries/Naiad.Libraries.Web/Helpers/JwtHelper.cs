@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Naiad.Modules.Api.Core.Helpers;
+namespace Naiad.Libraries.Web.Helpers;
 
 public static class JwtHelper
 {

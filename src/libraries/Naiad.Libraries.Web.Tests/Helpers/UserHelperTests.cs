@@ -1,10 +1,11 @@
-﻿using System.Security.Claims;
-using Naiad.Libraries.System.Constants.System;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using Naiad.Libraries.Testing.Helpers;
-using Naiad.Modules.Api.Core.Helpers;
+using Naiad.Libraries.Web.Helpers;
 using NUnit.Framework;
 
-namespace Naiad.Modules.Api.Core.Tests.Helpers
+namespace Naiad.Libraries.Web.Tests.Helpers
 {
     [TestFixture]
     public class UserHelperTests
@@ -20,7 +21,7 @@ namespace Naiad.Modules.Api.Core.Tests.Helpers
                 { "SessionId", Guid.NewGuid().ToString() },
                 { "FamilyName", RandomHelper.GetRandomAlphaString(10) },
                 { "GivenName", RandomHelper.GetRandomAlphaString(10) },
-                { ClaimTypes.Role, Enum.GetName(typeof(UserTypes), UserTypes.ReadWrite) }
+                { ClaimTypes.Role,  RandomHelper.GetRandomAlphaString(10)}
             };
 
             var ci = JwtHelper.CreateClaimsIdentities(sessionInfo);
@@ -42,7 +43,7 @@ namespace Naiad.Modules.Api.Core.Tests.Helpers
                 { "SessionId", sessionId.ToString() },
                 { "FamilyName", RandomHelper.GetRandomAlphaString(10) },
                 { "GivenName", RandomHelper.GetRandomAlphaString(10) },
-                { ClaimTypes.Role, Enum.GetName(typeof(UserTypes), UserTypes.ReadWrite) }
+                { ClaimTypes.Role, RandomHelper.GetRandomAlphaString(10) }
             };
 
             var ci = JwtHelper.CreateClaimsIdentities(sessionInfo);
@@ -64,7 +65,7 @@ namespace Naiad.Modules.Api.Core.Tests.Helpers
                 { "SessionId", Guid.NewGuid().ToString() },
                 { ClaimTypes.Email, email },
                 { "GivenName", RandomHelper.GetRandomAlphaString(10) },
-                { ClaimTypes.Role, Enum.GetName(typeof(UserTypes), UserTypes.ReadWrite) }
+                { ClaimTypes.Role, RandomHelper.GetRandomAlphaString(10) }
             };
 
             var ci = JwtHelper.CreateClaimsIdentities(sessionInfo);
@@ -78,7 +79,7 @@ namespace Naiad.Modules.Api.Core.Tests.Helpers
         [Test]
         public void TestGetRole()
         {
-            string enumName = Enum.GetName(typeof(UserTypes), UserTypes.ReadWrite);
+            string enumName = RandomHelper.GetRandomAlphaString(10);
 
             var sessionInfo = new Dictionary<string, string>
             {

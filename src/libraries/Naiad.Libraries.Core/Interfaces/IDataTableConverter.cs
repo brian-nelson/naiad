@@ -2,7 +2,7 @@
 using System.Data;
 using System.IO;
 
-namespace Naiad.Libraries.System.Interfaces
+namespace Naiad.Libraries.Core.Interfaces
 {
     public interface IDataTableConverter
     {

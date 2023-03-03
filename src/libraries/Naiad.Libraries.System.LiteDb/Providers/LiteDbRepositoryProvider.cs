@@ -1,4 +1,5 @@
 ﻿using LiteDB;
+using Naiad.Libraries.Core.Interfaces;
 using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Interfaces.DataManagement;
 using Naiad.Libraries.System.Interfaces.MetadataManagement;

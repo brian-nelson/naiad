@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Naiad.Libraries.System.Interfaces;
+namespace Naiad.Libraries.Core.Interfaces;
 
 public interface IDataRepository<T>
 {

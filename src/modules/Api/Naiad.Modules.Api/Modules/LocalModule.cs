@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Naiad.Libraries.Core.Interfaces;
 using Naiad.Libraries.Core.Objects;
 using Naiad.Libraries.System.Converters;
 using Naiad.Libraries.System.Factories;
@@ -6,6 +7,7 @@ using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Interfaces.DataManagement;
 using Naiad.Libraries.System.LiteDb.Factory;
 using Naiad.Libraries.System.Services;
+using IConverterFactory = Naiad.Libraries.System.Interfaces.IConverterFactory;
 
 namespace Naiad.Modules.Api.Modules;
 

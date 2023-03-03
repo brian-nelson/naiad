@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Naiad.Libraries.ActivePub.Models.Pub;
+namespace Naiad.Libraries.ActivityPub.Models.Pub;
 
 public class Activity
 {

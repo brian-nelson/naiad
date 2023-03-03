@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Naiad.Libraries.ActivePub.Models.NodeInfo;
+namespace Naiad.Libraries.ActivityPub.Models.NodeInfo;
 
 public class NodeLink
 {

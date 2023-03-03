@@ -1,4 +1,5 @@
-﻿using Naiad.Libraries.System.Models.System;
+﻿using Naiad.Libraries.Core.Interfaces;
+using Naiad.Libraries.System.Models.System;
 
 namespace Naiad.Libraries.System.Interfaces.System;
 

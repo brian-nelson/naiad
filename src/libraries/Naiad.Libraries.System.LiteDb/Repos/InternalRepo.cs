@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using LiteDB;
+using Naiad.Libraries.Core.Interfaces;
 using Naiad.Libraries.System.Interfaces;
 
 namespace Naiad.Libraries.System.LiteDb.Repos;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Naiad.Libraries.ActivePub.Models.Pub;
+namespace Naiad.Libraries.ActivityPub.Models.Pub;
 
 public class Endpoints
 {

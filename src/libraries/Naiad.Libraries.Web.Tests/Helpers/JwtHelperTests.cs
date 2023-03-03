@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Naiad.Libraries.Testing.Helpers;
-using Naiad.Modules.Api.Core.Helpers;
+using Naiad.Libraries.Web.Helpers;
 using NUnit.Framework;
 
-namespace Naiad.Modules.Api.Core.Tests.Helpers
+namespace Naiad.Libraries.Web.Tests.Helpers
 {
     [TestFixture]
     public class JwtHelperTests

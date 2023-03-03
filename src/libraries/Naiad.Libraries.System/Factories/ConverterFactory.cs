@@ -1,6 +1,7 @@
-﻿using Naiad.Libraries.System.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Naiad.Libraries.Core.Interfaces;
+using IConverterFactory = Naiad.Libraries.System.Interfaces.IConverterFactory;
 
 namespace Naiad.Libraries.System.Factories
 {
