@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\libraries\Naiad.Libraries.Testing\Naiad.Libraries.Testing.csproj" />
+    <ProjectReference Include="..\..\..\libraries\Naiad.Libraries.Testing\Naiad.Libraries.Testing.csproj" />
     <ProjectReference Include="..\Naiad.Modules.Api.Core\Naiad.Modules.Api.Core.csproj" />
   </ItemGroup>
 

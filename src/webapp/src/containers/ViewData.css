@@ -1,0 +1,16 @@
+table {
+    overflow-y:scroll;
+    height: 800px;
+    display: block;
+}
+
+td {
+
+    /* css-3 */
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+
+}

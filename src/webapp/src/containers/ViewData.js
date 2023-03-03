@@ -1,4 +1,4 @@
-import "./DataFiles.css";
+import "./ViewData.css";
 import React, {Component} from "react";
 import NaiadService from "../services/NaiadService";
 import {Row, Col, Table, Button} from "react-bootstrap";
@@ -130,14 +130,18 @@ export default class ViewData extends Component {
   }
 
   renderTableBody(list) {
+    let dataColumns = this.state.dataTypeColumns;
+
     if (list != null
       && list.length > 0) {
       let rows =  list.map((item, i) => {
-        let columns = [];
-
-        for(let propValue in item){
-
-        }
+        let columns = dataColumns.map((column, j) => {
+          return (
+            <td>
+              {item[column]}
+            </td>
+          );
+        })
 
         return (
           <tr key={i}>
@@ -197,7 +201,9 @@ export default class ViewData extends Component {
         </Row>
         <Row>
           <Col>
-            <Table striped bordered hover>
+            <Table striped bordered hover
+                   style={{width:"100%", tableLayout:"fixed"}}
+            >
               { this.renderTableHeader(this.state.dataTypeColumns) }
               { this.renderTableBody(this.state.data) }
             </Table>

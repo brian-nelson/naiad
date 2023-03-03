@@ -23,13 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Naiad.Libraries.System.LiteDb\Naiad.Libraries.System.LiteDb.csproj" />
-    <ProjectReference Include="..\Naiad.Libraries.Testing\Naiad.Libraries.Testing.csproj" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Providers\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="Providers\" />
+    <ProjectReference Include="..\Naiad.Libraries.System.LiteDb\Naiad.Libraries.System.LiteDb.csproj" />
+    <ProjectReference Include="..\Naiad.Libraries.Testing\Naiad.Libraries.Testing.csproj" />
   </ItemGroup>
 
 </Project>
