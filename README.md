@@ -1,5 +1,5 @@
 # Naiad Data Lake
-A scalable networked data lake.
+Naiad is designed to be a scalable networked data lake.  It was intially constructed as part of a Masters Thesis project.
 
 # Design Objectives
 
@@ -19,4 +19,4 @@ A scalable networked data lake.
 
 # Acknowlegements
 
-1. The ActivityPub implementation is adapted from Fedodo's Fedodo Server. https://github.com/Fedodo/Fedodo.Server
+1. The ActivityPub implementation is adapted from Fedodo's Fedodo Server.  See https://github.com/Fedodo/Fedodo.Server for more information.
