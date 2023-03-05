@@ -137,7 +137,7 @@ export default class ViewData extends Component {
       let rows =  list.map((item, i) => {
         let columns = dataColumns.map((column, j) => {
           return (
-            <td>
+            <td className={'FixedColumn'}>
               {item[column]}
             </td>
           );
@@ -203,6 +203,7 @@ export default class ViewData extends Component {
           <Col>
             <Table striped bordered hover
                    style={{width:"100%", tableLayout:"fixed"}}
+                   className={'FixedWidthTable'}
             >
               { this.renderTableHeader(this.state.dataTypeColumns) }
               { this.renderTableBody(this.state.data) }

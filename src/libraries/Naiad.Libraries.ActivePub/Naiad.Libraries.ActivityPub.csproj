@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Naiad.libraries.core\Naiad.Libraries.Core.csproj" />
+    <ProjectReference Include="..\Naiad.Libraries.System\Naiad.Libraries.System.csproj" />
   </ItemGroup>
 
 </Project>

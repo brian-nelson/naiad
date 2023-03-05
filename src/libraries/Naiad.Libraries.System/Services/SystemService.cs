@@ -138,6 +138,11 @@ public class SystemService
         return _userRepo.GetByEmail(email);
     }
 
+    public User GetUserByUsername(string username)
+    {
+        return _userRepo.GetByUsername(username);
+    }
+
     public void Save(User user)
     {
         _userRepo.Save(user);
@@ -244,6 +249,16 @@ public class SystemService
         }
 
         return null;
+    }
+
+    public IEnumerable<Configuration> GetConfigurations()
+    {
+        return _configurationRepo.GetAll();
+    }
+
+    public IEnumerable<Configuration> GetExternalConfigurations()
+    {
+        return _configurationRepo.GetAllExternal();
     }
 
     public Configuration GetConfiguration(Guid configurationId)

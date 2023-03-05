@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repos\" />
+    <PackageReference Include="LiteDB" Version="5.0.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Naiad.libraries.activepub\Naiad.Libraries.ActivityPub.csproj" />
+    <ProjectReference Include="..\Naiad.Libraries.Core.LiteDb\Naiad.Libraries.Core.LiteDb.csproj" />
   </ItemGroup>
 
 </Project>

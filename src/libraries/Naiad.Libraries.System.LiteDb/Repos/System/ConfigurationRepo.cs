@@ -8,11 +8,11 @@ namespace Naiad.Libraries.System.LiteDb.Repos.System;
 
 public class ConfigurationRepo : IConfigurationRepo
 {
-    private readonly InternalRepo<Configuration> _repo;
+    private readonly BaseRepo<Configuration> _repo;
 
     public ConfigurationRepo(ILiteDatabase database)
     {
-        _repo = new InternalRepo<Configuration>(database, "configurations");
+        _repo = new BaseRepo<Configuration>(database, "configurations");
 
         _repo.EnsureIndex(x => x.Key, true);
     }
@@ -25,6 +25,16 @@ public class ConfigurationRepo : IConfigurationRepo
     public Configuration GetByKey(string key)
     {
         return _repo.GetItem(Query.EQ("Key", key));
+    }
+
+    public IEnumerable<Configuration> GetAllExternal()
+    {
+        return _repo.GetItems(Query.EQ("IsInternal", false));
+    }
+
+    public IEnumerable<Configuration> GetAllInternal()
+    {
+        return _repo.GetItems(Query.EQ("IsInternal", true));
     }
 
     public IEnumerable<Configuration> GetAll()

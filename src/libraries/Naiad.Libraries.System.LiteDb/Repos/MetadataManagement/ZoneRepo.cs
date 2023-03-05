@@ -8,12 +8,12 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 public class ZoneRepo : IZoneRepo
 {
-    private readonly InternalRepo<Zone> _repo;
+    private readonly BaseRepo<Zone> _repo;
 
     public ZoneRepo(
         ILiteDatabase database)
     {
-        _repo = new InternalRepo<Zone>(database, "zones");
+        _repo = new BaseRepo<Zone>(database, "zones");
 
         _repo.EnsureIndex(x => x.Name, true);
     }

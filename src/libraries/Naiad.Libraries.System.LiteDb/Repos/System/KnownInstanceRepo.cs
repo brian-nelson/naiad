@@ -8,11 +8,11 @@ namespace Naiad.Libraries.System.LiteDb.Repos.System;
 
 public class KnownInstanceRepo : IKnownInstanceRepo
 {
-    private readonly InternalRepo<KnownInstance> _repo;
+    private readonly BaseRepo<KnownInstance> _repo;
 
     public KnownInstanceRepo(ILiteDatabase database)
     {
-        _repo = new InternalRepo<KnownInstance>(database, "knowninstances");
+        _repo = new BaseRepo<KnownInstance>(database, "knowninstances");
     }
 
     public KnownInstance GetById(Guid knownInstanceId)

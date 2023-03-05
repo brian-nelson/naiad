@@ -6,11 +6,18 @@ public class User
     : AbstractDbRecord
 {
     private string _email;
+    private string _username;
 
     public string Email
     {
         get => _email;
         set => _email = value.ToLower();
+    }
+
+    public string Username
+    {
+        get => _username;
+        set => _username = value.ToLower();
     }
 
     public string GivenName { get; set; }
@@ -22,4 +29,6 @@ public class User
     public bool MustChangePassword { get; set; }
 
     public UserTypes UserType { get; set; }
+
+    public string FullName => $"{GivenName} {FamilyName}".Trim();
 }

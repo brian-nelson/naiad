@@ -8,12 +8,12 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 public class MetadataPropertyRepo : IMetadataPropertyRepo
 {
-    private readonly InternalRepo<MetadataProperty> _repo;
+    private readonly BaseRepo<MetadataProperty> _repo;
 
     public MetadataPropertyRepo(
         ILiteDatabase database)
     {
-        _repo = new InternalRepo<MetadataProperty>(database, "metadataproperties");
+        _repo = new BaseRepo<MetadataProperty>(database, "metadataproperties");
 
         _repo.EnsureIndex(x => x.MetadataId, false);
         _repo.EnsureIndex(x => x.Key, false);

@@ -73,6 +73,14 @@ module.exports = (_env, args) => {
           {
             from: path.join(publicSource, "favicon.ico"),
             to: "favicon.ico"
+          },
+          {
+            from: path.join(publicSource, "environment.json"),
+            to: "environment.json"
+          },
+          {
+            from: path.join(publicSource, "lib"),
+            to: "lib"
           }
         ]
       }),

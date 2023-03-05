@@ -8,11 +8,11 @@ namespace Naiad.Libraries.System.LiteDb.Repos.System;
 
 public class SessionRepo : ISessionRepo
 {
-    private readonly InternalRepo<Session> _repo;
+    private readonly BaseRepo<Session> _repo;
 
     public SessionRepo(ILiteDatabase database)
     {
-        _repo = new InternalRepo<Session>(database, "sessions");
+        _repo = new BaseRepo<Session>(database, "sessions");
 
         _repo.EnsureIndex(x => x.UserId, false);
     }

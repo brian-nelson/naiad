@@ -13,7 +13,8 @@ public class CertificateTests
     public void TestGetSet()
     {
         var id = Guid.NewGuid();
-        var certificateContents = RandomHelper.GetRandomAlphaNumericString(100);
+        var publicCertificateContents = RandomHelper.GetRandomAlphaNumericString(100);
+        var privateCertificateContents = RandomHelper.GetRandomAlphaNumericString(100);
         var certificateType = CertificateTypes.PublicKey;
         var validFrom = RandomHelper.GetRandomDateTimeOffset(30);
         var validTo = RandomHelper.GetRandomDateTimeOffset(30);
@@ -21,7 +22,8 @@ public class CertificateTests
         var c = new Certificate
         {
             Id = id,
-            CertificateContents = certificateContents,
+            PublicKeyPem = publicCertificateContents,
+            PrivateKeyPem = privateCertificateContents,
             CertificateType = certificateType,
             IsValid = true,
             ValidFrom = validFrom,
@@ -29,7 +31,8 @@ public class CertificateTests
         };
 
         Assert.AreEqual(id, c.Id);
-        Assert.AreEqual(certificateContents, c.CertificateContents);
+        Assert.AreEqual(privateCertificateContents, c.PrivateKeyPem);
+        Assert.AreEqual(publicCertificateContents, c.PublicKeyPem);
         Assert.AreEqual(certificateType, c.CertificateType);
         Assert.IsTrue(c.IsValid);
         Assert.AreEqual(validFrom, c.ValidFrom);

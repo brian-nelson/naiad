@@ -77,6 +77,7 @@ public static class DtoHelper
             GivenName = user.GivenName,
             FamilyName = user.FamilyName,
             UserRole = Enum.GetName(typeof(UserTypes), user.UserType),
+            Username = user.Username,
             IsEnabled = user.IsEnabled,
             MustChangePassword = user.MustChangePassword
         };
@@ -104,7 +105,8 @@ public static class DtoHelper
             GivenName = user.GivenName,
             IsEnabled = user.IsEnabled,
             MustChangePassword = user.MustChangePassword,
-            UserType = Enum.Parse<UserTypes>(user.UserRole)
+            UserType = Enum.Parse<UserTypes>(user.UserRole),
+            Username = user.Username
         };
     }
 }

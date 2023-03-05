@@ -8,5 +8,6 @@ namespace Naiad.Libraries.System.Interfaces.System;
 public interface IUserRepo : IDataRepository<User>
 {
     public User GetByEmail(string email);
+    public User GetByUsername(string username);
     public IEnumerable<User> GetByType(UserTypes userType);
 }

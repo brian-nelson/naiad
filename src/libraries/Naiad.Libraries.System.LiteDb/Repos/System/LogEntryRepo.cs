@@ -8,11 +8,11 @@ namespace Naiad.Libraries.System.LiteDb.Repos.System;
 
 public class LogEntryRepo : ILogEntryRepo
 {
-    private readonly InternalRepo<LogEntry> _repo;
+    private readonly BaseRepo<LogEntry> _repo;
 
     public LogEntryRepo(ILiteDatabase database)
     {
-        _repo = new InternalRepo<LogEntry>(database, "logentries");
+        _repo = new BaseRepo<LogEntry>(database, "logentries");
 
         _repo.EnsureIndex(x => x.EntryDateTime, false);
         _repo.EnsureIndex(x => x.UserId, false);

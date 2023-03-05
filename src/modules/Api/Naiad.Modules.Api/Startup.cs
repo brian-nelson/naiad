@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.LiteDb.Modules;
+using Naiad.Modules.ActivityPub.Core.Modules;
 using Naiad.modules.api;
 using Naiad.Modules.Api.Core.Modules;
 using Naiad.Modules.Api.Modules;
@@ -105,6 +106,9 @@ namespace Naiad.Modules.Api
 
             builder.RegisterModule(
                 new ApiModule(config));
+
+            builder.RegisterModule(
+                new ApModule(config));
 
             //var repositoryProviderAssemblyName = config.GetString("API_REPO_PROVIDER_ASSEMBLY");
             var repositoryProviderModuleName = config.GetString("API_REPO_PROVIDER_MODULE");

@@ -9,12 +9,12 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 public class CategorizationRepo : ICategorizationRepo
 {
-    private readonly InternalRepo<Categorization> _repo;
+    private readonly BaseRepo<Categorization> _repo;
 
     public CategorizationRepo(
         ILiteDatabase database)
     {
-        _repo = new InternalRepo<Categorization>(database, "categorizations");
+        _repo = new BaseRepo<Categorization>(database, "categorizations");
 
         _repo.EnsureIndex(x => x.Name, true);
     }

@@ -8,11 +8,11 @@ namespace Naiad.Libraries.System.LiteDb.Repos.System;
 
 public class AccessKeyRepo : IAccessKeyRepo
 {
-    private readonly InternalRepo<AccessKey> _repo;
+    private readonly BaseRepo<AccessKey> _repo;
 
     public AccessKeyRepo(ILiteDatabase database)
     {
-        _repo = new InternalRepo<AccessKey>(database, "useraccesses");
+        _repo = new BaseRepo<AccessKey>(database, "useraccesses");
         _repo.EnsureIndex(x => x.UserId, false);
     }
 

@@ -38,7 +38,8 @@ namespace Naiad.modules.api
 
                     services
                         .AddMvc()
-                        .AddApplicationPart(Assembly.Load(new AssemblyName("Naiad.Modules.Api.Core")));
+                        .AddApplicationPart(Assembly.Load(new AssemblyName("Naiad.Modules.Api.Core")))
+                        .AddApplicationPart(Assembly.Load(new AssemblyName("Naiad.Modules.ActivityPub.Core")));
 
                     services.AddControllers()
                         .AddNewtonsoftJson(options =>

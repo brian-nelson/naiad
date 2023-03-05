@@ -8,11 +8,11 @@ namespace Naiad.Libraries.System.LiteDb.Repos.System;
 
 public class UserAccessRepo : IUserAccessRepo
 {
-    private readonly InternalRepo<UserAccess> _repo;
+    private readonly BaseRepo<UserAccess> _repo;
 
     public UserAccessRepo(ILiteDatabase database)
     {
-        _repo = new InternalRepo<UserAccess>(database, "useraccesses");
+        _repo = new BaseRepo<UserAccess>(database, "useraccesses");
 
         _repo.EnsureIndex(x => x.UserId, true);
     }

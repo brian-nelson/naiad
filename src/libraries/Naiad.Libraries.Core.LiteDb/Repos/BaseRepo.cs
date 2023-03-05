@@ -4,16 +4,15 @@ using System.Linq;
 using System.Linq.Expressions;
 using LiteDB;
 using Naiad.Libraries.Core.Interfaces;
-using Naiad.Libraries.System.Interfaces;
 
 namespace Naiad.Libraries.System.LiteDb.Repos;
 
-internal class InternalRepo<T>
+public class BaseRepo<T>
     where T : IDbRecord, new()
 {
     private readonly ILiteCollection<T> _collection;
 
-    public InternalRepo(
+    public BaseRepo(
         ILiteDatabase database,
         string collectionName)
     {

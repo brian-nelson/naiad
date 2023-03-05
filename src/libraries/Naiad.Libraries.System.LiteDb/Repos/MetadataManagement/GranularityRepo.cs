@@ -8,12 +8,12 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 internal class GranularityRepo : IGranularityRepo
 {
-    private readonly InternalRepo<Granularity> _repo;
+    private readonly BaseRepo<Granularity> _repo;
 
     public GranularityRepo(
         ILiteDatabase database)
     {
-        _repo = new InternalRepo<Granularity>(database, "granularities");
+        _repo = new BaseRepo<Granularity>(database, "granularities");
 
         _repo.EnsureIndex(x => x.Name, true);
     }

@@ -6,9 +6,13 @@ namespace Naiad.Libraries.System.Models.System;
 public class Certificate 
     : AbstractDbRecord
 {
+    public Guid CertificateOwnerId { get; set; }
+
     public CertificateTypes CertificateType { get; set; }
 
-    public string CertificateContents { get; set; }
+    public string PublicKeyPem { get; set; }
+
+    public string PrivateKeyPem { get; set; }
 
     public DateTimeOffset ValidFrom { get; set; }
 

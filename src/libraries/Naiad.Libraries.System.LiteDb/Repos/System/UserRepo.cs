@@ -9,13 +9,14 @@ namespace Naiad.Libraries.System.LiteDb.Repos.System;
 
 public class UserRepo : IUserRepo
 {
-    private readonly InternalRepo<User> _repo;
+    private readonly BaseRepo<User> _repo;
 
     public UserRepo(ILiteDatabase database)
     {
-        _repo = new InternalRepo<User>(database, "users");
+        _repo = new BaseRepo<User>(database, "users");
 
         _repo.EnsureIndex(x => x.Email, true);
+        //_repo.EnsureIndex(x => x.Username, true);
     }
 
     public User GetById(Guid userId)
@@ -31,6 +32,11 @@ public class UserRepo : IUserRepo
     public User GetByEmail(string email)
     {
         return _repo.GetItem(Query.EQ("Email", email));
+    }
+
+    public User GetByUsername(string username)
+    {
+        return _repo.GetItem(Query.EQ("Username", username));
     }
 
     public void Save(User user)

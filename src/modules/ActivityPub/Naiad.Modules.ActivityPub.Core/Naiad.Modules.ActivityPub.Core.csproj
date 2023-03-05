@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\libraries\Naiad.libraries.activepub\Naiad.Libraries.ActivityPub.csproj" />
     <ProjectReference Include="..\..\..\libraries\Naiad.Libraries.System\Naiad.Libraries.System.csproj" />
     <ProjectReference Include="..\..\..\libraries\Naiad.Libraries.Web\Naiad.Libraries.Web.csproj" />

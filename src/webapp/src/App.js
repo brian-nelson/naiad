@@ -3,10 +3,11 @@ import React, {Component} from "react";
 import {Link, Navigate} from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
-import {ToastContainer} from 'react-toastify';
+import {toast, ToastContainer} from 'react-toastify';
 import AppRoutes from "./AppRoutes";
 import NaiadService from "./services/NaiadService";
 import 'react-toastify/dist/ReactToastify.css';
+import Env from "./env";
 
 export default class App extends Component {
   constructor(props) {
@@ -16,6 +17,22 @@ export default class App extends Component {
       isAuthenticated: false,
       redirect: false
     };
+
+    this.loadEnvironment = this.loadEnvironment.bind(this);
+
+    this.loadEnvironment();
+  }
+
+  loadEnvironment() {
+    fetch("/environment.json")
+      .then((r) => {
+        r.json().then((j) => {
+          Env.BASE_URL = j.BASE_URL;
+        });
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      })
   }
 
   userHasAuthenticated = authenticated => {

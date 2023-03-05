@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Naiad.Libraries.Core.LiteDb\Naiad.Libraries.Core.LiteDb.csproj" />
     <ProjectReference Include="..\Naiad.Libraries.System\Naiad.Libraries.System.csproj" />
   </ItemGroup>
 

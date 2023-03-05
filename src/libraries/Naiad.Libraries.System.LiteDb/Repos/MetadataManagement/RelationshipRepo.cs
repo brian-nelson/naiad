@@ -9,12 +9,12 @@ namespace Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 
 public class RelationshipRepo : IRelationshipRepo
 {
-    private readonly InternalRepo<Relationship> _repo;
+    private readonly BaseRepo<Relationship> _repo;
 
     public RelationshipRepo(
         ILiteDatabase database)
     {
-        _repo = new InternalRepo<Relationship>(database, "relationships");
+        _repo = new BaseRepo<Relationship>(database, "relationships");
 
         _repo.EnsureIndex(x => x.ParentId);
         _repo.EnsureIndex(x => x.ChildId);

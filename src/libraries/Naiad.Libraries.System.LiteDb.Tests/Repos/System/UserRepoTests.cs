@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using LiteDB;
 using Naiad.Libraries.System.Constants.System;
 using Naiad.Libraries.System.Interfaces;
@@ -40,6 +39,7 @@ public class UserRepoTests
         var ua = new User
         {
             Email = RandomHelper.GetRandomAlphaString(10),
+            Username = RandomHelper.GetRandomAlphaNumericString(10),
             FamilyName = RandomHelper.GetRandomAlphaString(10),
             GivenName = RandomHelper.GetRandomAlphaString(10),
             IsEnabled = true,
@@ -58,6 +58,7 @@ public class UserRepoTests
         var u = new User
         {
             Email = RandomHelper.GetRandomAlphaString(10),
+            Username = RandomHelper.GetRandomAlphaNumericString(10),
             FamilyName = RandomHelper.GetRandomAlphaString(10),
             GivenName = RandomHelper.GetRandomAlphaString(10),
             IsEnabled = true,
@@ -71,6 +72,7 @@ public class UserRepoTests
         Assert.NotNull(test);
 
         Assert.AreEqual(u.Id, test.Id);
+        Assert.AreEqual(u.Username, test.Username);
         Assert.AreEqual(u.FamilyName, test.FamilyName);
         Assert.AreEqual(u.GivenName, test.GivenName);
         Assert.AreEqual(u.IsEnabled, test.IsEnabled);
