@@ -8,4 +8,6 @@ namespace Naiad.Libraries.System.Interfaces.System;
 public interface IAccessKeyRepo : IDataRepository<AccessKey>
 {
     public IEnumerable<AccessKey> GetByUserId(Guid userId);
+
+    public AccessKey GetByKey(string key);
 }

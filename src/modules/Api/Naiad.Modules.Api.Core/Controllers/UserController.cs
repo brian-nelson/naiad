@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Naiad.Libraries.System.Services;
-using System.Collections.Generic;
-using System;
 using Naiad.Libraries.Core.Interfaces;
 using Naiad.Libraries.System.Models.System;
 using Naiad.Modules.Api.Core.Helpers;
@@ -90,5 +90,17 @@ public class UserController
         _logger.Info($"Password changed", User.GetUserId());
 
         return Ok();
+    }
+
+    [HttpPost]
+    [Route("api/user/accesskey")]
+    public ActionResult<AccessKeyResult> CreateAccessKey()
+    {
+        var accessKey = _systemService.GenerateAccessKey(
+            User.GetUserId());
+
+        _logger.Info("Access Key created.", User.GetUserId());
+
+        return Ok(accessKey);
     }
 }

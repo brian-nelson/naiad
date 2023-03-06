@@ -14,7 +14,6 @@ public class SystemService
     private readonly IAccessKeyRepo _accessKeyRepo;
     private readonly IConfigurationRepo _configurationRepo;
     private readonly IKnownInstanceRepo _knownInstanceRepo;
-    private readonly ILogEntryRepo _logEntryRepo;
     private readonly ISessionRepo _sessionRepo;
     private readonly IUserAccessRepo _userAccessRepo;
     private readonly IUserRepo _userRepo;
@@ -25,7 +24,6 @@ public class SystemService
         _accessKeyRepo = provider.GetAccessKeyRepo();
         _configurationRepo = provider.GetConfigurationRepo();
         _knownInstanceRepo = provider.GetKnownInstanceRepo();
-        _logEntryRepo = provider.GetLogEntryRepo();
         _sessionRepo = provider.GetSessionRepo();
         _userAccessRepo = provider.GetUserAccessRepo();
         _userRepo = provider.GetUserRepo();
@@ -34,6 +32,11 @@ public class SystemService
     public AccessKey GetAccessKey(Guid id)
     {
         return _accessKeyRepo.GetById(id);
+    }
+
+    public AccessKey GetAccessKey(string key)
+    {
+        return _accessKeyRepo.GetByKey(key);
     }
 
     public IEnumerable<AccessKey> GetAccessKeys(Guid userId)
@@ -83,6 +86,25 @@ public class SystemService
             session.IsDeleted = true;
             _sessionRepo.Save(session);
         }
+    }
+
+    public void CreateAccessKey(
+        Guid userId,
+        string key,
+        string secretKey)
+    {
+        var accessKey = new AccessKey
+        {
+            Key = key,
+            Salt = PasswordHelper.GenerateSalt(),
+            CreatedDateTime = DateTimeOffset.UtcNow,
+            UserId = userId,
+            IsEnabled = true
+        };
+
+        accessKey.HashedSecret = PasswordHelper.Hash(secretKey, accessKey.Salt);
+
+        _accessKeyRepo.Save(accessKey);
     }
 
     public void ChangePassword(
@@ -220,6 +242,42 @@ public class SystemService
         return null;
     }
 
+    public Dictionary<string, string> CreateSessionFromAccessKey(
+        string key,
+        string secretKey,
+        out User user)
+    {
+        user = AuthenticateAccessKey(key, secretKey);
+
+        if (user != null)
+        {
+            var now = DateTimeOffset.UtcNow;
+
+            var session = new Session
+            {
+                UserId = user.Id,
+                IsDeleted = false,
+                CreatedOnDateTime = now,
+                ExpiresOnDateTime = now.AddDays(30)
+            };
+            Save(session);
+
+            Dictionary<string, string> sessionValues = new Dictionary<string, string>
+            {
+                { "UserId", user.Id.ToString() },
+                { "SessionId", session.Id.ToString() },
+                { "FamilyName", user.FamilyName },
+                { "GivenName", user.GivenName },
+                { ClaimTypes.Name, user.Email },
+                { ClaimTypes.Role, Enum.GetName(typeof(UserTypes), user.UserType) }
+            };
+
+            return sessionValues;
+        }
+
+        return null;
+    }
+
     public void CloseSession(Guid sessionId)
     {
         var session = _sessionRepo.GetById(sessionId);
@@ -245,6 +303,26 @@ public class SystemService
                 {
                     return user;
                 }
+            }
+        }
+
+        return null;
+    }
+
+    public User AuthenticateAccessKey(
+        string key,
+        string secretKey)
+    {
+        var accessKey = _accessKeyRepo.GetByKey(key);
+        var user = _userRepo.GetById(accessKey.UserId);
+
+        if (user != null)
+        {
+            var testHash = PasswordHelper.Hash(secretKey, accessKey.Salt);
+
+            if (testHash.Equals(accessKey.HashedSecret))
+            {
+                return user;
             }
         }
 
@@ -285,4 +363,6 @@ public class SystemService
     {
         _knownInstanceRepo.Save(knownInstance);
     }
+
+    
 }

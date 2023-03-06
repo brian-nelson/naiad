@@ -3,7 +3,6 @@ using Naiad.Libraries.ActivityPub.Helpers;
 using Naiad.Libraries.ActivityPub.Models.Environment;
 using Naiad.Libraries.ActivityPub.Models.General;
 using Naiad.Libraries.ActivityPub.Models.Pub;
-using Naiad.Libraries.System.Models.System;
 using Naiad.Libraries.System.Services;
 
 namespace Naiad.Libraries.ActivityPub.Services;
@@ -49,8 +48,6 @@ public class ApService
         return null;
     }
 
-
-
     public Actor GetActor(Guid actorId)
     {
         var user = _systemService.GetUser(actorId);
@@ -63,4 +60,6 @@ public class ApService
 
         return null;
     }
+
+
 }

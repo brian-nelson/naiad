@@ -47,6 +47,31 @@ public class AuthController : ControllerBase
         return Unauthorized();
     }
 
+    [HttpPost]
+    [Route("api/login/authtoken")]
+    public ActionResult<LoginResponse> LoginWithAuthToken([FromBody] AccessKeyResult accessKeyRequest)
+    {
+        var webSession = _systemService.CreateSessionFromAccessKey(
+            accessKeyRequest.Key, 
+            accessKeyRequest.SecretKey, 
+            out User user);
+
+        if (webSession != null)
+        {
+            var jwt = JwtHelper.CreateJwt(webSession, _jwtSecret);
+            var response = new LoginResponse
+            {
+                JWT = jwt
+            };
+
+            _logger.Info("User logged in", user.Id);
+
+            return Ok(response);
+        }
+
+        return Unauthorized();
+    }
+
     [Authorize]
     [HttpPost]
     [Route("api/logout")]
@@ -56,7 +81,6 @@ public class AuthController : ControllerBase
         _systemService.CloseSession(sessionId);
 
         _logger.Info("User logged out", User.GetUserId());
-
 
         return Ok();
     }

@@ -12,8 +12,14 @@ public class AccessKeyRepo : IAccessKeyRepo
 
     public AccessKeyRepo(ILiteDatabase database)
     {
-        _repo = new BaseRepo<AccessKey>(database, "useraccesses");
+        _repo = new BaseRepo<AccessKey>(database, "accesskeys");
         _repo.EnsureIndex(x => x.UserId, false);
+        _repo.EnsureIndex(x => x.Key, true);
+    }
+
+    public AccessKey GetByKey(string key)
+    {
+        return _repo.GetItem(Query.EQ("Key", key));
     }
 
     public AccessKey GetById(Guid accessKeyId)

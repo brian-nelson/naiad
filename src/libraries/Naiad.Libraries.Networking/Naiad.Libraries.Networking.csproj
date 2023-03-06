@@ -7,16 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Connectors\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Naiad.libraries.core\Naiad.Libraries.Core.csproj" />
-    <ProjectReference Include="..\Naiad.Libraries.System\Naiad.Libraries.System.csproj" />
   </ItemGroup>
 
 </Project>

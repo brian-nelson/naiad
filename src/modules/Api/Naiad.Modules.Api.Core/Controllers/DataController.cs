@@ -117,4 +117,12 @@ public class DataController : ControllerBase
         var fileInfo = _dataService.ListFiles(filePathAndName);
         return Ok(fileInfo);
     }
+
+    [HttpGet]
+    [Route("api/data/pointer/{*filePathAndName}")]
+    public ActionResult<NaiadFileInfo> GetPointer([FromRoute] string filePathAndName)
+    {
+        var fileInfo = _dataService.GetFileInfo(filePathAndName);
+        return Ok(fileInfo);
+    }
 }

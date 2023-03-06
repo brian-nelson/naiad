@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Naiad.Libraries.Core.Constants;
 using Naiad.Libraries.Core.Interfaces;
 using Naiad.Libraries.System.Constants.DataManagement;
 using Naiad.Libraries.System.Interfaces;

@@ -1,11 +1,15 @@
-﻿using System;
+﻿using Naiad.Libraries.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Naiad.Libraries.ActivityPub.Models.Pub;
 
-public class Post
+public class Post : IDbRecord
 {
+    [JsonIgnore]
+    public Guid Id { get; set; }
+
     [JsonPropertyName("to")] 
     public IEnumerable<string> To { get; set; }
     
@@ -25,7 +29,7 @@ public class Post
     public string Content { get; set; }
     
     [JsonPropertyName("id")] 
-    public Uri Id { get; set; }
+    public Uri IdUri { get; set; }
     
     [JsonPropertyName("type")]
     public string Type { get; set; }

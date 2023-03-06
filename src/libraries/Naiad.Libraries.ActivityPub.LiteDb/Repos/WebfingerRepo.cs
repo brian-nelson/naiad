@@ -15,7 +15,7 @@ namespace Naiad.Libraries.ActivityPub.LiteDb.Repos
         {
             _repo = new BaseRepo<Webfinger>(
                 database, 
-                "webfingers");
+                "ap_webfingers");
 
             _repo.EnsureIndex(x => x.Subject, true);
         }

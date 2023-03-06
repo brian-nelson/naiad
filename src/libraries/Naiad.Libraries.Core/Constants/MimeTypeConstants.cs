@@ -1,4 +1,4 @@
-﻿namespace Naiad.Libraries.System.Constants.DataManagement
+﻿namespace Naiad.Libraries.Core.Constants
 {
     public static class MimeTypeConstants
     {

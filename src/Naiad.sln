@@ -37,17 +37,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ActivityPub", "ActivityPub"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Modules.ActivityPub.Core", "modules\ActivityPub\Naiad.Modules.ActivityPub.Core\Naiad.Modules.ActivityPub.Core.csproj", "{456FEB88-02A3-4BEE-8F99-7F110720212C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.ActivityPub.LiteDb", "libraries\Naiad.Libraries.ActivityPub.LiteDb\Naiad.Libraries.ActivityPub.LiteDb.csproj", "{21E8A1F3-C78F-4193-A143-E5CF8A7F0071}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.ActivityPub.LiteDb", "libraries\Naiad.Libraries.ActivityPub.LiteDb\Naiad.Libraries.ActivityPub.LiteDb.csproj", "{21E8A1F3-C78F-4193-A143-E5CF8A7F0071}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.Web", "libraries\Naiad.Libraries.Web\Naiad.Libraries.Web.csproj", "{9DDAC0A6-FC33-4611-9169-CC47542C35AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.Web", "libraries\Naiad.Libraries.Web\Naiad.Libraries.Web.csproj", "{9DDAC0A6-FC33-4611-9169-CC47542C35AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.Web.Tests", "libraries\Naiad.Libraries.Web.Tests\Naiad.Libraries.Web.Tests.csproj", "{758F69A0-C9E9-4CDD-AA70-254028F4F562}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.Web.Tests", "libraries\Naiad.Libraries.Web.Tests\Naiad.Libraries.Web.Tests.csproj", "{758F69A0-C9E9-4CDD-AA70-254028F4F562}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.ActivityPub.LiteDb.Tests", "libraries\Naiad.Libraries.ActivityPub.LiteDb.Tests\Naiad.Libraries.ActivityPub.LiteDb.Tests.csproj", "{5C57ABC2-F14B-4F14-9761-A4DFCC9CF99A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.ActivityPub.LiteDb.Tests", "libraries\Naiad.Libraries.ActivityPub.LiteDb.Tests\Naiad.Libraries.ActivityPub.LiteDb.Tests.csproj", "{5C57ABC2-F14B-4F14-9761-A4DFCC9CF99A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.Core.LiteDb", "libraries\Naiad.Libraries.Core.LiteDb\Naiad.Libraries.Core.LiteDb.csproj", "{80F55654-7628-445F-A088-4C72369D00EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.Core.LiteDb", "libraries\Naiad.Libraries.Core.LiteDb\Naiad.Libraries.Core.LiteDb.csproj", "{80F55654-7628-445F-A088-4C72369D00EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.Core.LiteDb.Tests", "libraries\Naiad.Libraries.Core.LiteDb.Tests\Naiad.Libraries.Core.LiteDb.Tests.csproj", "{E207DDC3-BC34-4D5B-A310-512725B4E34B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.Core.LiteDb.Tests", "libraries\Naiad.Libraries.Core.LiteDb.Tests\Naiad.Libraries.Core.LiteDb.Tests.csproj", "{E207DDC3-BC34-4D5B-A310-512725B4E34B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.Networking", "libraries\Naiad.Libraries.Networking\Naiad.Libraries.Networking.csproj", "{2657FB10-225F-473C-A45B-B128CF134052}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.Networking.Tests", "libraries\Naiad.Libraries.Networking.Tests\Naiad.Libraries.Networking.Tests.csproj", "{DAD7F0E0-2184-4987-A11B-30900FF0A8B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +135,14 @@ Global
 		{E207DDC3-BC34-4D5B-A310-512725B4E34B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E207DDC3-BC34-4D5B-A310-512725B4E34B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E207DDC3-BC34-4D5B-A310-512725B4E34B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2657FB10-225F-473C-A45B-B128CF134052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2657FB10-225F-473C-A45B-B128CF134052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2657FB10-225F-473C-A45B-B128CF134052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2657FB10-225F-473C-A45B-B128CF134052}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAD7F0E0-2184-4987-A11B-30900FF0A8B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAD7F0E0-2184-4987-A11B-30900FF0A8B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAD7F0E0-2184-4987-A11B-30900FF0A8B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAD7F0E0-2184-4987-A11B-30900FF0A8B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -157,6 +169,8 @@ Global
 		{5C57ABC2-F14B-4F14-9761-A4DFCC9CF99A} = {2FC5D3B3-757A-4D15-B8F7-567464D63AEB}
 		{80F55654-7628-445F-A088-4C72369D00EC} = {2FC5D3B3-757A-4D15-B8F7-567464D63AEB}
 		{E207DDC3-BC34-4D5B-A310-512725B4E34B} = {2FC5D3B3-757A-4D15-B8F7-567464D63AEB}
+		{2657FB10-225F-473C-A45B-B128CF134052} = {2FC5D3B3-757A-4D15-B8F7-567464D63AEB}
+		{DAD7F0E0-2184-4987-A11B-30900FF0A8B0} = {2FC5D3B3-757A-4D15-B8F7-567464D63AEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3F1B2E24-F6CD-44D2-8894-6DB55B7D15E8}

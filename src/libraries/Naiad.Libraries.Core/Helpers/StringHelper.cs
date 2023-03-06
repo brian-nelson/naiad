@@ -8,6 +8,5 @@ namespace Naiad.Libraries.Core.Helpers
         {
             return value.All(char.IsLetterOrDigit);
         }
-
     }
 }
