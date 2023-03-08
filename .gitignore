@@ -351,3 +351,5 @@ MigrationBackup/
 
 # Other
 *.bak
+
+.idea

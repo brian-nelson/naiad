@@ -21,5 +21,11 @@ namespace Naiad.Libraries.Networking.Helpers
 
             return JsonHelper.ToObject<T>(outputJson);
         }
+
+        public static void Post(string url)
+        {
+
+            
+        }
     }
 }
