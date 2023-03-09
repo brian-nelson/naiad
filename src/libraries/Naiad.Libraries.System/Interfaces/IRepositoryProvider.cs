@@ -29,6 +29,8 @@ public interface IRepositoryProvider
 
     public IConfigurationRepo GetConfigurationRepo();
 
+    public IConnectorConfigurationRepo GetConnectorConfigurationRepo();
+
     public IKnownInstanceRepo GetKnownInstanceRepo();
 
     public ILogEntryRepo GetLogEntryRepo();

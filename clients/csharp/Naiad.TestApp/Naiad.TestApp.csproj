@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\libraries\Naiad.Libraries.Networking\Naiad.Libraries.Networking.csproj" />
+    <ProjectReference Include="..\..\..\src\libraries\Naiad.Libraries.Client\Naiad.Libraries.Client.csproj" />
   </ItemGroup>
 
 </Project>

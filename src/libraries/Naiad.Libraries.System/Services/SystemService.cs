@@ -13,6 +13,7 @@ public class SystemService
 {
     private readonly IAccessKeyRepo _accessKeyRepo;
     private readonly IConfigurationRepo _configurationRepo;
+    private readonly IConnectorConfigurationRepo _connectorConfigurationRepo;
     private readonly IKnownInstanceRepo _knownInstanceRepo;
     private readonly ISessionRepo _sessionRepo;
     private readonly IUserAccessRepo _userAccessRepo;
@@ -23,6 +24,7 @@ public class SystemService
     {
         _accessKeyRepo = provider.GetAccessKeyRepo();
         _configurationRepo = provider.GetConfigurationRepo();
+        _connectorConfigurationRepo = provider.GetConnectorConfigurationRepo();
         _knownInstanceRepo = provider.GetKnownInstanceRepo();
         _sessionRepo = provider.GetSessionRepo();
         _userAccessRepo = provider.GetUserAccessRepo();
@@ -329,6 +331,8 @@ public class SystemService
         return null;
     }
 
+    // Naiad Configuration
+
     public IEnumerable<Configuration> GetConfigurations()
     {
         return _configurationRepo.GetAll();
@@ -354,6 +358,8 @@ public class SystemService
         _configurationRepo.Save(configuration);
     }
 
+    // Known Instance
+
     public KnownInstance GetKnownInstance(Guid knownInstanceId)
     {
         return _knownInstanceRepo.GetById(knownInstanceId);
@@ -364,5 +370,15 @@ public class SystemService
         _knownInstanceRepo.Save(knownInstance);
     }
 
-    
+    // Connector Configuration
+
+    public IEnumerable<ConnectorConfiguration> GetConnectorConfigurations()
+    {
+        return _connectorConfigurationRepo.GetAll();
+    }
+
+    public void Save(ConnectorConfiguration config)
+    {
+        _connectorConfigurationRepo.Save(config);
+    }
 }
