@@ -37,6 +37,8 @@ public interface IRepositoryProvider
 
     public ISessionRepo GetSessionRepo();
 
+    public ISystemEventRepo GetSystemEventRepo();
+
     public IUserAccessRepo GetUserAccessRepo();
 
     public IUserRepo GetUserRepo();

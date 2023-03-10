@@ -15,6 +15,7 @@ public class SystemService
     private readonly IConfigurationRepo _configurationRepo;
     private readonly IKnownInstanceRepo _knownInstanceRepo;
     private readonly ISessionRepo _sessionRepo;
+    private readonly ISystemEventRepo _systemEventRepo;
     private readonly IUserAccessRepo _userAccessRepo;
     private readonly IUserRepo _userRepo;
 
@@ -25,6 +26,7 @@ public class SystemService
         _configurationRepo = provider.GetConfigurationRepo();
         _knownInstanceRepo = provider.GetKnownInstanceRepo();
         _sessionRepo = provider.GetSessionRepo();
+        _systemEventRepo = provider.GetSystemEventRepo();
         _userAccessRepo = provider.GetUserAccessRepo();
         _userRepo = provider.GetUserRepo();
     }
@@ -366,5 +368,22 @@ public class SystemService
     public void Save(KnownInstance knownInstance)
     {
         _knownInstanceRepo.Save(knownInstance);
+    }
+
+    // System Events
+
+    public SystemEvent GetSystemEvent(Guid systemEventId)
+    {
+        return _systemEventRepo.GetById(systemEventId);
+    }
+
+    public void Save(SystemEvent systemEvent)
+    {
+        _systemEventRepo.Save(systemEvent);
+    }
+
+    public IEnumerable<SystemEvent> GetSystemEvents(DateTime startDate, DateTime endDate)
+    {
+        return _systemEventRepo.GetByDate(startDate, endDate);
     }
 }
