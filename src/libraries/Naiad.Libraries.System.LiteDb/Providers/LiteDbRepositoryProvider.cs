@@ -7,6 +7,7 @@ using Naiad.Libraries.System.Interfaces.System;
 using Naiad.Libraries.System.LiteDb.Repos.DataManagement;
 using Naiad.Libraries.System.LiteDb.Repos.MetadataManagement;
 using Naiad.Libraries.System.LiteDb.Repos.System;
+using NotImplementedException = System.NotImplementedException;
 
 namespace Naiad.Libraries.System.LiteDb.Providers;
 
@@ -99,6 +100,11 @@ public class LiteDbRepositoryProvider : IRepositoryProvider
     public ISystemEventRepo GetSystemEventRepo()
     {
         return new SystemEventRepo(Database);
+    }
+
+    public ISystemEventReceiptRepo GetSystemEventReceiptRepo()
+    {
+        return new SystemEventReceiptRepo(Database);
     }
 
     public IUserAccessRepo GetUserAccessRepo()

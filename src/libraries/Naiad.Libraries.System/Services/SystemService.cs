@@ -17,6 +17,7 @@ public class SystemService
     private readonly IKnownInstanceRepo _knownInstanceRepo;
     private readonly ISessionRepo _sessionRepo;
     private readonly ISystemEventRepo _systemEventRepo;
+    private readonly ISystemEventReceiptRepo _systemEventReceiptRepo;
     private readonly IUserAccessRepo _userAccessRepo;
     private readonly IUserRepo _userRepo;
 
@@ -29,6 +30,7 @@ public class SystemService
         _knownInstanceRepo = provider.GetKnownInstanceRepo();
         _sessionRepo = provider.GetSessionRepo();
         _systemEventRepo = provider.GetSystemEventRepo();
+        _systemEventReceiptRepo = provider.GetSystemEventReceiptRepo();
         _userAccessRepo = provider.GetUserAccessRepo();
         _userRepo = provider.GetUserRepo();
     }
@@ -405,5 +407,12 @@ public class SystemService
     public IEnumerable<SystemEvent> GetSystemEvents(DateTime startDate, DateTime endDate)
     {
         return _systemEventRepo.GetByDate(startDate, endDate);
+    }
+
+    // System Event Receipt
+
+    public void Save(SystemEventReceipt eventReceipt)
+    {
+        
     }
 }

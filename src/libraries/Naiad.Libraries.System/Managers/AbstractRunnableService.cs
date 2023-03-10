@@ -10,6 +10,7 @@ public abstract class AbstractRunnableService : IRunnableService
     private bool _isStopping;
 
     public abstract void DoWork();
+    public abstract void OnStopping();
 
     public void Start()
     {
@@ -40,6 +41,8 @@ public abstract class AbstractRunnableService : IRunnableService
 
             Thread.Sleep(100);
         }
+
+        OnStopping();
 
         _isStopping = false;
     }

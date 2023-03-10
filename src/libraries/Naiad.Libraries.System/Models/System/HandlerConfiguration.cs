@@ -14,7 +14,7 @@ public class HandlerConfiguration
 
     public string Description { get; set; }
 
-    public string ConnectorType { get; set; }
+    public string HandlerType { get; set; }
 
     public Dictionary<string, string> Configuration { get; set; }
 }

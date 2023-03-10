@@ -2,9 +2,9 @@
 
 namespace Naiad.Libraries.System.Models.System
 {
-    public class EventReceipt : AbstractDbRecord
+    public class SystemEventReceipt : AbstractDbRecord
     {
-        public EventReceipt()
+        public SystemEventReceipt()
         {
             Time = DateTime.UtcNow;
         }
@@ -13,8 +13,10 @@ namespace Naiad.Libraries.System.Models.System
 
         public DateTime Time { get; set; }
 
-        public string HandlerType { get; set; }
-
         public Guid HandlerConfigurationId { get; set; }
+
+        public bool WasSuccessful { get; set; }
+
+        public string Result { get; set; }
     }
 }
