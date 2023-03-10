@@ -2,10 +2,10 @@
 
 namespace Naiad.Libraries.System.Models.System;
 
-public class ConnectorConfiguration
+public class HandlerConfiguration
     : AbstractDbRecord
 {
-    public ConnectorConfiguration()
+    public HandlerConfiguration()
     {
         Configuration = new Dictionary<string, string>();
     }

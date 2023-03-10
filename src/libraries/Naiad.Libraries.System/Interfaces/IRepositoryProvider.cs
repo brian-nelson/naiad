@@ -29,7 +29,7 @@ public interface IRepositoryProvider
 
     public IConfigurationRepo GetConfigurationRepo();
 
-    public IConnectorConfigurationRepo GetConnectorConfigurationRepo();
+    public IHandlerConfigurationRepo GetHandlerConfigurationRepo();
 
     public IKnownInstanceRepo GetKnownInstanceRepo();
 

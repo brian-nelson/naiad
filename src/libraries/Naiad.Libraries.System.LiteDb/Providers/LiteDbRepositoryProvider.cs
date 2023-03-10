@@ -76,9 +76,9 @@ public class LiteDbRepositoryProvider : IRepositoryProvider
         return new ConfigurationRepo(Database);
     }
 
-    public IConnectorConfigurationRepo GetConnectorConfigurationRepo()
+    public IHandlerConfigurationRepo GetHandlerConfigurationRepo()
     {
-        return new ConnectorConfigurationRepo(Database);
+        return new HandlerConfigurationRepo(Database);
     }
 
     public IKnownInstanceRepo GetKnownInstanceRepo()

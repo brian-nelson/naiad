@@ -13,6 +13,7 @@ public class SystemService
 {
     private readonly IAccessKeyRepo _accessKeyRepo;
     private readonly IConfigurationRepo _configurationRepo;
+    private readonly IHandlerConfigurationRepo _handlerConfigurationRepo;
     private readonly IKnownInstanceRepo _knownInstanceRepo;
     private readonly ISessionRepo _sessionRepo;
     private readonly ISystemEventRepo _systemEventRepo;
@@ -24,6 +25,7 @@ public class SystemService
     {
         _accessKeyRepo = provider.GetAccessKeyRepo();
         _configurationRepo = provider.GetConfigurationRepo();
+        _handlerConfigurationRepo = provider.GetHandlerConfigurationRepo();
         _knownInstanceRepo = provider.GetKnownInstanceRepo();
         _sessionRepo = provider.GetSessionRepo();
         _systemEventRepo = provider.GetSystemEventRepo();
@@ -368,6 +370,24 @@ public class SystemService
     public void Save(KnownInstance knownInstance)
     {
         _knownInstanceRepo.Save(knownInstance);
+    }
+
+    // Handler Configuration
+
+    public IEnumerable<HandlerConfiguration> GetHandlerConfigurations()
+    {
+        return _handlerConfigurationRepo.GetAll();
+    }
+
+    public HandlerConfiguration GetHandlerConfiguration(
+        Guid handlerConfigurationId)
+    {
+        return _handlerConfigurationRepo.GetById(handlerConfigurationId);
+    }
+
+    public void Save(HandlerConfiguration configuration)
+    {
+        _handlerConfigurationRepo.Save(configuration);
     }
 
     // System Events
