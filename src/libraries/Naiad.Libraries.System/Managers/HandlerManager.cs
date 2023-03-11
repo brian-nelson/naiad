@@ -60,18 +60,34 @@ public class HandlerManager : AbstractRunnableService
 
                 try
                 {
-                    var success = handler.HandleEvent(systemEvent, out string result);
+                    //TODO - Return Success, Failure, RetryLater, or NoInterest
+                    var result = handler.HandleEvent(systemEvent, out string details);
 
-                    eventReceipt.WasSuccessful = success;
-                    eventReceipt.Result = result;
+                    if (result != HandlerResults.NoInterest)
+                    {
+                        if (result == HandlerResults.Success)
+                        {
+                            eventReceipt.Result = HandlerResultConstants.SUCCESS;
+                        }
+                        else if (result == HandlerResults.Failure)
+                        {
+                            eventReceipt.Result = HandlerResultConstants.FAILURE;
+                        }
+                        else
+                        {
+                            eventReceipt.Result  = HandlerResultConstants.RETRY;
+                        }
+                        
+                        eventReceipt.Details = details;
+                    }
+
                 }
                 catch (Exception ex)
                 {
-                    eventReceipt.WasSuccessful = false;
-                    eventReceipt.Result = ex.Message;
+                    eventReceipt.Result = HandlerResultConstants.EXCEPTION;
+                    eventReceipt.Details = ex.Message;
+                    _systemService.Save(eventReceipt);
                 }
-
-                _systemService.Save(eventReceipt);
             }
         }
 

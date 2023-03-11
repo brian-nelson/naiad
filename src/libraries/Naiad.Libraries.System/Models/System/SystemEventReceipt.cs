@@ -15,8 +15,8 @@ namespace Naiad.Libraries.System.Models.System
 
         public Guid HandlerConfigurationId { get; set; }
 
-        public bool WasSuccessful { get; set; }
-
         public string Result { get; set; }
+
+        public string Details { get; set; }
     }
 }
