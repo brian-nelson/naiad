@@ -67,6 +67,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.Client", "l
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Naiad.Libraries.Client.Tests", "libraries\Naiad.Libraries.Client.Tests\Naiad.Libraries.Client.Tests.csproj", "{3B2E8541-A1B4-4434-9F35-CBA278C857B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityPubTestClient", "apps\ActivityPubTestClient\ActivityPubTestClient.csproj", "{25413AF8-7F37-4FDE-A7D3-7AD19E8C8418}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.ActivityPub.Client", "libraries\Naiad.Libraries.ActivityPub.Client\Naiad.Libraries.ActivityPub.Client.csproj", "{B436F4EF-D508-4665-973A-B561728F2172}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naiad.Libraries.ActivityPub.Common", "libraries\Naiad.Libraries.ActivityPub.Common\Naiad.Libraries.ActivityPub.Common.csproj", "{07441430-6E2C-4C9F-9DD3-7307A90343E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MastodonTestClient", "apps\MastodonTestClient\MastodonTestClient.csproj", "{F70C6970-6BCE-4F78-AA15-E6C870D9EA89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +165,22 @@ Global
 		{3B2E8541-A1B4-4434-9F35-CBA278C857B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B2E8541-A1B4-4434-9F35-CBA278C857B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B2E8541-A1B4-4434-9F35-CBA278C857B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25413AF8-7F37-4FDE-A7D3-7AD19E8C8418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25413AF8-7F37-4FDE-A7D3-7AD19E8C8418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25413AF8-7F37-4FDE-A7D3-7AD19E8C8418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25413AF8-7F37-4FDE-A7D3-7AD19E8C8418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B436F4EF-D508-4665-973A-B561728F2172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B436F4EF-D508-4665-973A-B561728F2172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B436F4EF-D508-4665-973A-B561728F2172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B436F4EF-D508-4665-973A-B561728F2172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07441430-6E2C-4C9F-9DD3-7307A90343E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07441430-6E2C-4C9F-9DD3-7307A90343E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07441430-6E2C-4C9F-9DD3-7307A90343E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07441430-6E2C-4C9F-9DD3-7307A90343E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70C6970-6BCE-4F78-AA15-E6C870D9EA89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70C6970-6BCE-4F78-AA15-E6C870D9EA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70C6970-6BCE-4F78-AA15-E6C870D9EA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70C6970-6BCE-4F78-AA15-E6C870D9EA89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -191,6 +215,10 @@ Global
 		{17DF8A27-4CFE-4F76-9858-2D8B50403C4F} = {2FC5D3B3-757A-4D15-B8F7-567464D63AEB}
 		{7405DEC3-C54B-4A1A-BA6D-451280831D45} = {2EE67E90-E21D-45D5-87BC-64D009328556}
 		{3B2E8541-A1B4-4434-9F35-CBA278C857B2} = {2EE67E90-E21D-45D5-87BC-64D009328556}
+		{25413AF8-7F37-4FDE-A7D3-7AD19E8C8418} = {22543F2D-0985-4D73-9341-1864774DFF84}
+		{B436F4EF-D508-4665-973A-B561728F2172} = {176B39EB-43CE-4F39-B292-07452B605980}
+		{07441430-6E2C-4C9F-9DD3-7307A90343E7} = {176B39EB-43CE-4F39-B292-07452B605980}
+		{F70C6970-6BCE-4F78-AA15-E6C870D9EA89} = {22543F2D-0985-4D73-9341-1864774DFF84}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3F1B2E24-F6CD-44D2-8894-6DB55B7D15E8}

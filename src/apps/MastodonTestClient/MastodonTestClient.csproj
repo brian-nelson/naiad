@@ -1,14 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\libraries\Naiad.libraries.core\Naiad.Libraries.Core.csproj" />
   </ItemGroup>
 
 </Project>

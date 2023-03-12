@@ -6,8 +6,6 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Naiad.Libraries.Core.Constants;
 using Naiad.Libraries.Core.Interfaces;
-using Naiad.Libraries.System.Constants.DataManagement;
-using Naiad.Libraries.System.Interfaces;
 
 namespace Naiad.Libraries.System.Converters
 {
@@ -21,8 +19,10 @@ namespace Naiad.Libraries.System.Converters
 
             using (var streamReader = new StreamReader(sourceFile))
             {
-                var config = new CsvConfiguration(CultureInfo.InvariantCulture);
-                config.TrimOptions = TrimOptions.InsideQuotes;
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    TrimOptions = TrimOptions.InsideQuotes
+                };
 
                 using (var csvReader = new CsvReader(streamReader, config, true))
                 {

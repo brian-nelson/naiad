@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Naiad.Libraries.Core.Interfaces;
-using Naiad.Libraries.System.Interfaces;
 using Naiad.Libraries.System.Models.MetadataManagement;
 using Naiad.Libraries.System.Services;
 using Naiad.Modules.Api.Core.Services;

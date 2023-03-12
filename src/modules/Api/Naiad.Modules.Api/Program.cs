@@ -17,114 +17,110 @@ using Naiad.Modules.Api;
 using Naiad.Modules.Api.Core.Objects;
 using Newtonsoft.Json.Serialization;
 
-namespace Naiad.modules.api
+namespace Naiad.modules.api;
+
+class Program
 {
-    class Program
+    public static Config Config;
+    public static JwtSecret JwtSecret;
+    public static SystemService SystemService;
+
+    static void Main(string[] args)
     {
-        public static Config Config;
-        public static JwtSecret JwtSecret;
-        public static SystemService SystemService;
+        Config = new Config(EnvironmentVariableHelper.GetMachineEnvVars("NAIAD_"));
+        var contentRoot = Path.Combine(Directory.GetCurrentDirectory(), "webroot");
 
-        static void Main(string[] args)
-        {
-            Config = new Config(EnvironmentVariableHelper.GetMachineEnvVars("NAIAD_"));
-            var contentRoot = Path.Combine(Directory.GetCurrentDirectory(), "webroot");
+        var builder = new WebHostBuilder()
+            .UseKestrel(options => options.AddServerHeader = false)
+            .ConfigureServices(services =>
+            {
+                services.AddOptions();
 
-            var builder = new WebHostBuilder()
-                .UseKestrel(options => options.AddServerHeader = false)
-                .ConfigureServices(services =>
-                {
-                    services.AddOptions();
+                services
+                    .AddMvc()
+                    .AddApplicationPart(Assembly.Load(new AssemblyName("Naiad.Modules.Api.Core")))
+                    .AddApplicationPart(Assembly.Load(new AssemblyName("Naiad.Modules.ActivityPub.Core")));
 
-                    services
-                        .AddMvc()
-                        .AddApplicationPart(Assembly.Load(new AssemblyName("Naiad.Modules.Api.Core")))
-                        .AddApplicationPart(Assembly.Load(new AssemblyName("Naiad.Modules.ActivityPub.Core")));
+                services.AddControllers()
+                    .AddNewtonsoftJson(options =>
+                        options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
-                    services.AddControllers()
-                        .AddNewtonsoftJson(options =>
-                            options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+                services.AddAutofac(builder => { });
 
-                    services.AddAutofac(builder => { });
-
-                    services.AddAuthentication(x =>
+                services.AddAuthentication(x =>
+                    {
+                        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    })
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.SaveToken = true;
+                        options.TokenValidationParameters = new TokenValidationParameters
                         {
-                            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                        })
-                        .AddJwtBearer(options =>
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(JwtSecret.Value)),
+                            ValidateIssuer = false,
+                            ValidateAudience = false
+                        };
+                        options.Events = new JwtBearerEvents
                         {
-                            options.RequireHttpsMetadata = false;
-                            options.SaveToken = true;
-                            options.TokenValidationParameters = new TokenValidationParameters
+                            OnTokenValidated = context =>
                             {
-                                ValidateIssuerSigningKey = true,
-                                IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(JwtSecret.Value)),
-                                ValidateIssuer = false,
-                                ValidateAudience = false
-                            };
-                            options.Events = new JwtBearerEvents
-                            {
-                                OnTokenValidated = context =>
+                                // TODO = is there a more elegant way to return failure
+                                var identity = context.Principal.Claims.ToList().Find(c => c.Type == "SessionId");
+                                if (identity != null)
                                 {
-                                    // TODO = is there a more elegant way to return failure
-                                    var identity = context.Principal.Claims.ToList().Find(c => c.Type == "SessionId");
-                                    if (identity != null)
+                                    var sessionId = Guid.Parse(identity.Value);
+                                    if (SystemService.ValidateSession(sessionId))
                                     {
-                                        var sessionId = Guid.Parse(identity.Value);
-                                        if (SystemService.ValidateSession(sessionId))
-                                        {
-                                            return Task.CompletedTask;
-                                        }
+                                        return Task.CompletedTask;
                                     }
-
-                                    context.Fail("Session has expired or doesn't exist");
-                                    return Task.CompletedTask;
-                                },
-
-                                OnAuthenticationFailed = context =>
-                                {
-                                    return Task.CompletedTask;
                                 }
-                            };
-                        });
 
-                    services.AddCors(options =>
-                    {
-                        options.AddPolicy(
-                            "primary",
-                            policy =>
-                            {
-                                policy.AllowAnyOrigin()
-                                    .AllowAnyHeader()
-                                    .AllowAnyMethod();
-                            });
+                                context.Fail("Session has expired or doesn't exist");
+                                return Task.CompletedTask;
+                            },
+
+                            OnAuthenticationFailed = context => { return Task.CompletedTask; }
+                        };
                     });
 
-                })
-                .UseContentRoot(contentRoot)
-                .UseStartup<Startup>()
-                .ConfigureKestrel(serverOptions =>
+                services.AddCors(options =>
                 {
-                    var port = Config.GetInt("API_PORT_NUMBER", 443);
-                    var certificateFile = Config.GetString("API_CERTIFICATE_FILE");
-                    var certificatePassword = Config.GetString("API_CERTIFICATE_PASSWORD");
-
-                    serverOptions.Listen(IPAddress.Any, port, listenOptions =>
-                    {
-                        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
-                        listenOptions.UseHttps(certificateFile, certificatePassword);
-                    });
+                    options.AddPolicy(
+                        "primary",
+                        policy =>
+                        {
+                            policy.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                        });
                 });
 
-            var host = builder.Build();
+            })
+            .UseContentRoot(contentRoot)
+            .UseStartup<Startup>()
+            .ConfigureKestrel(serverOptions =>
+            {
+                var port = Config.GetInt("API_PORT_NUMBER", 443);
+                var certificateFile = Config.GetString("API_CERTIFICATE_FILE");
+                var certificatePassword = Config.GetString("API_CERTIFICATE_PASSWORD");
 
-            JwtSecret = host.Services.GetRequiredService<JwtSecret>();
-            SystemService = host.Services.GetRequiredService<SystemService>();
-            var bootstrap = host.Services.GetRequiredService<BootstrapService>();
-            bootstrap.PerformBootstrap();
+                serverOptions.Listen(IPAddress.Any, port, listenOptions =>
+                {
+                    listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+                    listenOptions.UseHttps(certificateFile, certificatePassword);
+                });
+            });
 
-            host.Run();
-        }
+        var host = builder.Build();
+
+        JwtSecret = host.Services.GetRequiredService<JwtSecret>();
+        SystemService = host.Services.GetRequiredService<SystemService>();
+        var bootstrap = host.Services.GetRequiredService<BootstrapService>();
+        bootstrap.PerformBootstrap();
+
+        host.Run();
     }
 }

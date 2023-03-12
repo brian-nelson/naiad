@@ -8,5 +8,10 @@ namespace Naiad.Libraries.Core.Helpers
         {
             return value.All(char.IsLetterOrDigit);
         }
+
+        public static bool IsNullOrEmpty(this string value)
+        {
+            return string.IsNullOrEmpty(value);
+        }
     }
 }

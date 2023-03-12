@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MastodonTestClient": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\Data\\NaiadTestFiles\\MastodonAccounts.txt\r\nD:\\Data\\NaiadTestFiles\\MastodonAccounts_output.csv"
+    }
+  }
+}

@@ -8,7 +8,7 @@ using Naiad.Libraries.System.Services;
 
 namespace Naiad.Libraries.System.Managers;
 
-public class HandlerManager : AbstractRunnableService
+public class EventHandlerManager : AbstractRunnableService
 {
     private readonly SystemService _systemService;
     private readonly INaiadLogger _logger;
@@ -16,7 +16,7 @@ public class HandlerManager : AbstractRunnableService
 
     private DateTime _lastQueryTime;
 
-    public HandlerManager(
+    public EventHandlerManager(
         IEnumerable<IHandler> handlers,
         SystemService systemService,
         INaiadLogger logger)
@@ -60,7 +60,6 @@ public class HandlerManager : AbstractRunnableService
 
                 try
                 {
-                    //TODO - Return Success, Failure, RetryLater, or NoInterest
                     var result = handler.HandleEvent(systemEvent, out string details);
 
                     if (result != HandlerResults.NoInterest)

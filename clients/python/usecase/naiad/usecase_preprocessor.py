@@ -51,9 +51,10 @@ def lemmatize_map_words(lemmatizer, text):
         [lemmatizer.lemmatize(word, wordnet_map.get(pos[0], wordnet.NOUN)) for word, pos in pos_tagged_text])
 
 
-def remove_urls(url_pattern, text):
-    text = re.sub(r'(https|http)?:\/\/(\w|\.|\/|\?|\=|\&|\%)*\b', '', text, flags=re.MULTILINE)
-    return url_pattern.sub(r'', text)
+def remove_urls(text):
+    output = re.sub(r'(https?:\/\/)(\s)*(www\.)?(\s)*((\w|\s)+\.)*([\w\-\s]+\/)*([\w\-]+)((\?)?[\w\s]*=\s*[\w\%&]*)*', '', text, flags=re.MULTILINE)
+    # output = re.sub(r'(https|http)?:\/\/(\w|\.|\/|\?|\=|\&|\%)*\b', '', text, flags=re.MULTILINE)
+    return output
 
 
 def cleanhtml(CLEANR, raw_html):
