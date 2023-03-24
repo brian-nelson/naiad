@@ -62,11 +62,11 @@ export default class App extends Component {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <NavDropdown title="Data" id="structured-data-dropdown">
-            <NavDropdown.Item to="/definitions" as={Link}>
-              Define Structured Data Type
-            </NavDropdown.Item>
             <NavDropdown.Item to="/datafiles" as={Link}>
               List Data Files
+            </NavDropdown.Item>
+            <NavDropdown.Item to="/definitions" as={Link}>
+              Define Structured Data Type
             </NavDropdown.Item>
             <NavDropdown.Item to="/collections" as={Link}>
               View Collections
